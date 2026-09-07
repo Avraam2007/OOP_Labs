@@ -54,7 +54,7 @@ namespace OOP_Main {
                 $"Max voltage:\t\t\t {this.MaxVoltage} V\n" +
                 $"Rotation frequency:\t\t {this.RotationFrequency} rotattions/s\n" +
                 $"Energy conversion efficiency:\t {this.ECE}\n" +
-                $"Inspect:\t {this.Inspect()}\n");
+                $"Inspect:\t\t\t {this.Inspect()}\n");
         }
 
         public override int GetDeliveryDays() => 10;

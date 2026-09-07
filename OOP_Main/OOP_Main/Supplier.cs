@@ -52,8 +52,8 @@ namespace OOP_Main {
         public void ShowInfo() {
             Console.WriteLine($"====================SUPPLIER===========================\n");
             Console.WriteLine($"" +
-                $"Supplier ID:\t\t {this.SupplierId}\n" +
-                $"Rating:\t {this.Rating}/5.0\n" +
+                $"Supplier ID:\t {this.SupplierId}\n" +
+                $"Rating:\t\t {this.Rating}/5.0\n" +
                 $"Name:\t\t {this.Name}\n" +
                 $"Reputation:\t {(this.Inspect() ? "Good" : "Bad")}\n" +
                 $"Catalog:\n");
