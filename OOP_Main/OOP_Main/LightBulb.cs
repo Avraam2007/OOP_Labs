@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOP_Main {
-    public class LightBulb: ElectronicPart, IQualityCheckable {
+    public class LightBulb : ElectronicPart, IQualityCheckable {
         private double brightness;
         private double temperature;
+        private Wire wire;
         public double Brightness {
             private set {
                 if (value <= 0) {
@@ -30,6 +27,11 @@ namespace OOP_Main {
                 return temperature;
             }
         }
+
+        public Wire Wire { 
+            get { return this.wire; } 
+            set { this.wire = value; } 
+        }
         public LightBulb(
             string article,
             string name,
@@ -42,7 +44,31 @@ namespace OOP_Main {
         ) : base(article, name, price, power, maxVoltage, supplierId) {
             this.Brightness = brightness;
             this.Tempreature = temperature;
+            this.Wire = new Wire("0", "Wire", 0.5, 0.5, "Copper", 0.5, 15, supplierId);
         }
+
+        // Тут комбінований зв'язок (Композиція й агрегація)
+        //public LightBulb(
+        //    string article,
+        //    string name,
+        //    double price,
+        //    int power,
+        //    int maxVoltage,
+        //    double brightness,
+        //    double temperature,
+        //    int supplierId = 0,
+        //    Wire wire = null
+        //) : base(article, name, price, power, maxVoltage, supplierId) {
+        //    this.Brightness = brightness;
+        //    this.Tempreature = temperature;
+        //    if (wire != null) {
+        //        this.Wire = wire;
+        //    }
+        //    else {
+        //        this.Wire = new Wire("0", "Wire", 0.5, 0.5, "Copper", 0.5, 15, supplierId);
+        //    }
+        //}
+
         public override void ShowInfo() {
             Console.WriteLine($"" +
                 $"Artile:\t\t {this.Article}\n" +

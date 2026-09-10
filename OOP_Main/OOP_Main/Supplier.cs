@@ -7,7 +7,7 @@ namespace OOP_Main {
         public int SupplierId { get; set; }
         public string Name { get; set; }
         public string ContactEmail { get; set; }
-        public double Rating { 
+        public double Rating {
             get {
                 return rating;
             }
@@ -16,7 +16,7 @@ namespace OOP_Main {
                     throw new ArgumentOutOfRangeException("Rating should range between 0 and 1");
                 }
                 rating = value;
-            } 
+            }
         }
         public List<Part> Catalog { get; private set; }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace OOP_Main {
-    public class MechanicalPart: Part {
+    public class MechanicalPart : Part {
         private double weight;
         private string material;
         private readonly int supplierId;
@@ -28,8 +28,8 @@ namespace OOP_Main {
             }
         }
         public MechanicalPart(
-            string article, 
-            string name, 
+            string article,
+            string name,
             double price,
             double weight,
             string material,

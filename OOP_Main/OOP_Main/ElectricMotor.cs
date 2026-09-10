@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOP_Main {
-    public class ElectricMotor: ElectronicPart, IQualityCheckable {
+    public class ElectricMotor : ElectronicPart, IQualityCheckable {
         private double rotationFrequency;
         private double energy_conversion_efficiency;
         public double RotationFrequency {

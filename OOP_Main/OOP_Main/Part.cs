@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace OOP_Main {
-     public abstract class Part : IOrderable {
+    public abstract class Part : IOrderable {
         private string article;
         private string name;
         private double price;
@@ -27,18 +27,18 @@ namespace OOP_Main {
                 name = value;
             }
         }
-        public double Price { 
+        public double Price {
             get {
                 return price;
             }
-            set { 
+            set {
                 if (value < 0) {
                     throw new ArgumentOutOfRangeException("Price should be posititve or equal to zero (free)");
                 }
                 price = Math.Round(value, 2, MidpointRounding.AwayFromZero);
             }
-           }
-        public Part(string article, string name, double price) { 
+        }
+        public Part(string article, string name, double price) {
             this.Article = article;
             this.Name = name;
             this.Price = price;
