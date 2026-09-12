@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 namespace OOP_Main {
     internal class Program {
         static void Main(string[] args) {
-            Interface consoleInterface = new Interface();
+            User admin = new User("123", "Admin", "admin", true);
+            Data appData = new Data();
+            appData.AddUser(admin);
+            Interface consoleInterface = new Interface(appData);
             consoleInterface.BootUpScreen();
         }
     }

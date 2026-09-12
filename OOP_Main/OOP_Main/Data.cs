@@ -12,20 +12,31 @@ namespace OOP_Main {
             Users.Add(user);
         }
         public void DeleteUserById(string id) {
-            User userToDelete = Users.Find((user) => user.Id == id);
+            User userToDelete = this.GetUserById(id);
             if (userToDelete != null) {
                 Users.Remove(userToDelete);
             }
         }
 
         public void DeleteUserByUsername(string username) {
-            User userToDelete = Users.Find((user) => user.Username == username);
+            User userToDelete = this.GetUserByUsername(username);
             if (userToDelete != null) {
                 Users.Remove(userToDelete);
             }
         }
 
+        public User GetUserById(string id) {
+            User foundUser = Users.Find((user) => user.Id == id);
+            return foundUser;
+        }
+
+        public User GetUserByUsername(string username) {
+            User foundUser = Users.Find((user) => user.Username == username);
+            return foundUser;
+        }
+
         public Data() {
+            users = new List<User>();
 
         }
     }

@@ -1,9 +1,4 @@
-﻿using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace OOP_Main {
     public class User {
@@ -22,6 +17,7 @@ namespace OOP_Main {
             } 
         }
         public string Id { get { return _id; } }
+        public bool IsAdmin { get { return isAdmin; } }
         public string Password { 
             get { return password; }
             private set {
