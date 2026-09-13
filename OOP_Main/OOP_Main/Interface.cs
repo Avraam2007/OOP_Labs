@@ -20,7 +20,7 @@ namespace OOP_Main {
         }
         public void BootUpScreen() {
             // Styled text with markup
-            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.6[/]");
+            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.7[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...");
@@ -64,7 +64,7 @@ namespace OOP_Main {
 
         public void CreateUserScreen() {
             AnsiConsole.Clear();
-            ShowHeader("[bold]Sign in[/]");
+            ShowHeader("[bold]Sign up[/]");
             var usernamePrompt = new TextPrompt<string>("Enter your [green]username[/]:");
 
             string username = AnsiConsole.Prompt(usernamePrompt);
@@ -81,6 +81,7 @@ namespace OOP_Main {
 
             if (confirmPassword == password) {
                 AppData.CurrentUser = new User("258", username, password);
+                AppData.AddUser(AppData.CurrentUser);
                 AnsiConsole.MarkupLine($"[green bold]Account was created![/]");
                 BackToMenu();
             }
@@ -95,7 +96,7 @@ namespace OOP_Main {
 
             if (AppData.GetUserByUsername(username) == null) {
                 AnsiConsole.MarkupLine($"[red bold]Sorry, we didn't found this account. Try again or sign in this account[/]");
-                BackToMenu("Sign in");
+                BackToMenu("Sign up");
             }
 
             var passwordPrompt = new TextPrompt<string>("What's your [green]password[/]?")
@@ -126,14 +127,18 @@ namespace OOP_Main {
                     .AddCancelResult("Back to menu")
                     .DefaultValue("Back to menu")
                     .AddChoices(options));
-            if (choice == "Back to menu") {
-                MainScreen();
-            }
-            if (choice == "Sign in") {
-                CreateUserScreen();
-            }
-            if (choice == "Log in") {
-                LoginScreen();
+            switch (choice) {
+                case "Back to menu":
+                    MainScreen();
+                    break;
+                case "Sign up":
+                    CreateUserScreen();
+                    break;
+                case "Log in":
+                    LoginScreen();
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -146,7 +151,7 @@ namespace OOP_Main {
                         "Show products",
                         "Create order",
                         "Add product",
-                        "Sign in",
+                        "Sign up",
                         "Log in",
                         "Quit"
             };
@@ -158,7 +163,7 @@ namespace OOP_Main {
             if (choice == "Quit") {
                 BootDownScreen();
             }
-            if (choice == "Sign in") {
+            if (choice == "Sign up") {
                 CreateUserScreen();
             }
             if (choice == "Log in") {
@@ -168,7 +173,7 @@ namespace OOP_Main {
             if (choice == "Create order") {
                 if (AppData.CurrentUser == null) {
                     AnsiConsole.MarkupLine($"[red bold]The access is forbidden[/]");
-                    BackToMenu("Sign in");
+                    BackToMenu("Sign up");
                 }
                 else {
                     AnsiConsole.MarkupLine($"[red bold]You should log in first[/]");
@@ -185,9 +190,6 @@ namespace OOP_Main {
                     BackToMenu();
                 }
             }
-            //else {
-            //    AnsiConsole.MarkupLine($"You selected: [green]{choice}[/]");
-            //}
         }
     }
 }
