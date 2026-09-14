@@ -1,4 +1,5 @@
 ﻿using Spectre.Console;
+using Spectre.Console.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -20,7 +21,7 @@ namespace OOP_Main {
         }
         public void BootUpScreen() {
             // Styled text with markup
-            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.7[/]");
+            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.8[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...");
@@ -39,10 +40,10 @@ namespace OOP_Main {
             switch (choice) {
                 case "Yes":
                     StatusSpinner("Shutting down...");
+                    Environment.Exit(0);
                     break;
                 case "No":
                     MainScreen();
-                    Environment.Exit(0);
                     break;
                 default:
                     break;
@@ -60,6 +61,67 @@ namespace OOP_Main {
 
             AnsiConsole.Write(padder);
             AnsiConsole.Write(new Rule());
+        }
+
+        public void InternalFlashCard(Dictionary<string, Spectre.Console.Text> dataForCard) {
+            var contentElements = new List<IRenderable>();
+            foreach (var element in dataForCard) {
+                contentElements.Add(element.Value);
+            }
+            var content = new Rows(contentElements);
+            var panel = new Panel(content)
+            .BorderColor(Color.Blue)
+            .Padding(4, 2);
+
+            AnsiConsole.Write(panel);
+        }
+
+        public void ShowOrdersScreen() {
+            AnsiConsole.Clear();
+            ShowHeader("Orders");
+            if (appData.Orders == null) {
+                AnsiConsole.Markup("[red bold]Sorry, we didn't find any orders in the store. You can create it.[/]");
+            }
+            else {
+                foreach (var order in appData.Orders) {
+                    var dataForCard = order.ShowInfo();
+                    InternalFlashCard(dataForCard);
+                }
+            }
+            BackToMenu();
+
+        }
+
+        public void ShowProductsScreen() {
+            AnsiConsole.Clear();
+            ShowHeader("Products");
+            if (appData.Products == null) {
+                AnsiConsole.Markup("[red bold]Sorry, we didn't find any products in the store.[/]");
+            }
+            else {
+                foreach (var product in appData.Products) {
+                    var dataForCard = product.ShowInfo();
+                    InternalFlashCard(dataForCard);
+                }
+            }
+            BackToMenu();
+
+        }
+
+        public void ShowUsersScreen() {
+            AnsiConsole.Clear();
+            ShowHeader("Users");
+            if (appData.Products == null) {
+                AnsiConsole.Markup("[red bold]Sorry, we didn't find any users registered in the store.[/]");
+            }
+            else {
+                foreach (var user in appData.Users) {
+                    var dataForCard = user.ShowInfo();
+                    InternalFlashCard(dataForCard);
+                }
+            }
+            BackToMenu();
+
         }
 
         public void CreateUserScreen() {
@@ -109,7 +171,7 @@ namespace OOP_Main {
                 BackToMenu();
             }
             else {
-                if (AppData.CurrentUser == null) {
+                if (AppData.CurrentUser == null || AppData.CurrentUser != AppData.GetUserByUsername(username)) {
                     AppData.CurrentUser = AppData.GetUserByUsername(username);
                 }
                 AnsiConsole.MarkupLine($"[green bold]Welcome back, {username}![/]");
@@ -123,7 +185,7 @@ namespace OOP_Main {
             }
             var choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title($"Press ESC or Enter to back to menu{(extraOption != "" ? $" or choose {extraOption} option" : "")}")
+                    .Title($"\nPress ESC or Enter to back to menu{(extraOption != "" ? $" or choose {extraOption} option" : "")}")
                     .AddCancelResult("Back to menu")
                     .DefaultValue("Back to menu")
                     .AddChoices(options));
@@ -170,6 +232,12 @@ namespace OOP_Main {
                 LoginScreen();
                 BackToMenu();
             }
+            if (choice == "Show orders") {
+                ShowOrdersScreen();
+            }
+            if (choice == "Show products") {
+                ShowProductsScreen();
+            }
             if (choice == "Create order") {
                 if (AppData.CurrentUser == null) {
                     AnsiConsole.MarkupLine($"[red bold]The access is forbidden[/]");
@@ -181,14 +249,15 @@ namespace OOP_Main {
                 }
             }
             if ((choice == "Add product" || choice == "Show users")) {
-                if (AppData.CurrentUser != null && !AppData.CurrentUser.IsAdmin) {
-                    AnsiConsole.MarkupLine($"[red bold]You don't have access. Only for admin[/]");
-                    BackToMenu();
+                if (AppData.CurrentUser != null && AppData.CurrentUser.IsAdmin) {
+                    if (choice == "Show users") {
+                        ShowUsersScreen();
+                    }
                 }
                 else {
                     AnsiConsole.MarkupLine($"[red bold]The access is forbidden. Only for admin[/]");
-                    BackToMenu();
                 }
+                BackToMenu();
             }
         }
     }

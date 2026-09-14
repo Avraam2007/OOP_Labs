@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Spectre.Console;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OOP_Main {
-    public abstract class Product {
+    public abstract class Product : IDataAndUIBridge {
         private string article;
         private string name;
         private double price;
@@ -48,7 +49,7 @@ namespace OOP_Main {
             this.Price = price;
         }
 
-        public abstract void ShowInfo();
+        public abstract Dictionary<string, Text> ShowInfo();
 
         public abstract int GetSupplierId();
 

@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using System;
+using System.Collections.Generic;
 
 namespace OOP_Main {
     public class Furniture : Product {
@@ -73,7 +74,7 @@ namespace OOP_Main {
             double length,
             double height,
             string material,
-            int supplierId
+            int supplierId = 0
         ) : base(article, name, price) {
             this.Weight = weight;
             this.Width = width;
@@ -83,16 +84,19 @@ namespace OOP_Main {
             this.supplierId = supplierId;
         }
 
-        public override void ShowInfo() {
-            AnsiConsole.MarkupLine($"" +
-                $"Artile:\t\t {this.Article}\n" +
-                $"Name:\t\t {this.Name}\n" +
-                $"Price:\t\t {this.Price}$\n" +
-                $"Length:\t\t {this.Length} cm\n" +
-                $"Width:\t\t {this.Width} cm\n" +
-                $"Height:\t\t {this.Height} cm\n" +
-                $"Weight:\t\t {this.Weight} kg\n" +
-                $"Material:\t {this.Material}\n");
+        public override Dictionary<string, Text> ShowInfo() {
+            Dictionary<string, Text> textsForRender = new Dictionary<string, Text> {
+                ["header"] = new Text($"FURNITURE \"{this.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
+                ["article"] = new Text($"Article: {this.Article}\n"),
+                ["price"] = new Text($"Price: {this.Price}$\n"),
+                ["length"] = new Text($"Length: {this.Length} cm\n"),
+                ["width"] = new Text($"Width: {this.Width} cm\n"),
+                ["height"] = new Text($"Height: {this.Height} cm\n"),
+                ["weight"] = new Text($"Weight: {this.Weight} kg\n"),
+                ["material"] = new Text($"Material: {this.Material}\n")
+            };
+
+            return textsForRender;
         }
 
         public override int GetSupplierId() => this.supplierId;

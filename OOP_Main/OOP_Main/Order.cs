@@ -3,27 +3,27 @@ using System;
 using System.Collections.Generic;
 
 namespace OOP_Main {
-    public class Order {
-        private List<Product> parts;
+    public class Order: IDataAndUIBridge {
+        private List<Product> products;
         public int orderId;
-        public List<Product> Parts {
-            get { return parts; }
-            private set { parts = value; }
+        public List<Product> Products {
+            get { return products; }
+            private set { products = value; }
         }
 
         public void AddPart(Product newPart) {
-            parts.Add(newPart);
+            this.Products.Add(newPart);
         }
 
-        public Order(int orderId, List<Product> parts) {
+        public Order(int orderId, List<Product> products) {
             this.orderId = orderId;
-            Parts = parts;
+            Products = products;
         }
 
         public double GetTotalPrice() {
-            if (Parts.Count == 0 || Parts is null) return 0;
+            if (Products.Count == 0 || Products is null) return 0;
             double totalPrice = 0;
-            foreach (Product part in Parts) {
+            foreach (Product part in Products) {
                 totalPrice += part.Price;
             }
             return totalPrice;
@@ -31,25 +31,25 @@ namespace OOP_Main {
 
         public double GetAveragePrice() {
             double totalPrice = GetTotalPrice();
-            double averagePrice = totalPrice / Parts.Count;
+            double averagePrice = totalPrice / Products.Count;
             return Math.Round(averagePrice, 2, MidpointRounding.AwayFromZero);
         }
 
         public double GetMinPrice() {
-            double minPrice = Parts[0].Price;
-            for (int i = 1; i < Parts.Count; i++) {
-                if (Parts[i].Price < minPrice) {
-                    minPrice = Parts[i].Price;
+            double minPrice = Products[0].Price;
+            for (int i = 1; i < Products.Count; i++) {
+                if (Products[i].Price < minPrice) {
+                    minPrice = Products[i].Price;
                 }
             }
             return minPrice;
         }
 
         public double GetMaxPrice() {
-            double maxPrice = Parts[0].Price;
-            for (int i = 1; i < Parts.Count; i++) {
-                if (Parts[i].Price > maxPrice) {
-                    maxPrice = Parts[i].Price;
+            double maxPrice = Products[0].Price;
+            for (int i = 1; i < Products.Count; i++) {
+                if (Products[i].Price > maxPrice) {
+                    maxPrice = Products[i].Price;
                 }
             }
             return maxPrice;
@@ -121,19 +121,32 @@ namespace OOP_Main {
             return ans;
         }
 
-        public void PrintOrder() {
-            AnsiConsole.MarkupLine($"=====================ORDER============================\n");
-            AnsiConsole.MarkupLine($"Order ID: {this.orderId}\n");
-            foreach (var part in parts) {
-                part.ShowInfo();
-                AnsiConsole.WriteLine();
-            }
-            AnsiConsole.MarkupLine($"========STATS========\n");
-            AnsiConsole.MarkupLine($"Total price: {this.GetTotalPrice()}$\n");
-            AnsiConsole.MarkupLine($"Average price: {this.GetAveragePrice()}$\n");
-            AnsiConsole.MarkupLine($"Minimal price: {this.GetMinPrice()}$\n");
-            AnsiConsole.MarkupLine($"Maximal price: {this.GetMaxPrice()}$\n");
-            AnsiConsole.WriteLine();
+        //public void PrintOrder() {
+        //    AnsiConsole.MarkupLine($"=====================ORDER============================\n");
+        //    AnsiConsole.MarkupLine($"Order ID: {this.orderId}\n");
+        //    foreach (var part in parts) {
+        //        part.ShowInfo();
+        //        AnsiConsole.WriteLine();
+        //    }
+        //    AnsiConsole.MarkupLine($"========STATS========\n");
+        //    AnsiConsole.MarkupLine($"Total price: {this.GetTotalPrice()}$\n");
+        //    AnsiConsole.MarkupLine($"Average price: {this.GetAveragePrice()}$\n");
+        //    AnsiConsole.MarkupLine($"Minimal price: {this.GetMinPrice()}$\n");
+        //    AnsiConsole.MarkupLine($"Maximal price: {this.GetMaxPrice()}$\n");
+        //    AnsiConsole.WriteLine();
+        //}
+
+        public Dictionary<string, Text> ShowInfo() {
+            Dictionary<string, Text> textsForRender = new Dictionary<string, Text> {
+                ["header"] = new Text("ORDER\n\n", new Style(decoration: Decoration.Bold)).Centered(),
+                ["orderId"] = new Text($"Order ID: {this.orderId}\n"),
+                ["total"] = new Text($"Total price: {this.GetTotalPrice()}$\n"),
+                ["average"] = new Text($"Average price: {this.GetAveragePrice()}$\n"),
+                ["minimal"] = new Text($"Minimal price: {this.GetMinPrice()}$\n"),
+                ["maximal"] = new Text($"Maximal price: {this.GetMinPrice()}$\n")
+            };
+
+            return textsForRender;
         }
     }
 }

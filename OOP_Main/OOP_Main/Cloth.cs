@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using System;
+using System.Collections.Generic;
 
 namespace OOP_Main {
     public class Cloth : Product {
@@ -27,12 +28,15 @@ namespace OOP_Main {
             this.supplierId = supplierId;
         }
 
-        public override void ShowInfo() {
-            AnsiConsole.WriteLine($"" +
-                $"Artile:\t\t {this.Article}\n" +
-                $"Name:\t\t {this.Name}\n" +
-                $"Price:\t\t {this.Price}$\n" +
-                $"Material:\t {this.Material}\n");
+        public override Dictionary<string, Text> ShowInfo() {
+            Dictionary<string, Text> textsForRender = new Dictionary<string, Text> {
+                ["header"] = new Text($"CLOTH \"{this.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
+                ["article"] = new Text($"Article: {this.Article}\n"),
+                ["price"] = new Text($"Price: {this.Price}$\n"),
+                ["material"] = new Text($"Material: {this.Material}\n")
+            };
+
+            return textsForRender;
         }
 
         public override int GetSupplierId() => this.supplierId;
