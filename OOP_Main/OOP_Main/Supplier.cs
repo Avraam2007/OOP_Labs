@@ -29,22 +29,22 @@ namespace OOP_Main {
             SupplierId = supplierId;
         }
 
-        public void AddPartToCatalog(Product part) {
-            if (part != null) {
-                Catalog.Add(part);
+        public void AddPartToCatalog(Product product) {
+            if (product != null) {
+                Catalog.Add(product);
             }
         }
 
         public Product GetProductFromCatalogByName(string name) {
-            return Catalog?.Find(part => part.Name == name);
+            return Catalog?.Find(product => product.Name == name);
         }
 
         public Product GetProductFromCatalogByArticle(string article) {
-            return Catalog?.Find(part => part.Article == article);
+            return Catalog?.Find(product => product.Article == article);
         }
 
-        public bool CanProvidePart(string partName) {
-            return Catalog.Exists(p => p.Name.Equals(partName, StringComparison.OrdinalIgnoreCase));
+        public bool CanProvidePart(string productName) {
+            return Catalog.Exists(p => p.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
         }
 
         //public void PrintInfo() {

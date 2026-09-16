@@ -70,12 +70,6 @@ namespace OOP_Main {
             return new double[] { min, max };
         }
 
-
-        public void PrintArray<T>(List<T> arr) {
-            if (arr == null || arr.Count == 0) return;
-            Console.Write(string.Join(", ", arr));
-        }
-
         public List<T> Reverse<T>(List<T> arr) {
             for (int i = 0; i < arr.Count / 2; i++) {
                 T tmp = arr[i];
@@ -121,30 +115,35 @@ namespace OOP_Main {
             return ans;
         }
 
-        //public void PrintOrder() {
-        //    AnsiConsole.MarkupLine($"=====================ORDER============================\n");
-        //    AnsiConsole.MarkupLine($"Order ID: {this.orderId}\n");
-        //    foreach (var part in parts) {
-        //        part.ShowInfo();
-        //        AnsiConsole.WriteLine();
-        //    }
-        //    AnsiConsole.MarkupLine($"========STATS========\n");
-        //    AnsiConsole.MarkupLine($"Total price: {this.GetTotalPrice()}$\n");
-        //    AnsiConsole.MarkupLine($"Average price: {this.GetAveragePrice()}$\n");
-        //    AnsiConsole.MarkupLine($"Minimal price: {this.GetMinPrice()}$\n");
-        //    AnsiConsole.MarkupLine($"Maximal price: {this.GetMaxPrice()}$\n");
-        //    AnsiConsole.WriteLine();
-        //}
-
         public Dictionary<string, Text> ShowInfo() {
             Dictionary<string, Text> textsForRender = new Dictionary<string, Text> {
-                ["header"] = new Text("ORDER\n\n", new Style(decoration: Decoration.Bold)).Centered(),
-                ["orderId"] = new Text($"Order ID: {this.orderId}\n"),
+                ["header"] = new Text($"ORDER #{this.orderId}\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["total"] = new Text($"Total price: {this.GetTotalPrice()}$\n"),
                 ["average"] = new Text($"Average price: {this.GetAveragePrice()}$\n"),
                 ["minimal"] = new Text($"Minimal price: {this.GetMinPrice()}$\n"),
                 ["maximal"] = new Text($"Maximal price: {this.GetMinPrice()}$\n")
             };
+
+            if (this.Products == null || this.Products.Count == 0) {
+                textsForRender["empty_products"] = new Text("  (No products in this order)\n", new Style(foreground: Color.Red));
+                return textsForRender;
+            }
+
+            for (int i = 0; i < this.Products.Count; i++) {
+                var product = this.Products[i];
+
+                var productSpecs = product.ShowInfo();
+
+                textsForRender[$"prod_{i}_name"] = new Text($"\n  {i + 1}. [{product.Article}] {product.Name}\n", new Style(foreground: Color.Green, decoration: Decoration.Bold));
+
+                foreach (var spec in productSpecs) {
+                    if (spec.Key == "header") continue;
+
+                    string uniqueKey = $"prod_{i}_{spec.Key}";
+
+                    textsForRender[uniqueKey] = spec.Value;
+                }
+            }
 
             return textsForRender;
         }

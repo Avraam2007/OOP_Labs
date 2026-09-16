@@ -29,6 +29,9 @@ namespace OOP_Main {
             secondSupplier.AddPartToCatalog(chair);
             secondSupplier.AddPartToCatalog(sofa);
 
+            appData.AddSupplier(firstSupplier);
+            appData.AddSupplier(secondSupplier);
+
             appData.AddProduct(phone);
             appData.AddProduct(tshirt);
 
