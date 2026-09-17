@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace OOP_Main {
     public class Data {
@@ -7,7 +8,6 @@ namespace OOP_Main {
         private List<Product> products;
         private List<Supplier> suppliers;
         private User currentUser;
-
         public List<User> Users { get { return users; } private set { users = value; } }
         public List<Order> Orders { get { return orders; } private set { orders = value; } }
         public List<Product> Products { get { return products; } private set { products = value; } }
@@ -62,6 +62,14 @@ namespace OOP_Main {
         public User GetUserById(string id) {
             User foundUser = Users.Find((user) => user.Id == id);
             return foundUser;
+        }
+
+        public int GetLatestOrderId() {
+            int minId = Int32.MaxValue;
+            foreach (var order in Orders) {
+                if (order.orderId < minId) minId = order.orderId;
+            }
+            return minId;
         }
 
         public Order GetOrderById(int id) {

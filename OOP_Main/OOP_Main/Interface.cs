@@ -9,9 +9,7 @@ using System.Threading;
 
 namespace OOP_Main {
     public class Interface {
-        private Data appData;
-
-        public Data AppData { get => appData; set => appData = value; }
+        public Data AppData { get; set; }
 
         private enum MenuOption {
             [Description("Show users")] ShowUsers,
@@ -30,12 +28,12 @@ namespace OOP_Main {
             return attributes.Length > 0 ? attributes[0].Description : value.ToString();
         }
 
-        public Interface(Data appData) {
-            this.AppData = appData;
+        public Interface(Data AppData) {
+            this.AppData = AppData;
         }
         private void BackToMenu(string extraOption = "") {
             List<string> options = new List<string> { "Back to menu" };
-            if (extraOption != "") {
+            if (extraOption != "" || extraOption is null) {
                 options.Add(extraOption);
             }
             var choice = AnsiConsole.Prompt(
@@ -84,26 +82,27 @@ namespace OOP_Main {
             AnsiConsole.Write(panel);
         }
 
-        private void ShowListScreen<T>(string header, IEnumerable<T> items, string extraErrorMessage = "") where T : class {
+        private void ShowListScreen<T>(string header, IEnumerable<T> items, string extraErrorMessage = "") where T : class, IDataAndUIBridge {
             AnsiConsole.Clear();
             ShowHeader(header);
+
             if (items == null || !items.Any()) {
                 AnsiConsole.Markup($"[red bold]Sorry, we didn't find any {header.ToLower()} in the store. {extraErrorMessage}[/]");
             }
-            else {
-                foreach (var item in items) {
-                    var dataForCard = ((dynamic)item).ShowInfo();
-                    InternalFlashCard(dataForCard);
-                }
+
+            foreach (var item in items) {
+                var dataForCard = item.ShowInfo();
+                InternalFlashCard(dataForCard);
             }
+
             BackToMenu();
         }
 
-        public void ShowOrdersScreen() => ShowListScreen("Orders", appData.Orders, "You can create it.");
+        public void ShowOrdersScreen() => ShowListScreen("Orders", AppData.Orders, "You can create it.");
 
-        public void ShowProductsScreen() => ShowListScreen("Products", appData.Products);
+        public void ShowProductsScreen() => ShowListScreen("Products", AppData.Products);
 
-        public void ShowUsersScreen() => ShowListScreen("Users", appData.Users);
+        public void ShowUsersScreen() => ShowListScreen("Users", AppData.Users);
 
         public void StatusSpinner(string text, int loadingTimeInMs = 2400) {
             AnsiConsole.Status()
@@ -113,7 +112,7 @@ namespace OOP_Main {
         }
         public void BootUpScreen() {
             // Styled text with markup
-            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.9[/]");
+            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.10[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...");
@@ -140,7 +139,7 @@ namespace OOP_Main {
                 default:
                     break;
             }
-            
+
         }
 
         public void CreateUserScreen() {
@@ -224,15 +223,15 @@ namespace OOP_Main {
                     int maxVoltageChoice = AnsiConsole.Prompt(maxVoltagePrompt);
 
                     ElectronicProduct newProduct = new ElectronicProduct(
-                        articleChoice, 
-                        nameChoice, 
-                        priceChoice, 
-                        powerChoice, 
-                        maxVoltageChoice, 
-                        appData.GetSupplierByName(supplierChoice).SupplierId
+                        articleChoice,
+                        nameChoice,
+                        priceChoice,
+                        powerChoice,
+                        maxVoltageChoice,
+                        AppData.GetSupplierByName(supplierChoice).SupplierId
                     );
-                    appData.AddProduct(newProduct);
-                    appData.GetSupplierByName(supplierChoice).AddPartToCatalog(newProduct);
+                    AppData.AddProduct(newProduct);
+                    AppData.GetSupplierByName(supplierChoice).AddPartToCatalog(newProduct);
                     AnsiConsole.MarkupLine($"[green bold]New product is created! You can check it on \"{GetEnumDescription(MenuOption.ShowProducts)}\" screen.[/]");
                     break;
                 case "Cloth":
@@ -244,6 +243,65 @@ namespace OOP_Main {
                 default:
                     AnsiConsole.MarkupLine($"[red bold]Unknown error[/]");
                     break;
+            }
+
+            BackToMenu();
+        }
+
+        public void CreateOrderScreen() {
+            AnsiConsole.Clear();
+            ShowHeader("[bold]Creating order[/]");
+            const string exitOption = "Exit";
+            Order currentOrder = new Order(AppData.GetLatestOrderId()+1);
+
+            List<string> productNames = new List<string> {
+                exitOption
+            };
+            
+            bool isChosenExit = false;
+
+            foreach (var product in AppData.Products) {
+                productNames.Add(product.Name);
+            }
+
+            while (!isChosenExit) {
+                var prompt = new SelectionPrompt<string>()
+                    .Title("Select [green]product[/] to order")
+                    .PageSize(15)
+                    .AddChoices(productNames);
+                var productChoice = AnsiConsole.Prompt(prompt);
+
+                if (productChoice == exitOption) {
+                    isChosenExit = true;
+                    continue;
+                }
+
+                Product chosenProduct = AppData.GetProductByName(productChoice);
+                if (chosenProduct != null) {
+                    int amount = AnsiConsole.Ask<int>("Enter [green]amount[/] of this product");
+
+                    if (amount > 0) {
+                        for (int i = 0; i < amount; i++) {
+                            currentOrder.AddProduct(chosenProduct);
+                        }
+                    }
+                    else {
+                        AnsiConsole.MarkupLine($"[red bold]Amount should be more than 0. Try again[/]");
+                        continue;
+                    }
+                }
+                else {
+                    AnsiConsole.MarkupLine($"[red bold]Sorry, we didn't found this product. Try again[/]");
+                }
+                productNames.Remove(productChoice);
+                AnsiConsole.Clear();
+                ShowHeader("[bold]Creating order[/]");
+            }
+
+            if (currentOrder.Products.Count > 0) {
+                AppData.AddOrder(currentOrder);
+                AnsiConsole.MarkupLine($"[bold green rapidblink]YOUR NEW ORDER[/]");
+                InternalFlashCard(currentOrder.ShowInfo());
             }
 
             BackToMenu();
@@ -268,9 +326,10 @@ namespace OOP_Main {
 
             string password = AnsiConsole.Prompt(passwordPrompt);
 
-            if (AppData.GetUserByUsername(username).Password != password ) {
+            if (AppData.GetUserByUsername(username).Password != password) {
                 AnsiConsole.MarkupLine($"[red bold]Invalid username or password. Try again[/]");
                 BackToMenu();
+
             }
             else {
                 if (AppData.CurrentUser == null || AppData.CurrentUser != AppData.GetUserByUsername(username)) {
@@ -287,12 +346,13 @@ namespace OOP_Main {
                     GetEnumDescription(MenuOption.SignUp)
                 );
             }
-            else {
-                AnsiConsole.MarkupLine($"[red bold]You should log in first[/]");
-                BackToMenu(
-                    GetEnumDescription(MenuOption.LogIn)
-                );
-            }
+            CreateOrderScreen();
+            //else {
+            //    AnsiConsole.MarkupLine($"[red bold]You should log in first[/]");
+            //    BackToMenu(
+            //        GetEnumDescription(MenuOption.LogIn)
+            //    );
+            //}
         }
 
         private void CheckIfUserIsAdmin(Action GoToPage) {

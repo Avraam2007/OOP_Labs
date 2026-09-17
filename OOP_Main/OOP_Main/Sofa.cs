@@ -1,18 +1,13 @@
 ﻿using Spectre.Console;
-using Spectre.Console.Rendering;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOP_Main {
-    public class Sofa: Furniture {
+    public class Sofa : Furniture {
         private bool isAssemble;
 
-        public bool IsAssemble { 
+        public bool IsAssemble {
             get {
-                return isAssemble; 
+                return isAssemble;
             }
             private set {
                 this.isAssemble = value;

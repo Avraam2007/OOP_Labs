@@ -1,9 +1,6 @@
 ﻿using Spectre.Console;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOP_Main {
     public abstract class Product : IDataAndUIBridge {
@@ -15,10 +12,11 @@ namespace OOP_Main {
                 return article;
             }
             set {
-                if (value.Trim().Length == 0) {
+                string polishedName = value.Trim();
+                if (polishedName.Length == 0) {
                     throw new ArgumentException("Article shouldn\'t be empty");
                 }
-                article = value;
+                article = polishedName;
             }
         }
         public string Name {
@@ -26,10 +24,11 @@ namespace OOP_Main {
                 return name;
             }
             set {
-                if (value.Trim().Length == 0) {
+                string polishedName = value.Trim();
+                if (polishedName.Length == 0) {
                     throw new ArgumentException("Name shouldn\'t be empty");
                 }
-                name = value;
+                name = polishedName;
             }
         }
         public double Price {

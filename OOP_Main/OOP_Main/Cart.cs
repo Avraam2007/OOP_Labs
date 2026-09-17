@@ -1,10 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace OOP_Main {
-    internal class Cart {
+    public class Cart {
+        public ConcurrentDictionary<string, int> Products { get; private set; } = new ConcurrentDictionary<string, int>();
+        public Cart() {
+
+        }
+
+        public void AddProduct(string productName) {
+            var normalizedProductName = ProductHelpers.NormalizeProductName(productName);
+            if (!Products.TryAdd(normalizedProductName, 1)) {
+                Products[normalizedProductName]++;
+            }
+        }
     }
 }

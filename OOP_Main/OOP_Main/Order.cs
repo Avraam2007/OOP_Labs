@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 namespace OOP_Main {
-    public class Order: IDataAndUIBridge {
+    public class Order : IDataAndUIBridge {
         private List<Product> products;
         public int orderId;
         public List<Product> Products {
@@ -11,13 +11,18 @@ namespace OOP_Main {
             private set { products = value; }
         }
 
-        public void AddPart(Product newPart) {
-            this.Products.Add(newPart);
+        public void AddProduct(Product newProduct) {
+            this.Products.Add(newProduct);
         }
 
         public Order(int orderId, List<Product> products) {
             this.orderId = orderId;
             Products = products;
+        }
+
+        public Order(int orderId) {
+            this.orderId = orderId;
+            Products = new List<Product>();
         }
 
         public double GetTotalPrice() {
