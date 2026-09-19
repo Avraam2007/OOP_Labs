@@ -22,18 +22,20 @@ namespace OOP_Main {
             [Description("Quit")] Quit
         }
 
+        public Interface(Data AppData) {
+            this.AppData = AppData;
+        }
+
         private string GetEnumDescription(Enum value) {
             FieldInfo fi = value.GetType().GetField(value.ToString());
+            if (fi == null) return value.ToString();
             DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
             return attributes.Length > 0 ? attributes[0].Description : value.ToString();
         }
 
-        public Interface(Data AppData) {
-            this.AppData = AppData;
-        }
         private void BackToMenu(string extraOption = "") {
             List<string> options = new List<string> { "Back to menu" };
-            if (extraOption != "" || extraOption is null) {
+            if (!string.IsNullOrWhiteSpace(extraOption)) {
                 options.Add(extraOption);
             }
             var choice = AnsiConsole.Prompt(
@@ -43,9 +45,6 @@ namespace OOP_Main {
                     .DefaultValue("Back to menu")
                     .AddChoices(options));
             switch (choice) {
-                case "Back to menu":
-                    MainScreen();
-                    break;
                 case "Sign up":
                     CreateUserScreen();
                     break;
@@ -98,7 +97,23 @@ namespace OOP_Main {
             BackToMenu();
         }
 
-        public void ShowOrdersScreen() => ShowListScreen("Orders", AppData.Orders, "You can create it.");
+
+        public void ShowOrdersScreen() {
+            if (AppData.CurrentUser == null) {
+                AnsiConsole.MarkupLine($"[red bold]The access is forbidden[/]");
+                BackToMenu(
+                    GetEnumDescription(MenuOption.SignUp)
+                );
+                return;
+            }
+            ShowListScreen(
+                "Orders",
+                CheckIfUserIsAdmin() ?
+                AppData.Orders :
+                AppData.GetOrdersFromUser(AppData.CurrentUser.Id),
+                "You can create it."
+            );
+        }
 
         public void ShowProductsScreen() => ShowListScreen("Products", AppData.Products);
 
@@ -112,14 +127,21 @@ namespace OOP_Main {
         }
         public void BootUpScreen() {
             // Styled text with markup
-            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.10[/]");
+            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.11[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...");
-            MainScreen();
         }
 
-        public void BootDownScreen() {
+        public void Start() {
+            BootUpScreen();
+            bool isRunning = true;
+            while (isRunning) {
+                isRunning = MainScreen();
+            }
+        }
+
+        public bool BootDownScreen() {
             AnsiConsole.Clear();
             var exitChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
@@ -132,12 +154,9 @@ namespace OOP_Main {
                 case "Yes":
                     StatusSpinner("Shutting down...");
                     Environment.Exit(0);
-                    break;
-                case "No":
-                    MainScreen();
-                    break;
+                    return false;
                 default:
-                    break;
+                    return true;
             }
 
         }
@@ -149,7 +168,14 @@ namespace OOP_Main {
 
             string username = AnsiConsole.Prompt(usernamePrompt);
 
-            var passwordPrompt = new TextPrompt<string>("Enter your [green]password[/]:")
+            if (AppData.GetUserByUsername(username) != null) {
+                AnsiConsole.MarkupLine($"[red bold]Sorry, this account was created earlier. You can log in to this account instead[/]");
+                BackToMenu(
+                    GetEnumDescription(MenuOption.LogIn)
+                );
+            }
+
+            var passwordPrompt = new TextPrompt<string>("Create your [green]password[/]:")
                 .Secret();
 
             string password = AnsiConsole.Prompt(passwordPrompt);
@@ -160,16 +186,30 @@ namespace OOP_Main {
             string confirmPassword = AnsiConsole.Prompt(confirmPasswordPrompt);
 
             if (confirmPassword == password) {
-                AppData.CurrentUser = new User("258", username, password);
+                string newId = new Random().Next(100, 999).ToString();
+                AppData.CurrentUser = new User(newId, username, password);
                 AppData.AddUser(AppData.CurrentUser);
                 AnsiConsole.MarkupLine($"[green bold]Account was created![/]");
                 BackToMenu();
             }
         }
 
+        public void AddingProduct(Product newProduct, string supplierChoice) {
+            AppData.AddProduct(newProduct);
+            AppData.GetSupplierByName(supplierChoice).AddProductToCatalog(newProduct);
+            AnsiConsole.MarkupLine($"[green bold]New product is created! You can check it on \"{GetEnumDescription(MenuOption.ShowProducts)}\" screen.[/]");
+        }
+
         public void AddProductScreen() {
             AnsiConsole.Clear();
             ShowHeader("[bold]Adding product[/]");
+
+            if (Tools.ValidateArray(AppData.Suppliers)) {
+                AnsiConsole.MarkupLine("[red bold]No suppliers found. Call the admin to fix this issue[/]");
+                BackToMenu();
+                return;
+            }
+
             var prompt = new SelectionPrompt<string>()
                 .Title("Select product [green]category[/]")
                 .PageSize(15)
@@ -212,36 +252,79 @@ namespace OOP_Main {
 
             string supplierChoice = AnsiConsole.Prompt(supplierPrompt);
 
+            int supplierId = AppData.GetSupplierByName(supplierChoice).SupplierId;
+
             switch (categoryChoice) {
                 case "Electronic product":
-                    var powerPrompt = new TextPrompt<int>("Enter product [green]power (in watts)[/]:");
+                    int powerChoice = AnsiConsole.Prompt(new TextPrompt<int>("Enter product [green]power (in watts)[/]:"));
+                    int maxVoltageChoice = AnsiConsole.Prompt(new TextPrompt<int>("Enter product [green]max voltage (in volts)[/]:"));
 
-                    int powerChoice = AnsiConsole.Prompt(powerPrompt);
-
-                    var maxVoltagePrompt = new TextPrompt<int>("Enter product [green]max voltage (in volts)[/]:");
-
-                    int maxVoltageChoice = AnsiConsole.Prompt(maxVoltagePrompt);
-
-                    ElectronicProduct newProduct = new ElectronicProduct(
+                    var newElectronicProduct = new ElectronicProduct(
                         articleChoice,
                         nameChoice,
                         priceChoice,
                         powerChoice,
                         maxVoltageChoice,
-                        AppData.GetSupplierByName(supplierChoice).SupplierId
+                        supplierId
                     );
-                    AppData.AddProduct(newProduct);
-                    AppData.GetSupplierByName(supplierChoice).AddPartToCatalog(newProduct);
-                    AnsiConsole.MarkupLine($"[green bold]New product is created! You can check it on \"{GetEnumDescription(MenuOption.ShowProducts)}\" screen.[/]");
+                    AddingProduct(newElectronicProduct, supplierChoice);
                     break;
+
                 case "Cloth":
+                    string materialChoice = AnsiConsole.Prompt(new TextPrompt<string>("Enter product [green]material[/]:"));
+
+                    var newCloth = new Cloth(
+                        articleChoice,
+                        nameChoice,
+                        priceChoice,
+                        materialChoice,
+                        supplierId
+                    );
+                    AddingProduct(newCloth, supplierChoice);
                     break;
+
                 case "Sofa":
-                    break;
                 case "Other furniture":
-                    break;
-                default:
-                    AnsiConsole.MarkupLine($"[red bold]Unknown error[/]");
+                    double weight = AnsiConsole.Prompt(new TextPrompt<double>("Enter product [green]weight (in kg)[/]:"));
+                    double width = AnsiConsole.Prompt(new TextPrompt<double>("Enter product [green]width (in cm)[/]:"));
+                    double length = AnsiConsole.Prompt(new TextPrompt<double>("Enter product [green]length (in cm)[/]:"));
+                    double height = AnsiConsole.Prompt(new TextPrompt<double>("Enter product [green]height (in cm)[/]:"));
+                    string mat = AnsiConsole.Prompt(new TextPrompt<string>("Enter product [green]material[/]:"));
+
+                    if (categoryChoice == "Sofa") {
+                        bool assemble = AnsiConsole.Prompt(
+                            new SelectionPrompt<bool>()
+                                .Title("Is the product [green]assembled[/]?")
+                                .AddChoices(true, false));
+
+                        var newSofa = new Sofa(
+                            articleChoice,
+                            nameChoice,
+                            priceChoice,
+                            weight,
+                            width,
+                            length,
+                            height,
+                            mat,
+                            assemble,
+                            supplierId
+                        );
+                        AddingProduct(newSofa, supplierChoice);
+                    }
+                    else {
+                        var newFurniture = new Furniture(
+                            articleChoice,
+                            nameChoice,
+                            priceChoice,
+                            weight,
+                            width,
+                            length,
+                            height,
+                            mat,
+                            supplierId
+                        );
+                        AddingProduct(newFurniture, supplierChoice);
+                    }
                     break;
             }
 
@@ -251,13 +334,20 @@ namespace OOP_Main {
         public void CreateOrderScreen() {
             AnsiConsole.Clear();
             ShowHeader("[bold]Creating order[/]");
+            
+            if (Tools.ValidateArray(AppData.Products)) {
+                AnsiConsole.MarkupLine("[red bold]No products found. Call the admin to fix this issue.[/]");
+                BackToMenu();
+                return;
+            }
+            
             const string exitOption = "Exit";
-            Order currentOrder = new Order(AppData.GetLatestOrderId()+1);
+            Order currentOrder = new Order(new Random().Next(100, 999), AppData.CurrentUser.Id);
 
             List<string> productNames = new List<string> {
                 exitOption
             };
-            
+
             bool isChosenExit = false;
 
             foreach (var product in AppData.Products) {
@@ -314,29 +404,26 @@ namespace OOP_Main {
 
             string username = AnsiConsole.Prompt(usernamePrompt);
 
-            if (AppData.GetUserByUsername(username) == null) {
-                AnsiConsole.MarkupLine($"[red bold]Sorry, we didn't found this account. Try again or sign in this account[/]");
-                BackToMenu(
-                    GetEnumDescription(MenuOption.SignUp)
-                );
-            }
-
             var passwordPrompt = new TextPrompt<string>("What's your [green]password[/]?")
                 .Secret();
 
             string password = AnsiConsole.Prompt(passwordPrompt);
 
-            if (AppData.GetUserByUsername(username).Password != password) {
+            User user = AppData.GetUserByUsername(username);
+
+            if (user == null || user.Password != password) {
                 AnsiConsole.MarkupLine($"[red bold]Invalid username or password. Try again[/]");
                 BackToMenu();
+                return;
 
             }
             else {
-                if (AppData.CurrentUser == null || AppData.CurrentUser != AppData.GetUserByUsername(username)) {
-                    AppData.CurrentUser = AppData.GetUserByUsername(username);
+                if (AppData.CurrentUser == null || AppData.CurrentUser != user) {
+                    AppData.CurrentUser = user;
                 }
                 AnsiConsole.MarkupLine($"[green bold]Welcome back, {username}![/]");
             }
+            BackToMenu();
         }
 
         private void CheckAccessToCreateOrder() {
@@ -345,18 +432,17 @@ namespace OOP_Main {
                 BackToMenu(
                     GetEnumDescription(MenuOption.SignUp)
                 );
+                return;
             }
             CreateOrderScreen();
-            //else {
-            //    AnsiConsole.MarkupLine($"[red bold]You should log in first[/]");
-            //    BackToMenu(
-            //        GetEnumDescription(MenuOption.LogIn)
-            //    );
-            //}
         }
 
-        private void CheckIfUserIsAdmin(Action GoToPage) {
-            if (AppData.CurrentUser != null && AppData.CurrentUser.IsAdmin) {
+        private bool CheckIfUserIsAdmin() {
+            return AppData.CurrentUser != null && AppData.CurrentUser.IsAdmin;
+        }
+
+        private void CheckAdminAccessToPage(Action GoToPage) {
+            if (CheckIfUserIsAdmin()) {
                 GoToPage();
             }
             else {
@@ -379,12 +465,12 @@ namespace OOP_Main {
             }
         }
 
-        public void MainScreen() {
+        public bool MainScreen() {
             AnsiConsole.Clear();
 
             ShowHeader("[bold]Welcome to [green]ECommerce[/][/]");
 
-            List<MenuOption> menuList = new List<MenuOption>{
+            var menuList = new List<MenuOption>{
                         MenuOption.ShowUsers,
                         MenuOption.ShowOrders,
                         MenuOption.ShowProducts,
@@ -406,7 +492,7 @@ namespace OOP_Main {
 
             switch (choice) {
                 case MenuOption.ShowUsers:
-                    CheckIfUserIsAdmin(ShowUsersScreen);
+                    CheckAdminAccessToPage(ShowUsersScreen);
                     break;
                 case MenuOption.ShowOrders:
                     ShowOrdersScreen();
@@ -418,21 +504,21 @@ namespace OOP_Main {
                     CheckAccessToCreateOrder();
                     break;
                 case MenuOption.AddProduct:
-                    CheckIfUserIsAdmin(AddProductScreen);
+                    CheckAdminAccessToPage(AddProductScreen);
                     break;
                 case MenuOption.SignUp:
                     CreateUserScreen();
                     break;
                 case MenuOption.LogIn:
                     LoginScreen();
-                    BackToMenu();
                     break;
                 case MenuOption.Quit:
-                    BootDownScreen();
-                    break;
+                    return BootDownScreen();
                 default:
                     break;
             }
+
+            return true;
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="OOP_Main.Cart">
-    <Position X="7.5" Y="0.5" Width="1.5" />
+    <Position X="5.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>Cart.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -15,14 +15,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Data">
-    <Position X="9.25" Y="0.5" Width="1.5" />
+    <Position X="7.25" Y="7" Width="2" />
     <TypeIdentifier>
-      <HashCode>IAEAACApAKAAAIGAQACCQAAAABAEAAAgAEAIBAAQAAQ=</HashCode>
+      <HashCode>AAEAACAoAKAAAIEAQIACQAAAABAEAACgAEAIAAAQAAQ=</HashCode>
       <FileName>Data.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.ElectronicProduct">
-    <Position X="5" Y="4.5" Width="1.5" />
+    <Position X="5" Y="4.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>ACAAAAAAAAAAAAAABgCAAAIAAAEAAAABAAAAAAAAAAA=</HashCode>
       <FileName>ElectronicProduct.cs</FileName>
@@ -36,26 +36,26 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Interface">
-    <Position X="11" Y="0.5" Width="1.5" />
+    <Position X="9.5" Y="0.5" Width="2.25" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Enum Name="OOP_Main.Interface.MenuOption" Collapsed="true">
+      <Enum Name="OOP_Main.Interface.MenuOption">
         <TypeIdentifier>
           <NewMemberFileName>Interface.cs</NewMemberFileName>
         </TypeIdentifier>
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAEQCQAAAAgAASAAAAQgUACAAAAAAIICBAACIhAAAA=</HashCode>
+      <HashCode>AAAERCQAACAgAASAAAAQgUASAAAACAIACBAACIhAAAA=</HashCode>
       <FileName>Interface.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Order" BaseTypeListCollapsed="true">
-    <Position X="7.5" Y="7.25" Width="1.5" />
+    <Position X="7.25" Y="2.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAAIABAAAAEAAAAAAQQAAAQACBBBAAAQ=</HashCode>
+      <HashCode>EAAAAAAEAAAAAAIABAAAQEAAAQAAQQAAAAACABBAAAQ=</HashCode>
       <FileName>Order.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -69,36 +69,44 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Program">
-    <Position X="7.5" Y="11.75" Width="1.5" />
+    <Position X="5.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Sofa">
-    <Position X="0.5" Y="9.25" Width="1.5" />
+    <Position X="0.5" Y="9.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAABAAAAAQ=</HashCode>
       <FileName>Sofa.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OOP_Main.Supplier">
-    <Position X="11" Y="7.25" Width="1.5" />
+  <Class Name="OOP_Main.Supplier" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="8" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AgAAAAAAAAAEAABABAAAAAQBAQAARAEAAAAAAAAgBAA=</HashCode>
+      <HashCode>AgAAAAAAAAAEAAAABAAAAAQBAQAARAEAAAAAABAgBAA=</HashCode>
       <FileName>Supplier.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.User" BaseTypeListCollapsed="true">
-    <Position X="9.25" Y="7.25" Width="1.5" />
+    <Position X="5.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAABQBAAAEACAAAAAgCAAAAAgAAAAA=</HashCode>
       <FileName>User.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="OOP_Main.Tools">
+    <Position X="9.5" Y="9.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tools.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="OOP_Main.IDataAndUIBridge">
-    <Position X="7.5" Y="13" Width="1.5" />
+    <Position X="0.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IDataAndUIBridge.cs</FileName>

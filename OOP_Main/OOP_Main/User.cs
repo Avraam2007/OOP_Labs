@@ -6,13 +6,13 @@ namespace OOP_Main {
     public class User : IDataAndUIBridge {
         private readonly string _id;
         private string username;
-        private readonly string password;
+        private string password;
         private readonly bool isAdmin;
 
         public string Username {
             get { return username; }
             set {
-                if (value.Trim() == "") {
+                if (string.IsNullOrWhiteSpace(value)) {
                     throw new ArgumentException("Error: username is empty!");
                 }
                 username = value;
@@ -23,10 +23,10 @@ namespace OOP_Main {
         public string Password {
             get { return password; }
             private set {
-                if (value.Trim() == "") {
+                if (string.IsNullOrWhiteSpace(value)) {
                     throw new ArgumentException("Error: password is empty!");
                 }
-                username = value;
+                password = value;
             }
         }
 

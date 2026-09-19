@@ -1,25 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OOP_Main {
     public class Data {
-        private List<User> users;
-        private List<Order> orders;
-        private List<Product> products;
-        private List<Supplier> suppliers;
-        private User currentUser;
-        public List<User> Users { get { return users; } private set { users = value; } }
-        public List<Order> Orders { get { return orders; } private set { orders = value; } }
-        public List<Product> Products { get { return products; } private set { products = value; } }
+        public List<User> Users { get; private set; } = new List<User>();
+        public List<Order> Orders { get; private set; } = new List<Order>();
+        public List<Product> Products { get; private set; } = new List<Product>();
 
-        public List<Supplier> Suppliers { get { return suppliers; } private set { suppliers = value; } }
-        public User CurrentUser { get { return currentUser; } set { currentUser = value; } }
+        public List<Supplier> Suppliers { get; private set; } = new List<Supplier>();
+        public User CurrentUser { get; set; }
 
         public Data() {
-            Users = new List<User>();
-            Orders = new List<Order>();
-            Products = new List<Product>();
-            Suppliers = new List<Supplier>();
+
         }
 
         public void AddUser(User user) {
@@ -45,10 +38,10 @@ namespace OOP_Main {
             }
         }
 
-        public void DeleteOrder(string id) {
-            User orderToDelete = this.GetUserById(id);
+        public void DeleteOrder(int id) {
+            Order orderToDelete = this.GetOrderById(id);
             if (orderToDelete != null) {
-                Users.Remove(orderToDelete);
+                Orders.Remove(orderToDelete);
             }
         }
 
@@ -65,15 +58,25 @@ namespace OOP_Main {
         }
 
         public int GetLatestOrderId() {
-            int minId = Int32.MaxValue;
+            if (!Orders.Any()) return 1;
+
+            int maxId = Int32.MinValue;
             foreach (var order in Orders) {
-                if (order.orderId < minId) minId = order.orderId;
+                if (order.OrderId > maxId) maxId = order.OrderId;
             }
-            return minId;
+            return maxId;
+        }
+
+        public List<Order> GetOrdersFromUser(string userId) {
+            List<Order> ordersFromUser = new List<Order>();
+            foreach (var order in Orders) {
+                if(order.BuyerId == userId) ordersFromUser.Add(order);
+            }
+            return ordersFromUser;
         }
 
         public Order GetOrderById(int id) {
-            Order foundOrder = Orders.Find((order) => order.orderId == id);
+            Order foundOrder = Orders.Find((order) => order.OrderId == id);
             return foundOrder;
         }
 

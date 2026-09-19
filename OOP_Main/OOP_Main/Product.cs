@@ -12,11 +12,11 @@ namespace OOP_Main {
                 return article;
             }
             set {
-                string polishedName = value.Trim();
-                if (polishedName.Length == 0) {
-                    throw new ArgumentException("Article shouldn\'t be empty");
+                string polishedArticle = value.Trim();
+                if (string.IsNullOrWhiteSpace(polishedArticle)) {
+                    throw new ArgumentException("Article shouldn\'t be empty", nameof(polishedArticle));
                 }
-                article = polishedName;
+                article = polishedArticle;
             }
         }
         public string Name {
@@ -25,8 +25,8 @@ namespace OOP_Main {
             }
             set {
                 string polishedName = value.Trim();
-                if (polishedName.Length == 0) {
-                    throw new ArgumentException("Name shouldn\'t be empty");
+                if (string.IsNullOrWhiteSpace(polishedName)) {
+                    throw new ArgumentException("Name shouldn\'t be empty", nameof(polishedName));
                 }
                 name = polishedName;
             }
@@ -37,7 +37,7 @@ namespace OOP_Main {
             }
             set {
                 if (value < 0) {
-                    throw new ArgumentOutOfRangeException("Price should be posititve or equal to zero (free)");
+                    throw new ArgumentOutOfRangeException("Price should be positive or equal to zero (free)", nameof(value));
                 }
                 price = Math.Round(value, 2, MidpointRounding.AwayFromZero);
             }

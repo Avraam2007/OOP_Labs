@@ -11,7 +11,7 @@ namespace OOP_Main {
                 return material;
             }
             protected set {
-                if (value.Trim().Length == 0) {
+                if (string.IsNullOrWhiteSpace(value)) {
                     throw new ArgumentException("Material name shouldn\'t be empty");
                 }
                 material = value;
