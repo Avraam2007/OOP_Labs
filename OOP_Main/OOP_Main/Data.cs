@@ -4,6 +4,10 @@ using System.Linq;
 
 namespace OOP_Main {
     public class Data {
+        private const string UsersFilePath = "DataStorage/users.json";
+        private const string ProductsFilePath = "DataStorage/products.json";
+        private const string OrdersFilePath = "DataStorage/orders.json";
+        private const string SuppliersFilePath = "DataStorage/suppliers.json";
         public List<User> Users { get; private set; } = new List<User>();
         public List<Order> Orders { get; private set; } = new List<Order>();
         public List<Product> Products { get; private set; } = new List<Product>();
@@ -15,20 +19,38 @@ namespace OOP_Main {
 
         }
 
+        public void LoadAllData() {
+            Users = JsonStorage.LoadFromFile<List<User>>(UsersFilePath);
+            Products = JsonStorage.LoadFromFile<List<Product>>(ProductsFilePath);
+            Orders = JsonStorage.LoadFromFile<List<Order>>(OrdersFilePath);
+            Suppliers = JsonStorage.LoadFromFile<List<Supplier>>(SuppliersFilePath);
+        }
+
+        public void SaveAllData() {
+            JsonStorage.SaveToFile(UsersFilePath, Users);
+            JsonStorage.SaveToFile(ProductsFilePath, Products);
+            JsonStorage.SaveToFile(OrdersFilePath, Orders);
+            JsonStorage.SaveToFile(SuppliersFilePath, Suppliers);
+        }
+
         public void AddUser(User user) {
             Users.Add(user);
+            JsonStorage.SaveToFile(UsersFilePath, Users);
         }
 
         public void AddOrder(Order order) {
             Orders.Add(order);
+            JsonStorage.SaveToFile(OrdersFilePath, Orders);
         }
 
         public void AddProduct(Product product) {
             Products.Add(product);
+            JsonStorage.SaveToFile(ProductsFilePath, Products);
         }
 
         public void AddSupplier(Supplier supplier) {
             Suppliers.Add(supplier);
+            JsonStorage.SaveToFile(SuppliersFilePath, Suppliers);
         }
 
         public void DeleteUserById(string id) {

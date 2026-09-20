@@ -1,9 +1,10 @@
-﻿using Spectre.Console;
+﻿using Newtonsoft.Json;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 
 namespace OOP_Main {
-    public class Order : IDataAndUIBridge {
+    public class Order {
         private int orderId;
         public int OrderId { get => orderId; private set { orderId = value; } }
         public List<Product> Products { get; private set; }
@@ -13,6 +14,7 @@ namespace OOP_Main {
             this.Products.Add(newProduct);
         }
 
+        [JsonConstructor]
         public Order(int orderId, string buyerId, List<Product> products) {
             this.OrderId = orderId;
             this.BuyerId = buyerId;
@@ -123,40 +125,6 @@ namespace OOP_Main {
             }
 
             return ans;
-        }
-
-        public Dictionary<string, Text> ShowInfo() {
-            Dictionary<string, Text> textsForRender = new Dictionary<string, Text> {
-                ["header"] = new Text($"ORDER #{this.orderId}\n\n", new Style(decoration: Decoration.Bold)).Centered(),
-                ["buyer"] = new Text($"Buyer ID: {this.BuyerId}\n"),
-                ["total"] = new Text($"Total price: {this.GetTotalPrice()}$\n"),
-                ["average"] = new Text($"Average price: {this.GetAveragePrice()}$\n"),
-                ["minimal"] = new Text($"Minimal price: {this.GetMinPrice()}$\n"),
-                ["maximal"] = new Text($"Maximal price: {this.GetMaxPrice()}$\n")
-            };
-
-            if (Tools.ValidateArray(Products)) {
-                textsForRender["empty_products"] = new Text("  (No products in this order)\n", new Style(foreground: Color.Red));
-                return textsForRender;
-            }
-
-            for (int i = 0; i < this.Products.Count; i++) {
-                var product = this.Products[i];
-
-                var productSpecs = product.ShowInfo();
-
-                textsForRender[$"prod_{i}_name"] = new Text($"\n  {i + 1}. [{product.Article}] {product.Name}\n", new Style(foreground: Color.Green, decoration: Decoration.Bold));
-
-                foreach (var spec in productSpecs) {
-                    if (spec.Key == "header") continue;
-
-                    string uniqueKey = $"prod_{i}_{spec.Key}";
-
-                    textsForRender[uniqueKey] = spec.Value;
-                }
-            }
-
-            return textsForRender;
         }
     }
 }

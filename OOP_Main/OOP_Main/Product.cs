@@ -1,12 +1,11 @@
-﻿using Spectre.Console;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace OOP_Main {
-    public abstract class Product : IDataAndUIBridge {
+    public abstract class Product {
         private string article;
         private string name;
         private double price;
+        public int SupplierId { get; set; }
         public string Article {
             get {
                 return article;
@@ -42,13 +41,12 @@ namespace OOP_Main {
                 price = Math.Round(value, 2, MidpointRounding.AwayFromZero);
             }
         }
-        public Product(string article, string name, double price) {
+        public Product(string article, string name, double price, int supplierId) {
             this.Article = article;
             this.Name = name;
             this.Price = price;
+            this.SupplierId = supplierId;
         }
-
-        public abstract Dictionary<string, Text> ShowInfo();
 
         public abstract int GetSupplierId();
 

@@ -9,14 +9,13 @@ namespace OOP_Main {
         private double width;
         private double height;
         private double weight;
-        private readonly int supplierId;
         public double Weight {
             get {
                 return weight;
             }
             protected set {
                 if (value <= 0) {
-                    throw new ArgumentOutOfRangeException("Weight should be posititve (we don't sale antimatter)");
+                    throw new ArgumentOutOfRangeException("Weight should be posititve (we don't sell antimatter)");
                 }
                 weight = Math.Round(value, 3, MidpointRounding.AwayFromZero);
             }
@@ -27,7 +26,7 @@ namespace OOP_Main {
             }
             protected set {
                 if (value <= 0) {
-                    throw new ArgumentOutOfRangeException("Width should be posititve");
+                    throw new ArgumentOutOfRangeException("Width should be positive");
                 }
                 width = Math.Round(value, 3, MidpointRounding.AwayFromZero);
             }
@@ -38,7 +37,7 @@ namespace OOP_Main {
             }
             protected set {
                 if (value <= 0) {
-                    throw new ArgumentOutOfRangeException("Length should be posititve");
+                    throw new ArgumentOutOfRangeException("Length should be positive");
                 }
                 length = Math.Round(value, 3, MidpointRounding.AwayFromZero);
             }
@@ -49,7 +48,7 @@ namespace OOP_Main {
             }
             protected set {
                 if (value <= 0) {
-                    throw new ArgumentOutOfRangeException("Height should be posititve");
+                    throw new ArgumentOutOfRangeException("Height should be positive");
                 }
                 height = Math.Round(value, 3, MidpointRounding.AwayFromZero);
             }
@@ -75,31 +74,14 @@ namespace OOP_Main {
             double height,
             string material,
             int supplierId = 0
-        ) : base(article, name, price) {
+        ) : base(article, name, price, supplierId) {
             this.Weight = weight;
             this.Width = width;
             this.Length = length;
             this.Height = height;
             this.Material = material;
-            this.supplierId = supplierId;
         }
-
-        public override Dictionary<string, Text> ShowInfo() {
-            Dictionary<string, Text> textsForRender = new Dictionary<string, Text> {
-                ["header"] = new Text($"FURNITURE \"{this.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
-                ["article"] = new Text($"Article: {this.Article}\n"),
-                ["price"] = new Text($"Price: {this.Price}$\n"),
-                ["length"] = new Text($"Length: {this.Length} cm\n"),
-                ["width"] = new Text($"Width: {this.Width} cm\n"),
-                ["height"] = new Text($"Height: {this.Height} cm\n"),
-                ["weight"] = new Text($"Weight: {this.Weight} kg\n"),
-                ["material"] = new Text($"Material: {this.Material}\n")
-            };
-
-            return textsForRender;
-        }
-
-        public override int GetSupplierId() => this.supplierId;
+        public override int GetSupplierId() => this.SupplierId;
 
     }
 }

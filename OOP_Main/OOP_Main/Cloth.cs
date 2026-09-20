@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace OOP_Main {
     public class Cloth : Product {
         private string material;
-        private readonly int supplierId;
         public string Material {
             get {
                 return material;
@@ -23,23 +22,10 @@ namespace OOP_Main {
             double price,
             string material,
             int supplierId
-        ) : base(article, name, price) {
+        ) : base(article, name, price, supplierId) {
             this.material = material;
-            this.supplierId = supplierId;
         }
-
-        public override Dictionary<string, Text> ShowInfo() {
-            Dictionary<string, Text> textsForRender = new Dictionary<string, Text> {
-                ["header"] = new Text($"CLOTH \"{this.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
-                ["article"] = new Text($"Article: {this.Article}\n"),
-                ["price"] = new Text($"Price: {this.Price}$\n"),
-                ["material"] = new Text($"Material: {this.Material}\n")
-            };
-
-            return textsForRender;
-        }
-
-        public override int GetSupplierId() => this.supplierId;
+        public override int GetSupplierId() => this.SupplierId;
 
     }
 }
