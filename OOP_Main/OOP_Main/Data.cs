@@ -53,25 +53,75 @@ namespace OOP_Main {
             JsonStorage.SaveToFile(SuppliersFilePath, Suppliers);
         }
 
-        public void DeleteUserById(string id) {
+        public bool DeleteUserById(string id) {
             User userToDelete = this.GetUserById(id);
             if (userToDelete != null) {
                 Users.Remove(userToDelete);
+                JsonStorage.SaveToFile(UsersFilePath, Users);
+                return true;
             }
+            return false;
         }
 
-        public void DeleteOrder(int id) {
+        public bool DeleteOrder(int id) {
             Order orderToDelete = this.GetOrderById(id);
             if (orderToDelete != null) {
                 Orders.Remove(orderToDelete);
+                JsonStorage.SaveToFile(OrdersFilePath, Orders);
+                return true;
             }
+            return false;
         }
 
-        public void DeleteUserByUsername(string username) {
+        public bool DeleteUserByUsername(string username) {
             User userToDelete = this.GetUserByUsername(username);
             if (userToDelete != null) {
                 Users.Remove(userToDelete);
+                JsonStorage.SaveToFile(UsersFilePath, Users);
+                return true;
             }
+            return false;
+        }
+
+        public bool DeleteSupplierByName(string name) {
+            Supplier supplierToDelete = this.GetSupplierByName(name);
+            if (supplierToDelete != null) {
+                Suppliers.Remove(supplierToDelete);
+                JsonStorage.SaveToFile(SuppliersFilePath, Suppliers);
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteProductByName(string name) {
+            Product productToDelete = this.GetProductByName(name);
+            if (productToDelete != null) {
+                Products.Remove(productToDelete);
+                JsonStorage.SaveToFile(ProductsFilePath, Products);
+
+                foreach (var supplier in Suppliers) {
+                    supplier.Catalog.RemoveAll(product => product.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                }
+                JsonStorage.SaveToFile(SuppliersFilePath, Suppliers);
+
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteProductByArticle(string article) {
+            Product productToDelete = this.GetProductByArticle(article);
+            if (productToDelete != null) {
+                Products.Remove(productToDelete);
+                JsonStorage.SaveToFile(ProductsFilePath, Products);
+
+                foreach (var supplier in Suppliers) {
+                    supplier.Catalog.RemoveAll(product => product.Article.Equals(article, StringComparison.OrdinalIgnoreCase));
+                }
+                JsonStorage.SaveToFile(SuppliersFilePath, Suppliers);
+                return true;
+            }
+            return false;
         }
 
         public User GetUserById(string id) {

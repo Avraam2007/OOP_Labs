@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OOP_Main {
     public class ProductScreen: UIHelper {
@@ -137,6 +138,55 @@ namespace OOP_Main {
                         AddingProduct(newFurniture, supplierChoice);
                     }
                     break;
+            }
+
+            return BackToMenuPrompt();
+        }
+
+        public string DeleteProductScreen() {
+            AnsiConsole.Clear();
+            ShowHeader("[bold]Delete product[/]");
+
+            if (Tools.ValidateArray(_appData.Products)) {
+                AnsiConsole.MarkupLine("[red bold]There are no products to delete.[/]");
+                return BackToMenuPrompt();
+            }
+
+            var choices = new List<string>();
+            foreach (var p in _appData.Products) {
+                choices.Add($"({p.Article}) {p.Name} - {p.Price}$");
+            }
+            choices.Add("Cancel");
+
+            var selectedChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Select a product to delete:")
+                    .PageSize(10)
+                    .AddChoices(choices));
+
+            if (selectedChoice == "Cancel") return BackToMenuPrompt();
+
+            string article = selectedChoice.Split(')')[0].TrimStart('(');
+            Product productToDelete = _appData.Products.FirstOrDefault(p => p.Article == article);
+
+            if (productToDelete != null) {
+                bool confirm = AnsiConsole.Confirm(
+                    $"Are you sure you want to delete [red]\"{productToDelete.Name}\"[/] ({productToDelete.Article})?",
+                    defaultValue: false
+                );
+
+                if (confirm) {
+                    bool isDeleted = _appData.DeleteProductByArticle(productToDelete.Article);
+                    if (isDeleted) {
+                        AnsiConsole.MarkupLine("[green]Product successfully deleted![/]");
+                    }
+                    else {
+                        AnsiConsole.MarkupLine("[red]Failed to delete product.[/]");
+                    }
+                }
+                else {
+                    AnsiConsole.MarkupLine("[yellow]Deleting cancelled.[/]");
+                }
             }
 
             return BackToMenuPrompt();

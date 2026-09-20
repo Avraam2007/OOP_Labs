@@ -45,7 +45,7 @@ namespace OOP_Main {
 
         public void BootUpScreen() {
             // Styled text with markup
-            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.12[/]");
+            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.13[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...");
@@ -110,6 +110,9 @@ namespace OOP_Main {
                 case MenuOption.CreateOrder: return "Create order";
                 case MenuOption.AddProduct: return "Add product";
                 case MenuOption.AddSupplier: return "Add supplier";
+                case MenuOption.DeleteProduct: return "Delete product";
+                case MenuOption.DeleteUser: return "Delete user";
+                case MenuOption.DeleteSupplier: return "Delete supplier";
                 case MenuOption.SignUp: return "Sign up";
                 case MenuOption.LogIn: return "Log in";
                 case MenuOption.Quit: return "Quit";
@@ -130,6 +133,9 @@ namespace OOP_Main {
                         MenuOption.CreateOrder,
                         MenuOption.AddProduct,
                         MenuOption.AddSupplier,
+                        MenuOption.DeleteProduct,
+                        MenuOption.DeleteUser,
+                        MenuOption.DeleteSupplier,
                         MenuOption.SignUp,
                         MenuOption.LogIn,
                         MenuOption.Quit
@@ -166,6 +172,18 @@ namespace OOP_Main {
                     break;
                 case MenuOption.AddSupplier:
                     CheckAdminAccessToPage(_supplierScreen.AddSupplierScreen);
+                    break;
+                case MenuOption.DeleteProduct:
+                    CheckAdminAccessToPage(_productScreen.DeleteProductScreen);
+                    break;
+                case MenuOption.DeleteUser:
+                    CheckAdminAccessToPage(_userScreen.DeleteUserScreen);
+                    break;
+                case MenuOption.DeleteSupplier:
+                    CheckAdminAccessToPage(_supplierScreen.DeleteSupplierScreen);
+                    break;
+                case MenuOption.DeleteOrder:
+                    CheckAdminAccessToPage(_orderScreen.DeleteOrderScreen);
                     break;
                 case MenuOption.SignUp:
                     RunSignUpFlow();

@@ -10,6 +10,10 @@ namespace OOP_Main {
         [Description("Create order")] CreateOrder,
         [Description("Add product")] AddProduct,
         [Description("Add supplier")] AddSupplier,
+        [Description("Delete product")] DeleteProduct,
+        [Description("Delete user")] DeleteUser,
+        [Description("Delete supplier")] DeleteSupplier,
+        [Description("Delete order")] DeleteOrder,
         [Description("Sign up")] SignUp,
         [Description("Log in")] LogIn,
         [Description("Quit")] Quit

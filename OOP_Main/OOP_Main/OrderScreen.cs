@@ -1,6 +1,7 @@
 ﻿using Spectre.Console;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OOP_Main {
     public class OrderScreen: UIHelper {
@@ -85,6 +86,56 @@ namespace OOP_Main {
                 _appData.AddOrder(currentOrder);
                 AnsiConsole.MarkupLine($"[bold green rapidblink]YOUR NEW ORDER[/]");
                 InternalFlashCard(CardRenderer.GetCardInfo(currentOrder));
+            }
+
+            return BackToMenuPrompt();
+        }
+
+
+        public string DeleteOrderScreen() {
+            AnsiConsole.Clear();
+            ShowHeader("[bold]Delete order[/]");
+
+            if (Tools.ValidateArray(_appData.Suppliers)) {
+                AnsiConsole.MarkupLine("[red bold]There are no orders to delete.[/]");
+                return BackToMenuPrompt();
+            }
+
+            var choices = new List<string>();
+            foreach (var order in _appData.Orders) {
+                choices.Add($"({order.OrderId}) Buyer ID: {order.BuyerId}");
+            }
+            choices.Add("Cancel");
+
+            var selectedChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Select a order to delete:")
+                    .PageSize(10)
+                    .AddChoices(choices));
+
+            if (selectedChoice == "Cancel") return BackToMenuPrompt();
+
+            int id = Convert.ToInt32(selectedChoice.Split(')')[0].TrimStart('('));
+            Order orderToDelete = _appData.Orders.FirstOrDefault(order => order.OrderId == id);
+
+            if (orderToDelete != null) {
+                bool confirm = AnsiConsole.Confirm(
+                    $"Are you sure you want to delete this order ({orderToDelete.OrderId})?",
+                    defaultValue: false
+                );
+
+                if (confirm) {
+                    bool isDeleted = _appData.DeleteOrder(orderToDelete.OrderId);
+                    if (isDeleted) {
+                        AnsiConsole.MarkupLine("[green]Order successfully deleted![/]");
+                    }
+                    else {
+                        AnsiConsole.MarkupLine("[red]Failed to delete order.[/]");
+                    }
+                }
+                else {
+                    AnsiConsole.MarkupLine("[yellow]Deleting cancelled.[/]");
+                }
             }
 
             return BackToMenuPrompt();
