@@ -39,7 +39,7 @@ namespace OOP_Main {
         }
 
         public void RunSignUpFlow() {
-            string nextAction = _authScreen.CreateUserScreen();
+            string nextAction = _authScreen.Create();
             HandleNavigation(nextAction);
         }
 
@@ -88,7 +88,7 @@ namespace OOP_Main {
                     GetEnumDescription(MenuOption.SignUp)
                 );
             }
-            return _orderScreen.CreateOrderScreen();
+            return _orderScreen.Create();
         }
 
         private string CheckAdminAccessToPage(Func<string> GoToPage) {
@@ -100,24 +100,16 @@ namespace OOP_Main {
                 return BackToMenuPrompt();
             }
         }
+        private MenuOption MainMenuList(List<MenuOption> menuList) {
+            var prompt = new SelectionPrompt<MenuOption>()
+                .Title("Choose option")
+                .WrapAround()
+                .PageSize(10)
+                .AddChoices(menuList);
 
-        private string GetOptionName(MenuOption option) {
-            switch (option) {
-                case MenuOption.ShowUsers: return "Show users";
-                case MenuOption.ShowOrders: return "Show orders";
-                case MenuOption.ShowProducts: return "Show products";
-                case MenuOption.ShowSuppliers: return "Show suppliers";
-                case MenuOption.CreateOrder: return "Create order";
-                case MenuOption.AddProduct: return "Add product";
-                case MenuOption.AddSupplier: return "Add supplier";
-                case MenuOption.DeleteProduct: return "Delete product";
-                case MenuOption.DeleteUser: return "Delete user";
-                case MenuOption.DeleteSupplier: return "Delete supplier";
-                case MenuOption.SignUp: return "Sign up";
-                case MenuOption.LogIn: return "Log in";
-                case MenuOption.Quit: return "Quit";
-                default: return option.ToString();
-            }
+            prompt.UseConverter(option => GetEnumDescription(option));
+
+            return AnsiConsole.Prompt(prompt);
         }
 
         public bool MainScreen() {
@@ -125,7 +117,25 @@ namespace OOP_Main {
 
             ShowHeader("[bold]Welcome to [green]ECommerce[/][/]");
 
+            List<MenuOption> guestMenuList = new List<MenuOption>{
+                        MenuOption.ShowProducts,
+                        MenuOption.ShowSuppliers,
+                        MenuOption.SignUp,
+                        MenuOption.LogIn,
+                        MenuOption.Quit
+            };
+
             var menuList = new List<MenuOption>{
+                        MenuOption.ShowOrders,
+                        MenuOption.ShowProducts,
+                        MenuOption.ShowSuppliers,
+                        MenuOption.CreateOrder,
+                        MenuOption.SignUp,
+                        MenuOption.LogIn,
+                        MenuOption.Quit
+            };
+
+            var adminMenuList = new List<MenuOption>{
                         MenuOption.ShowUsers,
                         MenuOption.ShowOrders,
                         MenuOption.ShowProducts,
@@ -133,6 +143,7 @@ namespace OOP_Main {
                         MenuOption.CreateOrder,
                         MenuOption.AddProduct,
                         MenuOption.AddSupplier,
+                        MenuOption.DeleteOrder,
                         MenuOption.DeleteProduct,
                         MenuOption.DeleteUser,
                         MenuOption.DeleteSupplier,
@@ -141,61 +152,63 @@ namespace OOP_Main {
                         MenuOption.Quit
             };
 
-            var prompt = new SelectionPrompt<MenuOption>()
-                    .Title("Choose option")
-                    .WrapAround()
-                    .PageSize(10)
-                    .AddChoices(menuList);
+            MenuOption choice;
 
-            prompt.UseConverter(new Func<MenuOption, string>(GetOptionName));
-
-            var choice = AnsiConsole.Prompt(prompt);
+            if (CheckIfUserIsAdmin(AppData.CurrentUser)) {
+                choice = MainMenuList(adminMenuList);
+            }
+            else if (AppData.CurrentUser != null) {
+                choice = MainMenuList(menuList);
+            }
+            else {
+                choice = MainMenuList(guestMenuList);
+            }
 
             switch (choice) {
-                case MenuOption.ShowUsers:
-                    CheckAdminAccessToPage(_userScreen.ShowUsersScreen);
-                    break;
-                case MenuOption.ShowOrders:
-                    _orderScreen.ShowOrdersScreen();
-                    break;
-                case MenuOption.ShowProducts:
-                    _productScreen.ShowProductsScreen();
-                    break;
-                case MenuOption.ShowSuppliers:
-                    _supplierScreen.ShowSuppliersScreen();
-                    break;
-                case MenuOption.CreateOrder:
-                    CheckAccessToCreateOrder();
-                    break;
-                case MenuOption.AddProduct:
-                    CheckAdminAccessToPage(_productScreen.AddProductScreen);
-                    break;
-                case MenuOption.AddSupplier:
-                    CheckAdminAccessToPage(_supplierScreen.AddSupplierScreen);
-                    break;
-                case MenuOption.DeleteProduct:
-                    CheckAdminAccessToPage(_productScreen.DeleteProductScreen);
-                    break;
-                case MenuOption.DeleteUser:
-                    CheckAdminAccessToPage(_userScreen.DeleteUserScreen);
-                    break;
-                case MenuOption.DeleteSupplier:
-                    CheckAdminAccessToPage(_supplierScreen.DeleteSupplierScreen);
-                    break;
-                case MenuOption.DeleteOrder:
-                    CheckAdminAccessToPage(_orderScreen.DeleteOrderScreen);
-                    break;
-                case MenuOption.SignUp:
-                    RunSignUpFlow();
-                    break;
-                case MenuOption.LogIn:
-                    RunLoginFlow();
-                    break;
-                case MenuOption.Quit:
-                    return BootDownScreen();
-                default:
-                    break;
-            }
+                    case MenuOption.ShowUsers:
+                        CheckAdminAccessToPage(_userScreen.Show);
+                        break;
+                    case MenuOption.ShowOrders:
+                        _orderScreen.Show();
+                        break;
+                    case MenuOption.ShowProducts:
+                        _productScreen.Show();
+                        break;
+                    case MenuOption.ShowSuppliers:
+                        _supplierScreen.Show();
+                        break;
+                    case MenuOption.CreateOrder:
+                        CheckAccessToCreateOrder();
+                        break;
+                    case MenuOption.AddProduct:
+                        CheckAdminAccessToPage(_productScreen.Create);
+                        break;
+                    case MenuOption.AddSupplier:
+                        CheckAdminAccessToPage(_supplierScreen.Create);
+                        break;
+                    case MenuOption.DeleteProduct:
+                        CheckAdminAccessToPage(_productScreen.Delete);
+                        break;
+                    case MenuOption.DeleteUser:
+                        CheckAdminAccessToPage(_userScreen.Delete);
+                        break;
+                    case MenuOption.DeleteSupplier:
+                        CheckAdminAccessToPage(_supplierScreen.Delete);
+                        break;
+                    case MenuOption.DeleteOrder:
+                        CheckAdminAccessToPage(_orderScreen.Delete);
+                        break;
+                    case MenuOption.SignUp:
+                        RunSignUpFlow();
+                        break;
+                    case MenuOption.LogIn:
+                        RunLoginFlow();
+                        break;
+                    case MenuOption.Quit:
+                        return BootDownScreen();
+                    default:
+                        break;
+                }
 
             return true;
         }

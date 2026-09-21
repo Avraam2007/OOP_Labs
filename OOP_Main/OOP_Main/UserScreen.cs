@@ -1,17 +1,17 @@
 ﻿using Spectre.Console;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace OOP_Main {
-    public class UserScreen: UIHelper {
-        private readonly Data _appData;
-        public UserScreen(Data appData) {
-            _appData = appData;
-        }
+    public class UserScreen: BaseScreen {
+        public UserScreen(Data appData): base(appData) { }
 
-        public string ShowUsersScreen() => ShowListScreen("Users", _appData.Users);
+        public override string Create() => throw new NotImplementedException();
 
-        public string DeleteUserScreen() {
+        public override string Show() => ShowListScreen("Users", _appData.Users);
+
+        public override string Delete() {
             AnsiConsole.Clear();
             ShowHeader("[bold]Delete user[/]");
 
@@ -39,7 +39,8 @@ namespace OOP_Main {
 
             if (selectedChoice == "Cancel") return BackToMenuPrompt();
 
-            string userId = selectedChoice.Split(')')[0].TrimStart('(');
+            int userId = Convert.ToInt32(selectedChoice.Split(')')[0].TrimStart('('));
+
             User userToDelete = _appData.Users.FirstOrDefault(u => u.Id == userId);
 
             if (userToDelete != null) {

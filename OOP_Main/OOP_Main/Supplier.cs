@@ -5,7 +5,8 @@ using System.Collections.Generic;
 namespace OOP_Main {
     public class Supplier {
         private double rating;
-        public int SupplierId { get; set; }
+        private int supplierId;
+        public int SupplierId { get => supplierId; }
         public string Name { get; set; }
         public string ContactEmail { get; set; }
         public double Rating {
@@ -27,7 +28,7 @@ namespace OOP_Main {
             Name = name;
             ContactEmail = contactEmail;
             Rating = rating;
-            SupplierId = supplierId;
+            this.supplierId = supplierId;
         }
 
         public void AddProductToCatalog(Product product) {

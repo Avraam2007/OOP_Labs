@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace OOP_Main {
     public class User {
-        private readonly string _id;
+        private readonly int _id;
         private string username;
         private string password;
         private readonly bool isAdmin;
@@ -18,7 +18,7 @@ namespace OOP_Main {
                 username = value;
             }
         }
-        public string Id { get { return _id; } }
+        public int Id { get { return _id; } }
         public bool IsAdmin { get { return isAdmin; } }
         public string Password {
             get { return password; }
@@ -30,9 +30,9 @@ namespace OOP_Main {
             }
         }
 
-        public User(string id, string username, string password, bool isAdmin = false) {
-            this.username = username;
-            this.password = password;
+        public User(int id, string username, string password, bool isAdmin = false) {
+            this.Username = username;
+            this.Password = password;
             this._id = id;
             this.isAdmin = isAdmin;
         }

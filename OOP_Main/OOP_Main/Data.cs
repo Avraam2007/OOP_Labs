@@ -38,9 +38,25 @@ namespace OOP_Main {
             JsonStorage.SaveToFile(UsersFilePath, Users);
         }
 
+        public void AddUser(string name, string password, bool isAdmin = false) {
+            int newUserId = Users.Count > 0 ? Users.Max(u => u.Id) : 0;
+            newUserId++;
+            User newUser = new User(newUserId, name, password, isAdmin);
+
+            AddUser(newUser);
+        }
+
         public void AddOrder(Order order) {
             Orders.Add(order);
             JsonStorage.SaveToFile(OrdersFilePath, Orders);
+        }
+
+        public void AddOrder(int buyerId, List<Product> catalog) {
+            int newOrderId = Orders.Count > 0 ? Orders.Max(o => o.OrderId) : 0;
+            newOrderId++;
+            Order newOrder = new Order(newOrderId, buyerId, catalog);
+
+            AddOrder(newOrder);
         }
 
         public void AddProduct(Product product) {
@@ -53,7 +69,15 @@ namespace OOP_Main {
             JsonStorage.SaveToFile(SuppliersFilePath, Suppliers);
         }
 
-        public bool DeleteUserById(string id) {
+        public void AddSupplier(string name, string contactEmail, double rating) {
+            int newSupplierId = Suppliers.Count > 0 ? Suppliers.Max(s => s.SupplierId) : 0;
+            newSupplierId++;
+            Supplier newSupplier = new Supplier(newSupplierId, name, contactEmail, rating);
+
+            AddSupplier(newSupplier);
+        }
+
+        public bool DeleteUserById(int id) {
             User userToDelete = this.GetUserById(id);
             if (userToDelete != null) {
                 Users.Remove(userToDelete);
@@ -124,22 +148,12 @@ namespace OOP_Main {
             return false;
         }
 
-        public User GetUserById(string id) {
+        public User GetUserById(int id) {
             User foundUser = Users.Find((user) => user.Id == id);
             return foundUser;
         }
 
-        public int GetLatestOrderId() {
-            if (!Orders.Any()) return 1;
-
-            int maxId = Int32.MinValue;
-            foreach (var order in Orders) {
-                if (order.OrderId > maxId) maxId = order.OrderId;
-            }
-            return maxId;
-        }
-
-        public List<Order> GetOrdersFromUser(string userId) {
+        public List<Order> GetOrdersFromUser(int userId) {
             List<Order> ordersFromUser = new List<Order>();
             foreach (var order in Orders) {
                 if(order.BuyerId == userId) ordersFromUser.Add(order);
@@ -170,6 +184,30 @@ namespace OOP_Main {
         public Supplier GetSupplierByName(string name) {
             Supplier foundSupplier = Suppliers.Find((supplier) => supplier.Name == name);
             return foundSupplier;
+        }
+
+        public string GenerateNextProductArticle(Type productType) {
+            string prefix = "PRD";
+
+            if (productType == typeof(ElectronicProduct)) prefix = "EL";
+            else if (productType == typeof(Cloth)) prefix = "CL";
+            else if (productType == typeof(Sofa)) prefix = "SF";
+            else if (productType == typeof(Furniture)) prefix = "FN";
+
+            int maxNumber = 0;
+
+            if (Products != null) {
+                foreach (var product in Products) {
+                    if (product.Article != null && product.Article.StartsWith(prefix + "-")) {
+                        string numberPart = product.Article.Substring(prefix.Length + 1);
+                        if (int.TryParse(numberPart, out int num) && num > maxNumber) {
+                            maxNumber = num;
+                        }
+                    }
+                }
+            }
+
+            return $"{prefix}-{(maxNumber + 1):D4}";
         }
     }
 

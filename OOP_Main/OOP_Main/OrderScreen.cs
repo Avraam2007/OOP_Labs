@@ -4,13 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace OOP_Main {
-    public class OrderScreen: UIHelper {
-        private readonly Data _appData;
-        public OrderScreen(Data appData) {
-            _appData = appData;
-        }
+    public class OrderScreen: BaseScreen {
+        public OrderScreen(Data appData): base(appData) { }
 
-        public string ShowOrdersScreen() {
+        public override string Show() {
             if (_appData.CurrentUser == null) {
                 AnsiConsole.MarkupLine($"[red bold]The access is forbidden[/]");
                 return BackToMenuPrompt(
@@ -26,7 +23,7 @@ namespace OOP_Main {
             );
         }
 
-        public string CreateOrderScreen() {
+        public override string Create() {
             AnsiConsole.Clear();
             ShowHeader("[bold]Creating order[/]");
 
@@ -36,7 +33,8 @@ namespace OOP_Main {
             }
 
             const string exitOption = "Exit";
-            Order currentOrder = new Order(new Random().Next(100, 999), _appData.CurrentUser.Id);
+
+            List<Product> catalog = new List<Product>();
 
             List<string> productNames = new List<string> {
                 exitOption
@@ -66,7 +64,7 @@ namespace OOP_Main {
 
                     if (amount > 0) {
                         for (int i = 0; i < amount; i++) {
-                            currentOrder.AddProduct(chosenProduct);
+                            catalog.Add(chosenProduct);
                         }
                     }
                     else {
@@ -82,21 +80,24 @@ namespace OOP_Main {
                 ShowHeader("[bold]Creating order[/]");
             }
 
-            if (currentOrder.Products.Count > 0) {
-                _appData.AddOrder(currentOrder);
+            if (catalog.Count > 0) {
+                int userId = _appData.CurrentUser.Id;
+                _appData.AddOrder(userId, catalog);
+                int newOrderID = _appData.GetOrdersFromUser(userId).LastOrDefault().OrderId;
+
                 AnsiConsole.MarkupLine($"[bold green rapidblink]YOUR NEW ORDER[/]");
-                InternalFlashCard(CardRenderer.GetCardInfo(currentOrder));
+                InternalFlashCard(CardRenderer.GetCardInfo(_appData.GetOrderById(newOrderID)));
             }
 
             return BackToMenuPrompt();
         }
 
 
-        public string DeleteOrderScreen() {
+        public override string Delete() {
             AnsiConsole.Clear();
             ShowHeader("[bold]Delete order[/]");
 
-            if (Tools.ValidateArray(_appData.Suppliers)) {
+            if (Tools.ValidateArray(_appData.Orders)) {
                 AnsiConsole.MarkupLine("[red bold]There are no orders to delete.[/]");
                 return BackToMenuPrompt();
             }

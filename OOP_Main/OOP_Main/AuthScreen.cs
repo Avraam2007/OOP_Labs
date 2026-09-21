@@ -2,11 +2,8 @@
 using System;
 
 namespace OOP_Main {
-    public class AuthScreen: UIHelper {
-        private readonly Data _appData;
-        public AuthScreen(Data appData) {
-            _appData = appData;
-        }
+    public class AuthScreen: BaseScreen {
+        public AuthScreen(Data appData): base(appData) { }
 
         public string LoginScreen() {
             AnsiConsole.Clear();
@@ -32,7 +29,7 @@ namespace OOP_Main {
             return BackToMenuPrompt();
         }
 
-        public string CreateUserScreen() {
+        public override string Create() {
             AnsiConsole.Clear();
             ShowHeader("[bold]Sign up[/]");
 
@@ -50,9 +47,11 @@ namespace OOP_Main {
             string confirmPassword = PasswordPrompt("Confirm your [green]password[/]:");
 
             if (confirmPassword == password) {
-                string newId = new Random().Next(100, 999).ToString();
-                _appData.CurrentUser = new User(newId, username, password);
-                _appData.AddUser(_appData.CurrentUser);
+                _appData.AddUser(username, password);
+
+                int createdUserId = _appData.GetUserByUsername(username).Id;
+
+                _appData.CurrentUser = _appData.GetUserById(createdUserId);
                 AnsiConsole.MarkupLine($"[green bold]Account was created![/]");
                 return BackToMenuPrompt();
             }
@@ -60,6 +59,14 @@ namespace OOP_Main {
                 AnsiConsole.MarkupLine($"[red bold]Incorrect password. Try again[/]");
                 return BackToMenuPrompt();
             }
+        }
+
+        public override string Show() {
+            throw new NotImplementedException();
+        }
+
+        public override string Delete() {
+            throw new NotImplementedException();
         }
     }
 }

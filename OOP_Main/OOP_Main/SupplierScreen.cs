@@ -4,19 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace OOP_Main {
-    public class SupplierScreen: UIHelper {
-        private readonly Data _appData;
-        public SupplierScreen(Data appData) {
-            _appData = appData;
-        }
+    public class SupplierScreen: BaseScreen {
+        public SupplierScreen(Data appData): base(appData) { }
 
-        public string ShowSuppliersScreen() => ShowListScreen("Suppliers", _appData.Suppliers);
+        public override string Show() => ShowListScreen("Suppliers", _appData.Suppliers);
 
-        public string AddSupplierScreen() {
+        public override string Create() {
             AnsiConsole.Clear();
             ShowHeader("[bold]Creating supplier[/]");
-
-            int supplierId = DefaultTextPrompt<int>("Enter supplier [green]ID[/]:");
 
             string name = DefaultTextPrompt<string>("Enter supplier [green]name[/]:");
 
@@ -24,15 +19,13 @@ namespace OOP_Main {
 
             double rating = DefaultTextPrompt<double>("Enter supplier [green]rating (from 1.0 to 5.0)[/]:");
 
-            Supplier newSupplier = new Supplier(supplierId, name, email, rating);
-
-            _appData.AddSupplier(newSupplier);
+            _appData.AddSupplier(name, email, rating);
             AnsiConsole.MarkupLine($"[green bold]New supplier is created! You can check it on \"{GetEnumDescription(MenuOption.ShowSuppliers)}\" screen.[/]");
 
             return BackToMenuPrompt();
         }
 
-        public string DeleteSupplierScreen() {
+        public override string Delete() {
             AnsiConsole.Clear();
             ShowHeader("[bold]Delete supplier[/]");
 

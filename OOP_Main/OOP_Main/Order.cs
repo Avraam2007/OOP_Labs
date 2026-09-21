@@ -8,20 +8,20 @@ namespace OOP_Main {
         private int orderId;
         public int OrderId { get => orderId; private set { orderId = value; } }
         public List<Product> Products { get; private set; }
-        public string BuyerId { get; private set; }
+        public int BuyerId { get; private set; }
 
         public void AddProduct(Product newProduct) {
             this.Products.Add(newProduct);
         }
 
         [JsonConstructor]
-        public Order(int orderId, string buyerId, List<Product> products) {
+        public Order(int orderId, int buyerId, List<Product> products) {
             this.OrderId = orderId;
             this.BuyerId = buyerId;
             Products = products;
         }
 
-        public Order(int orderId, string buyerId) {
+        public Order(int orderId, int buyerId) {
             this.OrderId = orderId;
             this.BuyerId = buyerId;
             Products = new List<Product>();

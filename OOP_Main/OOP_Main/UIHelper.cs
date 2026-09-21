@@ -29,7 +29,7 @@ namespace OOP_Main {
         }
 
         protected static string PasswordPrompt(string text) {
-            var passwordPrompt = new TextPrompt<string>("What's your [green]password[/]?")
+            var passwordPrompt = new TextPrompt<string>(text)
                 .Secret();
 
             return AnsiConsole.Prompt(passwordPrompt);
@@ -79,21 +79,55 @@ namespace OOP_Main {
             return choice;
         }
 
+        private
+
         protected string ShowListScreen<T>(string header, IEnumerable<T> items, string extraErrorMessage = "") where T : class {
             AnsiConsole.Clear();
             ShowHeader(header);
 
             if (items == null || !items.Any()) {
                 AnsiConsole.Markup($"[red bold]Sorry, we didn't find any {header.ToLower()} in the store. {extraErrorMessage}[/]");
+                return BackToMenuPrompt();
             }
             else {
-                foreach (var item in items) {
-                    var dataForCard = CardRenderer.GetCardInfo(item);
-                    InternalFlashCard(dataForCard);
+                int pageSize = 3;
+                int totalItems = items.Count();
+                int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+                int currentPage = 1;
+
+                while (true) {
+                    AnsiConsole.Clear();
+                    ShowHeader(header);
+                    AnsiConsole.MarkupLine($"Page {currentPage} of {totalPages}");
+
+                    var pageItems = items.Skip((currentPage - 1) * pageSize).Take(pageSize);
+
+                    foreach (var item in pageItems) {
+                        InternalFlashCard(CardRenderer.GetCardInfo(item));
+                    }
+
+                    var navigationOptions = new List<string>();
+                    if (currentPage > 1) navigationOptions.Add("Previous Page");
+                    if (currentPage < totalPages) navigationOptions.Add("Next Page");
+                    navigationOptions.Add("Back to menu");
+
+                    var choice = AnsiConsole.Prompt(
+                        new SelectionPrompt<string>()
+                            .Title("\n[green]Navigation:[/]")
+                            .WrapAround()
+                            .AddChoices(navigationOptions));
+
+                    if (choice == "Next Page") {
+                        currentPage++;
+                    }
+                    else if (choice == "Previous Page") {
+                        currentPage--;
+                    }
+                    else {
+                        return choice;
+                    }
                 }
             }
-
-                return BackToMenuPrompt();
         }
     }
 }

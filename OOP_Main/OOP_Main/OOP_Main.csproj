@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthScreen.cs" />
+    <Compile Include="BaseScreen.cs" />
     <Compile Include="CardRenderer.cs" />
     <Compile Include="Cart.cs" />
     <Compile Include="Cloth.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Enum.cs" />
     <Compile Include="Furniture.cs" />
     <Compile Include="Interface.cs" />
+    <Compile Include="IScreen.cs" />
     <Compile Include="JsonStorage.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderScreen.cs" />
