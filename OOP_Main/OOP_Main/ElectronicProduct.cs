@@ -32,8 +32,5 @@ namespace OOP_Main {
             this.Power = power;
             this.MaxVoltage = maxVoltage;
         }
-
-        public override int GetSupplierId() => this.SupplierId;
-
     }
 }

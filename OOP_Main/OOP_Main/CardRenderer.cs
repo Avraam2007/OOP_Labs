@@ -67,7 +67,7 @@ namespace OOP_Main {
         }
 
         private static Dictionary<string, Text> GetProductCard(Product product) {
-            string categoryTitle = product.GetType().Name.ToUpper();
+            string categoryTitle = Tools.GetTypeName(product).ToUpper();
             var card = new Dictionary<string, Text> {
                 ["header"] = new Text($"{categoryTitle} \"{product.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["article"] = new Text($"Article: {product.Article}\n"),

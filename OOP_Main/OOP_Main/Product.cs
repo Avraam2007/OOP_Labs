@@ -48,8 +48,15 @@ namespace OOP_Main {
             this.SupplierId = supplierId;
         }
 
-        public abstract int GetSupplierId();
+        public int GetSupplierId() => this.SupplierId;
 
         public virtual int GetDeliveryDays() => 3;
+
+        public override bool Equals(object obj) {
+            if (obj is Product other) return this.Article == other.Article;
+            return false;
+        }
+        public override int GetHashCode() => Article?.GetHashCode() ?? 0;
+        public override string ToString() => $"{Name} [{Article}] - {Price}$";
     }
 }

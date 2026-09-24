@@ -1,6 +1,4 @@
-﻿using Spectre.Console;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace OOP_Main {
     public class Cloth : Product {
@@ -25,7 +23,5 @@ namespace OOP_Main {
         ) : base(article, name, price, supplierId) {
             this.material = material;
         }
-        public override int GetSupplierId() => this.SupplierId;
-
     }
 }

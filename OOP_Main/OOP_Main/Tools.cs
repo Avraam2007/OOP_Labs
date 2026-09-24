@@ -6,5 +6,9 @@ namespace OOP_Main {
         public static bool ValidateArray<T>(IEnumerable<T> arr) {
             return (arr is null || !arr.Any());
         }
+
+        public static string GetTypeName<T>(T obj) {
+            return obj.GetType().Name;
+        }
     }
 }

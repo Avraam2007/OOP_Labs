@@ -126,5 +126,12 @@ namespace OOP_Main {
 
             return ans;
         }
+
+        public override bool Equals(object obj) {
+            if (obj is Order other) return this.orderId == other.orderId;
+            return false;
+        }
+        public override int GetHashCode() => OrderId.GetHashCode();
+        public override string ToString() => $"[Order] {OrderId} (From: {BuyerId})";
     }
 }

@@ -45,7 +45,7 @@ namespace OOP_Main {
 
         public void BootUpScreen() {
             // Styled text with markup
-            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.13[/]");
+            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.14[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...");
@@ -143,6 +143,7 @@ namespace OOP_Main {
                         MenuOption.CreateOrder,
                         MenuOption.AddProduct,
                         MenuOption.AddSupplier,
+                        MenuOption.ChangeProductPrice,
                         MenuOption.DeleteOrder,
                         MenuOption.DeleteProduct,
                         MenuOption.DeleteUser,
@@ -185,6 +186,9 @@ namespace OOP_Main {
                         break;
                     case MenuOption.AddSupplier:
                         CheckAdminAccessToPage(_supplierScreen.Create);
+                        break;
+                    case MenuOption.ChangeProductPrice:
+                        CheckAdminAccessToPage(_productScreen.Edit);
                         break;
                     case MenuOption.DeleteProduct:
                         CheckAdminAccessToPage(_productScreen.Delete);

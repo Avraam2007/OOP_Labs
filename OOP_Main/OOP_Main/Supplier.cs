@@ -50,5 +50,12 @@ namespace OOP_Main {
         }
 
         public bool Inspect() => Rating >= 3.0;
+
+        public override bool Equals(object obj) {
+            if (obj is Supplier other) return this.SupplierId == other.SupplierId;
+            return false;
+        }
+        public override int GetHashCode() => SupplierId.GetHashCode();
+        public override string ToString() => $"[Supplier] {Name} (Email: {ContactEmail}) (Rating: {Rating}/5.0)";
     }
 }

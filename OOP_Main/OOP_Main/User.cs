@@ -1,6 +1,4 @@
-﻿using Spectre.Console;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace OOP_Main {
     public class User {
@@ -36,5 +34,12 @@ namespace OOP_Main {
             this._id = id;
             this.isAdmin = isAdmin;
         }
+
+        public override bool Equals(object obj) {
+            if (obj is User other) return this.Id == other.Id;
+            return false;
+        }
+        public override int GetHashCode() => Id.GetHashCode();
+        public override string ToString() => $"[User] {Username} (Admin: {IsAdmin})";
     }
 }

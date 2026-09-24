@@ -28,12 +28,12 @@ namespace OOP_Main {
             return AnsiConsole.Prompt(prompt);
         }
 
-        protected static string PasswordPrompt(string text) {
+        protected static Func<string, string> PasswordPrompt = (string text) => {
             var passwordPrompt = new TextPrompt<string>(text)
                 .Secret();
 
             return AnsiConsole.Prompt(passwordPrompt);
-        }
+        };
 
         protected static void InternalFlashCard(Dictionary<string, Spectre.Console.Text> dataForCard) {
             var contentElements = new List<IRenderable>();
@@ -48,7 +48,7 @@ namespace OOP_Main {
             AnsiConsole.Write(panel);
         }
 
-        protected static void ShowHeader(string text) {
+        protected static Action<string> ShowHeader = (string text) => {
             var logoPanel = new Panel(
                 new Markup(text, new Style(foreground: Color.Blue))
                 )
@@ -58,11 +58,11 @@ namespace OOP_Main {
 
             AnsiConsole.Write(header);
             AnsiConsole.Write(new Rule());
-        }
+        };
 
-        protected static bool CheckIfUserIsAdmin(User currentUser) {
+        protected static Func<User, bool> CheckIfUserIsAdmin = currentUser => {
             return currentUser != null && currentUser.IsAdmin;
-        }
+        };
 
         protected static string BackToMenuPrompt(string extraOption = "") {
             List<string> options = new List<string> { "Back to menu" };
@@ -78,8 +78,13 @@ namespace OOP_Main {
 
             return choice;
         }
+        private readonly Action<int, int> PageCheck = (int currentPage, int totalPages) => {
+            AnsiConsole.MarkupLine($"Page {currentPage} of {totalPages}");
+        };
 
-        private
+        protected Func<string, bool> DefaultConfirm = (string text) => {
+            return AnsiConsole.Confirm(text);
+        };
 
         protected string ShowListScreen<T>(string header, IEnumerable<T> items, string extraErrorMessage = "") where T : class {
             AnsiConsole.Clear();
@@ -98,13 +103,15 @@ namespace OOP_Main {
                 while (true) {
                     AnsiConsole.Clear();
                     ShowHeader(header);
-                    AnsiConsole.MarkupLine($"Page {currentPage} of {totalPages}");
+                    PageCheck(currentPage, totalPages);
 
                     var pageItems = items.Skip((currentPage - 1) * pageSize).Take(pageSize);
 
                     foreach (var item in pageItems) {
                         InternalFlashCard(CardRenderer.GetCardInfo(item));
                     }
+
+                    PageCheck(currentPage, totalPages);
 
                     var navigationOptions = new List<string>();
                     if (currentPage > 1) navigationOptions.Add("Previous Page");

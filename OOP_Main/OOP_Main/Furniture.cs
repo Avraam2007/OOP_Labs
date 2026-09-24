@@ -81,7 +81,5 @@ namespace OOP_Main {
             this.Height = height;
             this.Material = material;
         }
-        public override int GetSupplierId() => this.SupplierId;
-
     }
 }

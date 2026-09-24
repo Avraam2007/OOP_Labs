@@ -1,214 +1,83 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace OOP_Main {
     public class Data {
-        private const string UsersFilePath = "DataStorage/users.json";
-        private const string ProductsFilePath = "DataStorage/products.json";
-        private const string OrdersFilePath = "DataStorage/orders.json";
-        private const string SuppliersFilePath = "DataStorage/suppliers.json";
-        public List<User> Users { get; private set; } = new List<User>();
-        public List<Order> Orders { get; private set; } = new List<Order>();
-        public List<Product> Products { get; private set; } = new List<Product>();
+        private readonly UserData _userData;
+        private readonly ProductData _productData;
+        private readonly OrderData _orderData;
+        private readonly SupplierData _supplierData;
 
-        public List<Supplier> Suppliers { get; private set; } = new List<Supplier>();
+        public List<User> Users => _userData.Users;
+        public List<Product> Products => _productData.Products;
+        public List<Order> Orders => _orderData.Orders;
+        public List<Supplier> Suppliers => _supplierData.Suppliers;
+
         public User CurrentUser { get; set; }
 
         public Data() {
-
+            _userData = new UserData();
+            _productData = new ProductData();
+            _orderData = new OrderData();
+            _supplierData = new SupplierData();
         }
 
         public void LoadAllData() {
-            Users = JsonStorage.LoadFromFile<List<User>>(UsersFilePath);
-            Products = JsonStorage.LoadFromFile<List<Product>>(ProductsFilePath);
-            Orders = JsonStorage.LoadFromFile<List<Order>>(OrdersFilePath);
-            Suppliers = JsonStorage.LoadFromFile<List<Supplier>>(SuppliersFilePath);
+            _userData.Load();
+            _productData.Load();
+            _orderData.Load(); 
+            _supplierData.Load();
         }
 
         public void SaveAllData() {
-            JsonStorage.SaveToFile(UsersFilePath, Users);
-            JsonStorage.SaveToFile(ProductsFilePath, Products);
-            JsonStorage.SaveToFile(OrdersFilePath, Orders);
-            JsonStorage.SaveToFile(SuppliersFilePath, Suppliers);
+            _userData.Save();
+            _productData.Save();
+            _orderData.Save();
+            _supplierData.Save();
         }
 
-        public void AddUser(User user) {
-            Users.Add(user);
-            JsonStorage.SaveToFile(UsersFilePath, Users);
-        }
+        public void AddUser(User user) => _userData.AddUser(user);
 
-        public void AddUser(string name, string password, bool isAdmin = false) {
-            int newUserId = Users.Count > 0 ? Users.Max(u => u.Id) : 0;
-            newUserId++;
-            User newUser = new User(newUserId, name, password, isAdmin);
+        public void AddUser(string name, string password, bool isAdmin = false) => _userData.AddUser(name, password, isAdmin);
 
-            AddUser(newUser);
-        }
+        public void AddOrder(Order order) => _orderData.AddOrder(order);
 
-        public void AddOrder(Order order) {
-            Orders.Add(order);
-            JsonStorage.SaveToFile(OrdersFilePath, Orders);
-        }
+        public void AddOrder(int buyerId, List<Product> catalog) => _orderData.AddOrder(buyerId, catalog);
 
-        public void AddOrder(int buyerId, List<Product> catalog) {
-            int newOrderId = Orders.Count > 0 ? Orders.Max(o => o.OrderId) : 0;
-            newOrderId++;
-            Order newOrder = new Order(newOrderId, buyerId, catalog);
+        public void AddProduct(Product product) => _productData.AddProduct(product);
 
-            AddOrder(newOrder);
-        }
+        public void AddSupplier(Supplier supplier) => _supplierData.AddSupplier(supplier);
 
-        public void AddProduct(Product product) {
-            Products.Add(product);
-            JsonStorage.SaveToFile(ProductsFilePath, Products);
-        }
+        public void AddSupplier(string name, string contactEmail, double rating) => _supplierData.AddSupplier(name, contactEmail, rating);
 
-        public void AddSupplier(Supplier supplier) {
-            Suppliers.Add(supplier);
-            JsonStorage.SaveToFile(SuppliersFilePath, Suppliers);
-        }
+        public bool DeleteUserById(int id) => _userData.DeleteUserById(id);
 
-        public void AddSupplier(string name, string contactEmail, double rating) {
-            int newSupplierId = Suppliers.Count > 0 ? Suppliers.Max(s => s.SupplierId) : 0;
-            newSupplierId++;
-            Supplier newSupplier = new Supplier(newSupplierId, name, contactEmail, rating);
+        public bool DeleteOrder(int id) => _orderData.DeleteOrder(id);
 
-            AddSupplier(newSupplier);
-        }
+        public bool DeleteUserByUsername(string username) => _userData.DeleteUserByUsername(username);
 
-        public bool DeleteUserById(int id) {
-            User userToDelete = this.GetUserById(id);
-            if (userToDelete != null) {
-                Users.Remove(userToDelete);
-                JsonStorage.SaveToFile(UsersFilePath, Users);
-                return true;
-            }
-            return false;
-        }
+        public bool DeleteSupplierByName(string name) => _supplierData.DeleteSupplierByName(name);
 
-        public bool DeleteOrder(int id) {
-            Order orderToDelete = this.GetOrderById(id);
-            if (orderToDelete != null) {
-                Orders.Remove(orderToDelete);
-                JsonStorage.SaveToFile(OrdersFilePath, Orders);
-                return true;
-            }
-            return false;
-        }
+        public bool DeleteProductByName(string name) => _productData.DeleteProductByName(name, Suppliers);
+        public bool DeleteProductByArticle(string article) => _productData.DeleteProductByArticle(article, Suppliers);
 
-        public bool DeleteUserByUsername(string username) {
-            User userToDelete = this.GetUserByUsername(username);
-            if (userToDelete != null) {
-                Users.Remove(userToDelete);
-                JsonStorage.SaveToFile(UsersFilePath, Users);
-                return true;
-            }
-            return false;
-        }
+        public User GetUserById(int id) => _userData.GetUserById(id);
 
-        public bool DeleteSupplierByName(string name) {
-            Supplier supplierToDelete = this.GetSupplierByName(name);
-            if (supplierToDelete != null) {
-                Suppliers.Remove(supplierToDelete);
-                JsonStorage.SaveToFile(SuppliersFilePath, Suppliers);
-                return true;
-            }
-            return false;
-        }
+        public List<Order> GetOrdersFromUser(int userId) => _orderData.GetOrdersFromUser(userId);
 
-        public bool DeleteProductByName(string name) {
-            Product productToDelete = this.GetProductByName(name);
-            if (productToDelete != null) {
-                Products.Remove(productToDelete);
-                JsonStorage.SaveToFile(ProductsFilePath, Products);
+        public Order GetOrderById(int id) => _orderData.GetOrderById(id);
 
-                foreach (var supplier in Suppliers) {
-                    supplier.Catalog.RemoveAll(product => product.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-                }
-                JsonStorage.SaveToFile(SuppliersFilePath, Suppliers);
+        public Product GetProductByArticle(string article) => _productData.GetProductByArticle(article);
 
-                return true;
-            }
-            return false;
-        }
+        public Product GetProductByName(string name) => _productData.GetProductByName(name);
 
-        public bool DeleteProductByArticle(string article) {
-            Product productToDelete = this.GetProductByArticle(article);
-            if (productToDelete != null) {
-                Products.Remove(productToDelete);
-                JsonStorage.SaveToFile(ProductsFilePath, Products);
+        public User GetUserByUsername(string username) => _userData.GetUserByUsername(username);
 
-                foreach (var supplier in Suppliers) {
-                    supplier.Catalog.RemoveAll(product => product.Article.Equals(article, StringComparison.OrdinalIgnoreCase));
-                }
-                JsonStorage.SaveToFile(SuppliersFilePath, Suppliers);
-                return true;
-            }
-            return false;
-        }
+        public Supplier GetSupplierByName(string name) => _supplierData.GetSupplierByName(name);
 
-        public User GetUserById(int id) {
-            User foundUser = Users.Find((user) => user.Id == id);
-            return foundUser;
-        }
+        public void ChangeProductPriceByArticle(string article, double newPrice) => _productData.ChangeProductPriceByArticle(article, newPrice);
 
-        public List<Order> GetOrdersFromUser(int userId) {
-            List<Order> ordersFromUser = new List<Order>();
-            foreach (var order in Orders) {
-                if(order.BuyerId == userId) ordersFromUser.Add(order);
-            }
-            return ordersFromUser;
-        }
-
-        public Order GetOrderById(int id) {
-            Order foundOrder = Orders.Find((order) => order.OrderId == id);
-            return foundOrder;
-        }
-
-        public Product GetProductByArticle(string article) {
-            Product foundProduct = Products.Find((product) => product.Article == article);
-            return foundProduct;
-        }
-
-        public Product GetProductByName(string name) {
-            Product foundProduct = Products.Find((product) => product.Name == name);
-            return foundProduct;
-        }
-
-        public User GetUserByUsername(string username) {
-            User foundUser = Users.Find((user) => user.Username == username);
-            return foundUser;
-        }
-
-        public Supplier GetSupplierByName(string name) {
-            Supplier foundSupplier = Suppliers.Find((supplier) => supplier.Name == name);
-            return foundSupplier;
-        }
-
-        public string GenerateNextProductArticle(Type productType) {
-            string prefix = "PRD";
-
-            if (productType == typeof(ElectronicProduct)) prefix = "EL";
-            else if (productType == typeof(Cloth)) prefix = "CL";
-            else if (productType == typeof(Sofa)) prefix = "SF";
-            else if (productType == typeof(Furniture)) prefix = "FN";
-
-            int maxNumber = 0;
-
-            if (Products != null) {
-                foreach (var product in Products) {
-                    if (product.Article != null && product.Article.StartsWith(prefix + "-")) {
-                        string numberPart = product.Article.Substring(prefix.Length + 1);
-                        if (int.TryParse(numberPart, out int num) && num > maxNumber) {
-                            maxNumber = num;
-                        }
-                    }
-                }
-            }
-
-            return $"{prefix}-{(maxNumber + 1):D4}";
-        }
+        public string GenerateNextProductArticle(Type productType) => _productData.GenerateNextProductArticle(productType);
     }
 
 }
