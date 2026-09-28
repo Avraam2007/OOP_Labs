@@ -32,5 +32,9 @@ namespace OOP_Main {
             this.Power = power;
             this.MaxVoltage = maxVoltage;
         }
+
+        public override double CalculateShippingCost() {
+            return Tools.RoundPrice(0.1 + (Power * 0.005));
+        }
     }
 }

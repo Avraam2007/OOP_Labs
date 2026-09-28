@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 
 namespace OOP_Main {
-    public class Order {
+    public class Order: ICloneable {
         private int orderId;
         public int OrderId { get => orderId; private set { orderId = value; } }
         public List<Product> Products { get; private set; }
         public int BuyerId { get; private set; }
 
+        public OrderStatus Status { get; set; } = OrderStatus.Pending;
         public void AddProduct(Product newProduct) {
             this.Products.Add(newProduct);
         }
@@ -27,6 +28,16 @@ namespace OOP_Main {
             Products = new List<Product>();
         }
 
+        public object Clone() {
+            return this.MemberwiseClone();
+        }
+
+        public Order DeepCopy() {
+            Order clone = (Order)this.MemberwiseClone();
+            clone.Products = new List<Product>(this.Products);
+            return clone;
+        }
+
         public double GetTotalPrice() {
             if (Tools.ValidateArray(Products)) return 0;
             double totalPrice = 0;
@@ -34,6 +45,15 @@ namespace OOP_Main {
                 totalPrice += part.Price;
             }
             return totalPrice;
+        }
+
+        public double GetTotalShippingCost() {
+            if (Tools.ValidateArray(Products)) return 0;
+            double totalShipCost = 0;
+            foreach (Product part in Products) {
+                totalShipCost += part.CalculateShippingCost();
+            }
+            return totalShipCost;
         }
 
         public double GetAveragePrice() {
@@ -65,14 +85,14 @@ namespace OOP_Main {
             return maxPrice;
         }
 
-        public double[] FindMinMaxPrices(List<Product> parts) {
-            if (Tools.ValidateArray(parts)) return new double[] { 0, 0 };
+        public double[] FindMinMaxPrices(List<Product>  products)  {
+            if (Tools.ValidateArray(products)) return new double[] { 0, 0 };
 
-            double min = parts[0].Price;
-            double max = parts[0].Price;
+            double min = products[0].Price;
+            double max = products[0].Price;
 
-            foreach (var part in parts) {
-                double price = part.Price;
+            foreach (var product in products) {
+                double price = product.Price;
                 if (price < min) min = price;
                 if (price > max) max = price;
             }

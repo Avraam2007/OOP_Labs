@@ -81,5 +81,9 @@ namespace OOP_Main {
             this.Height = height;
             this.Material = material;
         }
+
+        public override double CalculateShippingCost() {
+            return Tools.RoundPrice((Weight * 0.5) + (Width * Length * Height * 0.0001));
+        }
     }
 }

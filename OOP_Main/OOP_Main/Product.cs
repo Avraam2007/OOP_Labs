@@ -6,7 +6,7 @@ namespace OOP_Main {
         private string name;
         private double price;
         public int SupplierId { get; set; }
-        public string Article {
+        public virtual string Article {
             get {
                 return article;
             }
@@ -18,7 +18,7 @@ namespace OOP_Main {
                 article = polishedArticle;
             }
         }
-        public string Name {
+        public virtual string Name {
             get {
                 return name;
             }
@@ -30,7 +30,7 @@ namespace OOP_Main {
                 name = polishedName;
             }
         }
-        public double Price {
+        public virtual double Price {
             get {
                 return price;
             }
@@ -41,6 +41,7 @@ namespace OOP_Main {
                 price = Math.Round(value, 2, MidpointRounding.AwayFromZero);
             }
         }
+        protected Product() { }
         public Product(string article, string name, double price, int supplierId) {
             this.Article = article;
             this.Name = name;
@@ -58,5 +59,7 @@ namespace OOP_Main {
         }
         public override int GetHashCode() => Article?.GetHashCode() ?? 0;
         public override string ToString() => $"{Name} [{Article}] - {Price}$";
+
+        public abstract double CalculateShippingCost();
     }
 }

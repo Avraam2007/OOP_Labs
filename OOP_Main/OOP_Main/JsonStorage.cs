@@ -1,13 +1,15 @@
 ﻿using System;
 using System.IO;
 using Newtonsoft.Json;
+using Spectre.Console;
 
 namespace OOP_Main {
     public static class JsonStorage {
         private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings {
             Formatting = Formatting.Indented,
             TypeNameHandling = TypeNameHandling.Auto,
-            NullValueHandling = NullValueHandling.Ignore
+            NullValueHandling = NullValueHandling.Ignore,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
         };
 
         public static T LoadFromFile<T>(string filePath) where T : new() {
@@ -31,7 +33,7 @@ namespace OOP_Main {
                 return data;
             }
             catch (Exception ex) {
-                Console.WriteLine($"Error loading file {filePath}: {ex.Message}");
+                AnsiConsole.WriteException(ex, ExceptionFormats.ShortenEverything);
                 return new T();
             }
         }

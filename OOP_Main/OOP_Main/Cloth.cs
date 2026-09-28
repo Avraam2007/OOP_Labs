@@ -23,5 +23,9 @@ namespace OOP_Main {
         ) : base(article, name, price, supplierId) {
             this.material = material;
         }
+
+        public override double CalculateShippingCost() { 
+            return Tools.RoundPrice(Price * 0.05);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OOP_Main {
     public class ProductData: IBridgeJSON {
@@ -63,7 +64,20 @@ namespace OOP_Main {
             Products.Find((product) => product.Article == article).Price = newPrice;
         }
 
+        private static Product GetBaseProduct(Product product) {
+            // Рекурсивно знімаємо всі декоратори, щоб дістатися до Cloth, Sofa тощо
+            while (product is ProductDecorator decorator && decorator.TargetProduct != null) {
+                product = decorator.TargetProduct;
+            }
+            return product;
+        }
+
         public string GenerateNextProductArticle(Type productType) {
+            var existingProducts = Products
+                .Select(p => GetBaseProduct(p))
+                .Where(p => p.GetType() == productType)
+                .ToList();
+
             string prefix = "PRD";
 
             if (productType == typeof(ElectronicProduct)) prefix = "EL";
@@ -73,8 +87,8 @@ namespace OOP_Main {
 
             int maxNumber = 0;
 
-            if (Products != null) {
-                foreach (var product in Products) {
+            if (existingProducts != null) {
+                foreach (var product in existingProducts) {
                     if (product.Article != null && product.Article.StartsWith(prefix + "-")) {
                         string numberPart = product.Article.Substring(prefix.Length + 1);
                         if (int.TryParse(numberPart, out int num) && num > maxNumber) {

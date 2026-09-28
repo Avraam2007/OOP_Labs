@@ -45,7 +45,7 @@ namespace OOP_Main {
 
         public void BootUpScreen() {
             // Styled text with markup
-            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.14[/]");
+            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.15[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...");

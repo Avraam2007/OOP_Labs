@@ -11,6 +11,9 @@ namespace OOP_Main {
                 case Order order:
                     return GetOrderCard(order);
 
+                case ProductDecorator decorator:
+                    return GetProductDecoratorCard(decorator);
+
                 case Product product:
                     return GetProductCard(product);
 
@@ -37,9 +40,11 @@ namespace OOP_Main {
                 ["header"] = new Text($"ORDER #{order.OrderId}\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["buyer"] = new Text($"Buyer ID: {order.BuyerId}\n"),
                 ["total"] = new Text($"Total price: {order.GetTotalPrice()}$\n"),
+                ["shipping_cost"] = new Text($"Total shipping cost: {order.GetTotalShippingCost()}$\n"),
                 ["average"] = new Text($"Average price: {order.GetAveragePrice()}$\n"),
                 ["minimal"] = new Text($"Minimal price: {order.GetMinPrice()}$\n"),
-                ["maximal"] = new Text($"Maximal price: {order.GetMaxPrice()}$\n")
+                ["maximal"] = new Text($"Maximal price: {order.GetMaxPrice()}$\n"),
+                ["status"] = new Text($"Status: {OrderStatusExtensions.GetDescription(order.Status)}\n"),
             };
 
             if (Tools.ValidateArray(order.Products)) {
@@ -67,7 +72,7 @@ namespace OOP_Main {
         }
 
         private static Dictionary<string, Text> GetProductCard(Product product) {
-            string categoryTitle = Tools.GetTypeName(product).ToUpper();
+            string categoryTitle = Tools.GetTypeName(product).AddSpacesBetweenCapitalizedWords().ToUpper();
             var card = new Dictionary<string, Text> {
                 ["header"] = new Text($"{categoryTitle} \"{product.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["article"] = new Text($"Article: {product.Article}\n"),
@@ -75,6 +80,8 @@ namespace OOP_Main {
             };
 
             switch (product) {
+                case ProductDecorator decorator:
+                    return GetProductCard(decorator.TargetProduct);
                 case ElectronicProduct ep:
                     card["power"] = new Text($"Power: {ep.Power} W\n");
                     card["voltage"] = new Text($"Max Voltage: {ep.MaxVoltage} V\n");
@@ -96,6 +103,36 @@ namespace OOP_Main {
                     card["weight"] = new Text($"Weight: {furniture.Weight} kg\n");
                     card["material"] = new Text($"Material: {furniture.Material}\n");
                     break;
+            }
+
+            return card;
+        }
+
+        private static Dictionary<string, Text> GetProductDecoratorCard(ProductDecorator decorator) {
+            string categoryTitle = Tools.GetTypeName(decorator).AddSpacesBetweenCapitalizedWords().ToUpper();
+            var card = new Dictionary<string, Text> {
+                ["header"] = new Text($"{categoryTitle} \"{decorator.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
+                ["article"] = new Text($"Article: {decorator.Article}\n"),
+                ["price"] = new Text($"Price: {decorator.Price}$\n")
+            };
+
+            var innerProduct = decorator.TargetProduct;
+
+            if (innerProduct == null) {
+                card["empty_product"] = new Text("  (No product in this decorator)\n", new Style(foreground: Color.Red));
+                return card;
+            }
+
+            var productSpecs = GetProductCard(innerProduct);
+
+            card[$"prod_name"] = new Text($"\n  [{innerProduct.Article}] {innerProduct.Name}\n", new Style(foreground: Color.Green, decoration: Decoration.Bold));
+
+            foreach (var spec in productSpecs) {
+                if (spec.Key == "header") continue;
+
+                string uniqueKey = $"prod_{spec.Key}";
+
+                card[uniqueKey] = spec.Value;
             }
 
             return card;

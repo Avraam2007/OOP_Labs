@@ -9,6 +9,7 @@ using System.Threading;
 
 namespace OOP_Main {
     public class UIHelper {
+        public delegate string ConsolePromptHandler(string text); // Func<string, string>
         protected string GetEnumDescription(Enum value) {
             FieldInfo fi = value.GetType().GetField(value.ToString());
             if (fi == null) return value.ToString();
@@ -28,7 +29,7 @@ namespace OOP_Main {
             return AnsiConsole.Prompt(prompt);
         }
 
-        protected static Func<string, string> PasswordPrompt = (string text) => {
+        protected static ConsolePromptHandler PasswordPrompt = text => {
             var passwordPrompt = new TextPrompt<string>(text)
                 .Secret();
 
@@ -48,7 +49,7 @@ namespace OOP_Main {
             AnsiConsole.Write(panel);
         }
 
-        protected static Action<string> ShowHeader = (string text) => {
+        protected static Action<string> ShowHeader = text => {
             var logoPanel = new Panel(
                 new Markup(text, new Style(foreground: Color.Blue))
                 )
@@ -60,7 +61,7 @@ namespace OOP_Main {
             AnsiConsole.Write(new Rule());
         };
 
-        protected static Func<User, bool> CheckIfUserIsAdmin = currentUser => {
+        protected static Predicate<User> CheckIfUserIsAdmin = currentUser => {
             return currentUser != null && currentUser.IsAdmin;
         };
 
@@ -78,7 +79,7 @@ namespace OOP_Main {
 
             return choice;
         }
-        private readonly Action<int, int> PageCheck = (int currentPage, int totalPages) => {
+        private readonly Action<int, int> PageCheck = (currentPage, totalPages) => {
             AnsiConsole.MarkupLine($"Page {currentPage} of {totalPages}");
         };
 
