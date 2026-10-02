@@ -6,9 +6,9 @@ using System.Collections.Generic;
 namespace OOP_Main {
     public class Order: ICloneable {
         private int orderId;
-        public int OrderId { get => orderId; private set { orderId = value; } }
-        public List<Product> Products { get; private set; }
-        public int BuyerId { get; private set; }
+        public int OrderId { get => orderId; set { orderId = value; } }
+        public List<Product> Products { get; set; }
+        public int BuyerId { get;  set; }
 
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
         public void AddProduct(Product newProduct) {
@@ -27,6 +27,15 @@ namespace OOP_Main {
             this.BuyerId = buyerId;
             Products = new List<Product>();
         }
+
+        public Order(int orderId, int buyerId, List<Product> products, OrderStatus status) {
+            this.OrderId = orderId;
+            this.BuyerId = buyerId;
+            Products = products;
+            this.Status = status;
+        }
+
+        public Order() { }
 
         public object Clone() {
             return this.MemberwiseClone();

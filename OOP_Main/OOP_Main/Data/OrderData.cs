@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using OOP_Main.Builders;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OOP_Main {
@@ -22,7 +23,12 @@ namespace OOP_Main {
         public void AddOrder(int buyerId, List<Product> catalog) {
             int newOrderId = Orders.Count > 0 ? Orders.Max(o => o.OrderId) : 0;
             newOrderId++;
-            Order newOrder = new Order(newOrderId, buyerId, catalog);
+            var director = new Director();
+            var builder = new OrderBuilder();
+            director.Builder = builder;
+            director.BuildOrderWithProducts(newOrderId, buyerId, catalog);
+            Order newOrder = builder.GetOrder();
+            //Order newOrder = new Order(newOrderId, buyerId, catalog);
 
             AddOrder(newOrder);
         }

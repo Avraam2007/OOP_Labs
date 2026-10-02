@@ -77,6 +77,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\Director.cs" />
+    <Compile Include="Builders\OrderBuilder.cs" />
+    <Compile Include="Entities\Account.cs" />
+    <Compile Include="Builders\IBuilder.cs" />
     <Compile Include="Screens\AuthScreen.cs" />
     <Compile Include="Screens\BaseScreen.cs" />
     <Compile Include="UI\CardRenderer.cs" />

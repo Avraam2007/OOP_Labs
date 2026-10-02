@@ -266,6 +266,28 @@
       <FileName>Decorators\ProductDecorator.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="OOP_Main.Builders.Director">
+    <Position X="20" Y="21.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAgAEIAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Builders\Director.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.Builders.OrderBuilder" BaseTypeListCollapsed="true">
+    <Position X="20" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQACAAAABAAgAAAQAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Builders\OrderBuilder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Main.Entities.Account">
+    <Position X="16.75" Y="23" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAQ=</HashCode>
+      <FileName>Entities\Account.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="OOP_Main.IScreen">
     <Position X="17" Y="5.75" Width="1.5" />
     <TypeIdentifier>
@@ -278,6 +300,13 @@
     <TypeIdentifier>
       <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IBridgeJSON.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOP_Main.Builders.IBuilder">
+    <Position X="21.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAABAAgAAAQAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Builders\IBuilder.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="OOP_Main.MenuOption">

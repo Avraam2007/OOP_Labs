@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 namespace OOP_Main {
-    public class Interface: UIHelper {
+    public class Interface {
         private readonly AuthScreen _authScreen;
         private readonly ProductScreen _productScreen;
         private readonly OrderScreen _orderScreen;
@@ -166,53 +166,53 @@ namespace OOP_Main {
             }
 
             switch (choice) {
-                    case MenuOption.ShowUsers:
-                        CheckAdminAccessToPage(_userScreen.Show);
-                        break;
-                    case MenuOption.ShowOrders:
-                        _orderScreen.Show();
-                        break;
-                    case MenuOption.ShowProducts:
-                        _productScreen.Show();
-                        break;
-                    case MenuOption.ShowSuppliers:
-                        _supplierScreen.Show();
-                        break;
-                    case MenuOption.CreateOrder:
-                        CheckAccessToCreateOrder();
-                        break;
-                    case MenuOption.AddProduct:
-                        CheckAdminAccessToPage(_productScreen.Create);
-                        break;
-                    case MenuOption.AddSupplier:
-                        CheckAdminAccessToPage(_supplierScreen.Create);
-                        break;
-                    case MenuOption.ChangeProductPrice:
-                        CheckAdminAccessToPage(_productScreen.Edit);
-                        break;
-                    case MenuOption.DeleteProduct:
-                        CheckAdminAccessToPage(_productScreen.Delete);
-                        break;
-                    case MenuOption.DeleteUser:
-                        CheckAdminAccessToPage(_userScreen.Delete);
-                        break;
-                    case MenuOption.DeleteSupplier:
-                        CheckAdminAccessToPage(_supplierScreen.Delete);
-                        break;
-                    case MenuOption.DeleteOrder:
-                        CheckAdminAccessToPage(_orderScreen.Delete);
-                        break;
-                    case MenuOption.SignUp:
-                        RunSignUpFlow();
-                        break;
-                    case MenuOption.LogIn:
-                        RunLoginFlow();
-                        break;
-                    case MenuOption.Quit:
-                        return BootDownScreen();
-                    default:
-                        break;
-                }
+                case MenuOption.ShowUsers:
+                    CheckAdminAccessToPage(_userScreen.Show);
+                    break;
+                case MenuOption.ShowOrders:
+                    _orderScreen.Show();
+                    break;
+                case MenuOption.ShowProducts:
+                    _productScreen.Show();
+                    break;
+                case MenuOption.ShowSuppliers:
+                    _supplierScreen.Show();
+                    break;
+                case MenuOption.CreateOrder:
+                    CheckAccessToCreateOrder();
+                    break;
+                case MenuOption.AddProduct:
+                    CheckAdminAccessToPage(_productScreen.Create);
+                    break;
+                case MenuOption.AddSupplier:
+                    CheckAdminAccessToPage(_supplierScreen.Create);
+                    break;
+                case MenuOption.ChangeProductPrice:
+                    CheckAdminAccessToPage(_productScreen.Edit);
+                    break;
+                case MenuOption.DeleteProduct:
+                    CheckAdminAccessToPage(_productScreen.Delete);
+                    break;
+                case MenuOption.DeleteUser:
+                    CheckAdminAccessToPage(_userScreen.Delete);
+                    break;
+                case MenuOption.DeleteSupplier:
+                    CheckAdminAccessToPage(_supplierScreen.Delete);
+                    break;
+                case MenuOption.DeleteOrder:
+                    CheckAdminAccessToPage(_orderScreen.Delete);
+                    break;
+                case MenuOption.SignUp:
+                    RunSignUpFlow();
+                    break;
+                case MenuOption.LogIn:
+                    RunLoginFlow();
+                    break;
+                case MenuOption.Quit:
+                    return BootDownScreen();
+                default:
+                    break;
+            }
 
             return true;
         }

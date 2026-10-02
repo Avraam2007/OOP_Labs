@@ -1,7 +1,4 @@
-﻿using Spectre.Console;
-using System.Collections.Generic;
-
-namespace OOP_Main {
+﻿namespace OOP_Main {
     public class Sofa : Furniture {
         private bool isAssemble;
 
