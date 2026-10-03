@@ -1,10 +1,14 @@
 ﻿using System;
 
 namespace OOP_Main.Entities {
+    public delegate void AccountHandler(string message);
     public class Account {
-        private int sum;
-
-        public int Sum {
+        private double sum;
+        AccountHandler taken;
+        public void RegisterHandler(AccountHandler del) {
+            taken = del;
+        }
+        public double Sum {
             get => sum;
             set {
                 if (value < 0) {
@@ -13,13 +17,17 @@ namespace OOP_Main.Entities {
                 sum = value;
             } 
         }
-        public Account(int sum) => this.Sum = sum;
-        public void Add(int sum) => this.Sum += sum;
-        public void Take(int sum) {
+        public Account(double sum) => this.Sum = sum;
+        public void Add(double sum) => this.Sum += sum;
+        public void Take(double sum) {
             if (this.sum >= sum) {
                 this.sum -= sum;
-                Console.WriteLine($"New transaction: -{sum}$");
+                taken?.Invoke($"New transaction: -{sum} $");
             }
+            else {
+                taken?.Invoke($"Not enough money. Balance: {this.sum} $.");
+            }
+
         }
     }
 }

@@ -31,7 +31,8 @@ namespace OOP_Main {
             return new Dictionary<string, Text> {
                 ["header"] = new Text($"{user.Username}\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["id"] = new Text($"ID: {user.Id}\n"),
-                ["isAdmin"] = new Text($"Is admin: {user.IsAdmin}\n")
+                ["role"] = new Text($"Role: {user.Role}\n"),
+                ["account"] = new Text($"Total balance: {user.Account.Sum}$\n")
             };
         }
 

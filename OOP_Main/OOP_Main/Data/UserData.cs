@@ -22,7 +22,7 @@ namespace OOP_Main {
         }
 
         public void AddUser(string name, string password, bool isAdmin = false) {
-            int newUserId = Users.Count > 0 ? Users.Max(u => u.Id) : 0;
+            int newUserId = Users.Count > 1 ? Users.Max(u => u.Id) : 0;
             newUserId++;
             User newUser = new User(newUserId, name, password, 0, isAdmin);
 

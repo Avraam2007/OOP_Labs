@@ -15,7 +15,7 @@ namespace OOP_Main {
 
             User user = _appData.GetUserByUsername(username);
 
-            if (user == null || user.Password != password) {
+            if (user == null || user.Password != password || user.IsGuest()) {
                 AnsiConsole.MarkupLine($"[red bold]Invalid username or password. Try again[/]");
                 return BackToMenuPrompt();
 

@@ -56,6 +56,6 @@ namespace OOP_Main {
             return false;
         }
         public override int GetHashCode() => SupplierId.GetHashCode();
-        public override string ToString() => $"[Supplier] {Name} (Email: {ContactEmail}) (Rating: {Rating}/5.0)";
+        public override string ToString() => $"|Supplier| {Name}";
     }
 }

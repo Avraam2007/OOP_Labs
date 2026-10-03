@@ -83,6 +83,13 @@
     <Compile Include="Builders\IBuilder.cs" />
     <Compile Include="Screens\AuthScreen.cs" />
     <Compile Include="Screens\BaseScreen.cs" />
+    <Compile Include="States\OrderStates\PendingState.cs" />
+    <Compile Include="States\OrderStates\ShippingState.cs" />
+    <Compile Include="States\UserStates\AdminState.cs" />
+    <Compile Include="States\UserStates\GuestState.cs" />
+    <Compile Include="States\UserStates\LoggedInState.cs" />
+    <Compile Include="States\OrderState.cs" />
+    <Compile Include="States\UserState.cs" />
     <Compile Include="UI\CardRenderer.cs" />
     <Compile Include="Entities\Cart.cs" />
     <Compile Include="Entities\Cloth.cs" />

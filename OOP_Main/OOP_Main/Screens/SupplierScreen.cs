@@ -36,7 +36,8 @@ namespace OOP_Main {
 
             var choices = new List<string>();
             foreach (var supplier in _appData.Suppliers) {
-                choices.Add($"({supplier.SupplierId}) {supplier.Name}");
+                // $"({supplier.SupplierId}) {supplier.Name}"
+                choices.Add(supplier.ToString());
             }
             choices.Add("Cancel");
 

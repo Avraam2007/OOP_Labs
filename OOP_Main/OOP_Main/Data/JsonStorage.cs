@@ -32,10 +32,30 @@ namespace OOP_Main {
 
                 return data;
             }
-            catch (Exception ex) {
-                AnsiConsole.WriteException(ex, ExceptionFormats.ShortenEverything);
+            catch (JsonReaderException ex) {
+                AnsiConsole.MarkupLine($"JSON syntax error: {ex.Message}");
                 return new T();
             }
+            catch (JsonSerializationException ex) {
+                AnsiConsole.MarkupLine($"JSON structure/polymorphism error: {ex.Message}");
+                return new T();
+            }
+            catch (UnauthorizedAccessException ex) {
+                AnsiConsole.MarkupLine($"[red bold]Access Denied:[/] Cannot read '{filePath}'. {ex.Message}");
+                return new T();
+            }
+            catch (IOException ex) {
+                AnsiConsole.MarkupLine($"[red bold]I/O Error:[/] File '{filePath}' might be locked by another process. {ex.Message}");
+                return new T();
+            }
+            catch (Exception ex) {
+                AnsiConsole.MarkupLine($"[red bold]Unexpected Error loading '{filePath}':[/] {ex.Message}");
+                return new T();
+            }
+            //catch (Exception ex) {
+            //    AnsiConsole.WriteException(ex, ExceptionFormats.ShortenEverything);
+            //    return new T();
+            //}
         }
 
         public static void SaveToFile<T>(string filePath, T data) {

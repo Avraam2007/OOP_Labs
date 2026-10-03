@@ -62,7 +62,7 @@ namespace OOP_Main {
         };
 
         protected static Predicate<User> CheckIfUserIsAdmin = currentUser => {
-            return currentUser != null && currentUser.IsAdmin;
+            return currentUser != null && currentUser.IsAdmin();
         };
 
         protected static string BackToMenuPrompt(string extraOption = "") {

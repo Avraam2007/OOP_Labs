@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using OOP_Main.Entities;
+using OOP_Main.States;
 using System;
 
 namespace OOP_Main {
@@ -7,8 +8,10 @@ namespace OOP_Main {
         private readonly int _id;
         private string username;
         private string password;
-        //private Account _account;
-        private readonly bool isAdmin;
+        public readonly bool isAdmin;
+        private Account _account;
+
+        private readonly UserState _roleState;
 
         public string Username {
             get { return username; }
@@ -20,7 +23,7 @@ namespace OOP_Main {
             }
         }
         public int Id { get { return _id; } }
-        public bool IsAdmin { get { return isAdmin; } }
+        public string Role { get { return _roleState.GetRoleName(); } }
         public string Password {
             get { return password; }
             private set {
@@ -31,12 +34,12 @@ namespace OOP_Main {
             }
         }
 
-        //public Account Account {
-        //    get { return _account; }
-        //    set {
-        //        _account = value;
-        //    }
-        //}
+        public Account Account {
+            get { return _account; }
+            set {
+                _account = value;
+            }
+        }
         public User() { }
 
         [JsonConstructor]
@@ -45,7 +48,16 @@ namespace OOP_Main {
             this.Password = password;
             this._id = id;
             this.isAdmin = isAdmin;
-            //this._account = new Account(startSum);
+            if (id == 0) {
+                _roleState = new GuestState();
+            }
+            else if (isAdmin) {
+                _roleState = new AdminState();
+            }
+            else {
+                _roleState = new LoggedInState();
+            }
+            this._account = new Account(startSum);
         }
 
         public override bool Equals(object obj) {
@@ -53,6 +65,18 @@ namespace OOP_Main {
             return false;
         }
         public override int GetHashCode() => Id.GetHashCode();
-        public override string ToString() => $"[User] {Username} (Admin: {IsAdmin})";
+        public override string ToString() => $"|User #{Id}| {Username} ({this.Role})";
+
+        public void TakeMoney(double amount) => _account.Take(amount);
+
+        public void TopUpAccount(double amount) => _account.Add(amount);
+
+        public bool CanBuy() => _roleState.CanBuyProducts();
+
+        public bool IsGuest() => this.Role == "Guest";
+
+        public bool IsAdmin() => this.Role == "Administrator";
+
+        public void RegisterAccountHandler(AccountHandler del) => _account.RegisterHandler(del);
     }
 }

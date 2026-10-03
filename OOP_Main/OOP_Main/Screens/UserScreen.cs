@@ -17,7 +17,7 @@ namespace OOP_Main {
 
             var regularUsers = new List<User>();
 
-            _appData.Users.ForEach(user => { if (!user.IsAdmin) regularUsers.Add(user); });
+            _appData.Users.ForEach(user => { if (!(CheckIfUserIsAdmin(user) || user.IsGuest())) regularUsers.Add(user); });
 
 
             if (Tools.ValidateArray(regularUsers)) {
@@ -27,7 +27,8 @@ namespace OOP_Main {
 
             var choices = new List<string>();
             foreach (var user in regularUsers) {
-                choices.Add($"({user.Id}) {user.Username}");
+                //$"({user.Id}) {user.Username}"
+                choices.Add(user.ToString());
             }
             choices.Add("Cancel");
 

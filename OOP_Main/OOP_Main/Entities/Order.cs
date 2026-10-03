@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
-using Spectre.Console;
+using OOP_Main.States;
+using OOP_Main.States.OrderStates;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +12,8 @@ namespace OOP_Main {
         public int BuyerId { get;  set; }
 
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
+
+        private OrderState _state;
         public void AddProduct(Product newProduct) {
             this.Products.Add(newProduct);
         }
@@ -20,12 +23,14 @@ namespace OOP_Main {
             this.OrderId = orderId;
             this.BuyerId = buyerId;
             Products = products;
+            this._state = new PendingState();
         }
 
         public Order(int orderId, int buyerId) {
             this.OrderId = orderId;
             this.BuyerId = buyerId;
             Products = new List<Product>();
+            this._state = new PendingState();
         }
 
         public Order(int orderId, int buyerId, List<Product> products, OrderStatus status) {
@@ -36,6 +41,16 @@ namespace OOP_Main {
         }
 
         public Order() { }
+
+        public void SetState(OrderState state) {
+            this._state = state;
+        }
+
+        public void Pay() => _state.Pay();
+        public void Ship() => _state.Ship();
+        public void Cancel() => _state.Cancel();
+
+        public string GetStatusDescription() => _state.GetDescription();
 
         public object Clone() {
             return this.MemberwiseClone();
@@ -161,6 +176,6 @@ namespace OOP_Main {
             return false;
         }
         public override int GetHashCode() => OrderId.GetHashCode();
-        public override string ToString() => $"[Order] {OrderId} (From: {BuyerId})";
+        public override string ToString() => $"|Order| #{OrderId} (From: {BuyerId})";
     }
 }

@@ -52,11 +52,15 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Order" BaseTypeListCollapsed="true">
-    <Position X="14.5" Y="0.5" Width="2" />
+    <Position X="26" Y="10" Width="2" />
     <TypeIdentifier>
-      <HashCode>EAAAAAAEAAAAAAKEgAAAQEAAAQAIQYAAAAACABBAABQ=</HashCode>
+      <HashCode>EAAABAAEQAIAAgKEgAAASEAAAQCIQYAAAAACABBAABQ=</HashCode>
       <FileName>Entities\Order.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_state" />
+      <Property Name="Status" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Product">
@@ -81,21 +85,24 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Supplier" BaseTypeListCollapsed="true">
-    <Position X="19.25" Y="0.5" Width="2.5" />
+    <Position X="14.5" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AiAAAAAAAAAEAAAEgAAAAAQBAQAARIEAAAAAABAgBAA=</HashCode>
       <FileName>Entities\Supplier.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.User" BaseTypeListCollapsed="true">
-    <Position X="17" Y="0.5" Width="1.5" />
+    <Position X="22.25" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAEgQBAAAEACAAAAIgCAAAAAgAAAAA=</HashCode>
+      <HashCode>AAACAEABAAIAQAAEkQRACAEACAAAAIgCAAAQAgAAAEA=</HashCode>
       <FileName>Entities\User.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_roleState" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="OOP_Main.Tools">
-    <Position X="18.75" Y="14.75" Width="2.75" />
+    <Position X="17.5" Y="3.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAEAAAABBAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utilities\Tools.cs</FileName>
@@ -267,29 +274,81 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Builders.Director">
-    <Position X="20" Y="21.5" Width="1.5" />
+    <Position X="31" Y="10.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAAAAAAAAgAEIAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>Builders\Director.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Builders.OrderBuilder" BaseTypeListCollapsed="true">
-    <Position X="20" Y="18" Width="1.5" />
+    <Position X="28.75" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQACAAAABAAgAAAQAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Builders\OrderBuilder.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_order" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Entities.Account">
     <Position X="16.75" Y="23" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAQ=</HashCode>
+      <HashCode>AAIABAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEABAAAAAQ=</HashCode>
       <FileName>Entities\Account.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="OOP_Main.States.OrderState">
+    <Position X="29.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACQAAAAgAAIAAAAQAAAACAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>States\OrderState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.States.UserState">
+    <Position X="27.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAIAIAAAAABCAAQAAA=</HashCode>
+      <FileName>States\UserState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.States.AdminState">
+    <Position X="29.75" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAACAAQAAA=</HashCode>
+      <FileName>States\UserStates\AdminState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.States.GuestState">
+    <Position X="24.75" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAACAAQAAA=</HashCode>
+      <FileName>States\UserStates\GuestState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.States.LoggedInState">
+    <Position X="27.25" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAACAAQAAA=</HashCode>
+      <FileName>States\UserStates\LoggedInState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.States.OrderStates.PendingState">
+    <Position X="28.25" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAgAAIAAAAQAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>States\OrderStates\PendingState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.States.OrderStates.ShippingState">
+    <Position X="30.75" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAgAAIAAAAQAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>States\OrderStates\ShippingState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="OOP_Main.IScreen">
-    <Position X="17" Y="5.75" Width="1.5" />
+    <Position X="17.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IScreen.cs</FileName>
@@ -303,7 +362,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="OOP_Main.Builders.IBuilder">
-    <Position X="21.5" Y="5.75" Width="1.5" />
+    <Position X="28.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAABAAgAAAQAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Builders\IBuilder.cs</FileName>
@@ -317,7 +376,7 @@
     </TypeIdentifier>
   </Enum>
   <Enum Name="OOP_Main.OrderStatus">
-    <Position X="16.5" Y="14.25" Width="1.5" />
+    <Position X="24" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAgAAgAAAAAAAAAAAIAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>Utilities\OrderStatus.cs</FileName>

@@ -104,7 +104,8 @@ namespace OOP_Main {
 
             var choices = new List<string>();
             foreach (var order in _appData.Orders) {
-                choices.Add($"({order.OrderId}) Buyer ID: {order.BuyerId}");
+                // $"({order.OrderId}) Buyer ID: {order.BuyerId}"
+                choices.Add(order.ToString());
             }
             choices.Add("Cancel");
 
