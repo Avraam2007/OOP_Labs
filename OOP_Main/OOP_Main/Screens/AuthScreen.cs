@@ -6,7 +6,7 @@ namespace OOP_Main {
         public AuthScreen(Data appData): base(appData) { }
 
         public string LoginScreen() {
-            AnsiConsole.Clear();
+            ClearConsole();
             ShowHeader("[bold]Log in[/]");
 
             string username = DefaultTextPrompt<string>("What's your [green]username[/]?");
@@ -16,7 +16,7 @@ namespace OOP_Main {
             User user = _appData.GetUserByUsername(username);
 
             if (user == null || user.Password != password || user.IsGuest()) {
-                AnsiConsole.MarkupLine($"[red bold]Invalid username or password. Try again[/]");
+                DefaultMarkupOutput($"[red bold]Invalid username or password. Try again[/]");
                 return BackToMenuPrompt();
 
             }
@@ -24,19 +24,19 @@ namespace OOP_Main {
                 if (_appData.CurrentUser == null || _appData.CurrentUser != user) {
                     _appData.CurrentUser = user;
                 }
-                AnsiConsole.MarkupLine($"[green bold]Welcome back, {username}![/]");
+                DefaultMarkupOutput($"[green bold]Welcome back, {username}![/]");
             }
             return BackToMenuPrompt();
         }
 
         public override string Create() {
-            AnsiConsole.Clear();
+            ClearConsole();
             ShowHeader("[bold]Sign up[/]");
 
             string username = DefaultTextPrompt<string>("Enter your [green]username[/]:");
 
             if (_appData.GetUserByUsername(username) != null) {
-                AnsiConsole.MarkupLine($"[red bold]Sorry, this account was created earlier. You can log in to this account instead[/]");
+                DefaultMarkupOutput($"[red bold]Sorry, this account was created earlier. You can log in to this account instead[/]");
                 return BackToMenuPrompt(
                     GetEnumDescription(MenuOption.LogIn)
                 );
@@ -52,11 +52,11 @@ namespace OOP_Main {
                 int createdUserId = _appData.GetUserByUsername(username).Id;
 
                 _appData.CurrentUser = _appData.GetUserById(createdUserId);
-                AnsiConsole.MarkupLine($"[green bold]Account was created![/]");
+                DefaultMarkupOutput($"[green bold]Account was created![/]");
                 return BackToMenuPrompt();
             }
             else {
-                AnsiConsole.MarkupLine($"[red bold]Incorrect password. Try again[/]");
+                DefaultMarkupOutput($"[red bold]Incorrect password. Try again[/]");
                 return BackToMenuPrompt();
             }
         }

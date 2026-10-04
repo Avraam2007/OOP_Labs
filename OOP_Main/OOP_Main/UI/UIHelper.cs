@@ -29,6 +29,14 @@ namespace OOP_Main {
             return AnsiConsole.Prompt(prompt);
         }
 
+        protected static void DefaultMarkupOutput(string text) {
+            AnsiConsole.MarkupLine(text);
+        }
+
+        protected static void ClearConsole() {
+            AnsiConsole.Clear();
+        }
+
         protected static ConsolePromptHandler PasswordPrompt = text => {
             var passwordPrompt = new TextPrompt<string>(text)
                 .Secret();
@@ -72,7 +80,7 @@ namespace OOP_Main {
             }
             var choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title($"\nPress ESC or Enter to back to menu{(extraOption != "" ? $" or choose {extraOption} option" : "")}")
+                    .Title($"\nPress ESC or Enter to back to menu{(extraOption != "" ? $" or choose \"{extraOption}\" option" : "")}")
                     .AddCancelResult("Back to menu")
                     .DefaultValue("Back to menu")
                     .AddChoices(options));
@@ -80,7 +88,7 @@ namespace OOP_Main {
             return choice;
         }
         private readonly Action<int, int> PageCheck = (currentPage, totalPages) => {
-            AnsiConsole.MarkupLine($"Page {currentPage} of {totalPages}");
+            DefaultMarkupOutput($"Page {currentPage} of {totalPages}");
         };
 
         protected Func<string, bool> DefaultConfirm = (string text) => {
@@ -88,11 +96,11 @@ namespace OOP_Main {
         };
 
         protected string ShowListScreen<T>(string header, IEnumerable<T> items, string extraErrorMessage = "") where T : class {
-            AnsiConsole.Clear();
+            ClearConsole();
             ShowHeader(header);
 
             if (items == null || !items.Any()) {
-                AnsiConsole.Markup($"[red bold]Sorry, we didn't find any {header.ToLower()} in the store. {extraErrorMessage}[/]");
+                DefaultMarkupOutput($"[red bold]Sorry, we didn't find any {header.ToLower()} in the store. {extraErrorMessage}[/]");
                 return BackToMenuPrompt();
             }
             else {
@@ -102,7 +110,7 @@ namespace OOP_Main {
                 int currentPage = 1;
 
                 while (true) {
-                    AnsiConsole.Clear();
+                    ClearConsole();
                     ShowHeader(header);
                     PageCheck(currentPage, totalPages);
 

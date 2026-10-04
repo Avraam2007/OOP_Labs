@@ -10,7 +10,7 @@ namespace OOP_Main {
         public override string Show() => ShowListScreen("Suppliers", _appData.Suppliers);
 
         public override string Create() {
-            AnsiConsole.Clear();
+            ClearConsole();
             ShowHeader("[bold]Creating supplier[/]");
 
             string name = DefaultTextPrompt<string>("Enter supplier [green]name[/]:");
@@ -20,17 +20,17 @@ namespace OOP_Main {
             double rating = DefaultTextPrompt<double>("Enter supplier [green]rating (from 1.0 to 5.0)[/]:");
 
             _appData.AddSupplier(name, email, rating);
-            AnsiConsole.MarkupLine($"[green bold]New supplier is created! You can check it on \"{GetEnumDescription(MenuOption.ShowSuppliers)}\" screen.[/]");
+            DefaultMarkupOutput($"[green bold]New supplier is created! You can check it on \"{GetEnumDescription(MenuOption.ShowSuppliers)}\" screen.[/]");
 
             return BackToMenuPrompt();
         }
 
         public override string Delete() {
-            AnsiConsole.Clear();
+            ClearConsole();
             ShowHeader("[bold]Delete supplier[/]");
 
             if (Tools.ValidateArray(_appData.Suppliers)) {
-                AnsiConsole.MarkupLine("[red bold]There are no suppliers to delete.[/]");
+                DefaultMarkupOutput("[red bold]There are no suppliers to delete.[/]");
                 return BackToMenuPrompt();
             }
 
@@ -61,14 +61,14 @@ namespace OOP_Main {
                 if (confirm) {
                     bool isDeleted = _appData.DeleteSupplierByName(supplierToDelete.Name);
                     if (isDeleted) {
-                        AnsiConsole.MarkupLine("[green]Supplier successfully deleted![/]");
+                        DefaultMarkupOutput("[green]Supplier successfully deleted![/]");
                     }
                     else {
-                        AnsiConsole.MarkupLine("[red]Failed to delete supplier.[/]");
+                        DefaultMarkupOutput("[red]Failed to delete supplier.[/]");
                     }
                 }
                 else {
-                    AnsiConsole.MarkupLine("[yellow]Deleting cancelled.[/]");
+                    DefaultMarkupOutput("[yellow]Deleting cancelled.[/]");
                 }
             }
 

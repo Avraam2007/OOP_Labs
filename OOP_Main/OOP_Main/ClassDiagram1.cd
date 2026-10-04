@@ -8,7 +8,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Cloth">
-    <Position X="3" Y="19.5" Width="1.5" />
+    <Position X="3.25" Y="19.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AEAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Entities\Cloth.cs</FileName>
@@ -28,14 +28,14 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="OOP_Main.ElectronicProduct">
-    <Position X="5.25" Y="19.5" Width="1.75" />
+    <Position X="5.75" Y="19.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAgAAAAIACAEAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Entities\ElectronicProduct.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Furniture">
-    <Position X="0.75" Y="19.5" Width="1.5" />
+    <Position X="0.75" Y="19.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AEAAAAAABAAAAAQAQEAAAEBACCAAAAAgAAAAAABAAAA=</HashCode>
       <FileName>Entities\Furniture.cs</FileName>
@@ -47,7 +47,7 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>IAAAAAQAACAAAgQAAAAYAAAQAAAAABAAABAgCACBBAA=</HashCode>
+      <HashCode>IAAAAAQAACAAAgQAAAAYAAAQAAAAABAAQBAgCACBBAA=</HashCode>
       <FileName>UI\Interface.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -64,21 +64,21 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Product">
-    <Position X="3" Y="14.75" Width="1.5" />
+    <Position X="3" Y="14.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAQAAAAAEgACAAAQAGAAkAJAAAAAAAAAgAAA=</HashCode>
       <FileName>Entities\Product.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Program">
-    <Position X="10" Y="2.5" Width="1.5" />
+    <Position X="9.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Sofa">
-    <Position X="0.75" Y="23.75" Width="1.5" />
+    <Position X="1" Y="24" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQ=</HashCode>
       <FileName>Entities\Sofa.cs</FileName>
@@ -94,7 +94,7 @@
   <Class Name="OOP_Main.User" BaseTypeListCollapsed="true">
     <Position X="22.25" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAEABAAIAQAAEkQRACAEACAAAAIgCAAAQAgAAAEA=</HashCode>
+      <HashCode>AAACAEABAAIAQAAEkQRACAEACAAAAIACAAAQAgAAAEA=</HashCode>
       <FileName>Entities\User.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -130,7 +130,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.UIHelper">
-    <Position X="11" Y="4.25" Width="2.25" />
+    <Position X="11" Y="3.75" Width="2.25" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -142,14 +142,14 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAICAAAAAAgACAAAAEIIACAAAAIBAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAICAAAAAAgACAAAAEIIAGAAAAIBABAA=</HashCode>
       <FileName>UI\UIHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.UserScreen">
     <Position X="1.5" Y="12" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEBEAAAAAQAAAAAAA=</HashCode>
       <FileName>Screens\UserScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -253,7 +253,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.DiscountDecorator">
-    <Position X="16.25" Y="19" Width="2" />
+    <Position X="16.25" Y="19" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAAQACAAAAAAAAAIAIAIAAAA=</HashCode>
       <FileName>Decorators\DiscountDecorator.cs</FileName>
@@ -292,11 +292,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Entities.Account">
-    <Position X="16.75" Y="23" Width="1.5" />
+    <Position X="19.75" Y="17.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIABAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEABAAAAAQ=</HashCode>
       <FileName>Entities\Account.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="taken" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="OOP_Main.States.OrderState">
     <Position X="29.5" Y="14.5" Width="1.5" />
@@ -371,7 +374,7 @@
   <Enum Name="OOP_Main.MenuOption">
     <Position X="0.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAQDABECEAAQAgAAAAAABAAAECAAIgQAQA=</HashCode>
+      <HashCode>AAAAAAAACAAQDABECEAAQAgAAAAAABAAAECAAIgQAQA=</HashCode>
       <FileName>Utilities\Enum.cs</FileName>
     </TypeIdentifier>
   </Enum>
@@ -382,5 +385,12 @@
       <FileName>Utilities\OrderStatus.cs</FileName>
     </TypeIdentifier>
   </Enum>
+  <Delegate Name="OOP_Main.Entities.AccountHandler">
+    <Position X="19.75" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Account.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

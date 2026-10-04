@@ -9,7 +9,7 @@ namespace OOP_Main {
 
         public override string Show() {
             if (_appData.CurrentUser == null) {
-                AnsiConsole.MarkupLine($"[red bold]The access is forbidden[/]");
+                DefaultMarkupOutput($"[red bold]The access is forbidden[/]");
                 return BackToMenuPrompt(
                     GetEnumDescription(MenuOption.SignUp)
                 );
@@ -24,11 +24,11 @@ namespace OOP_Main {
         }
 
         public override string Create() {
-            AnsiConsole.Clear();
+            ClearConsole();
             ShowHeader("[bold]Creating order[/]");
 
             if (Tools.ValidateArray(_appData.Products)) {
-                AnsiConsole.MarkupLine("[red bold]No products found. Call the admin to fix this issue.[/]");
+                DefaultMarkupOutput("[red bold]No products found. Call the admin to fix this issue.[/]");
                 return BackToMenuPrompt();
             }
 
@@ -68,25 +68,49 @@ namespace OOP_Main {
                         }
                     }
                     else {
-                        AnsiConsole.MarkupLine($"[red bold]Amount should be more than 0. Try again[/]");
+                        DefaultMarkupOutput($"[red bold]Amount should be more than 0. Try again[/]");
                         continue;
                     }
                 }
                 else {
-                    AnsiConsole.MarkupLine($"[red bold]Sorry, we didn't found this product. Try again[/]");
+                    DefaultMarkupOutput($"[red bold]Sorry, we didn't found this product. Try again[/]");
                 }
                 productNames.Remove(productChoice);
-                AnsiConsole.Clear();
+                ClearConsole();
                 ShowHeader("[bold]Creating order[/]");
             }
 
             if (catalog.Count > 0) {
+                _appData.CurrentUser.RegisterAccountHandler(DefaultMarkupOutput);
+
                 int userId = _appData.CurrentUser.Id;
                 _appData.AddOrder(userId, catalog);
                 int newOrderID = _appData.GetOrdersFromUser(userId).LastOrDefault().OrderId;
 
-                AnsiConsole.MarkupLine($"[bold green rapidblink]YOUR NEW ORDER[/]");
-                InternalFlashCard(CardRenderer.GetCardInfo(_appData.GetOrderById(newOrderID)));
+                Order newOrder = _appData.GetOrderById(newOrderID);
+
+                double totalPrice = newOrder.GetTotalPrice();
+
+                bool acceptOrder = DefaultConfirm($"The order costs {totalPrice}$. Would you like to pay for it?");
+
+                if (!acceptOrder) {
+                    _appData.DeleteOrder(newOrderID);
+                    newOrder = null;
+                    return BackToMenuPrompt();
+                }
+
+                _appData.CurrentUser.TakeMoney(totalPrice);
+                if (_appData.CurrentUser.Account.Sum > totalPrice) {
+                    newOrder.Status = OrderStatus.Paid;
+                    DefaultMarkupOutput($"[bold green rapidblink]YOUR NEW ORDER[/]");
+                    InternalFlashCard(CardRenderer.GetCardInfo(newOrder));
+                }
+                else {
+                    _appData.DeleteOrder(newOrderID);
+                    newOrder = null;
+                }
+
+                return BackToMenuPrompt();
             }
 
             return BackToMenuPrompt();
@@ -94,11 +118,11 @@ namespace OOP_Main {
 
 
         public override string Delete() {
-            AnsiConsole.Clear();
+            ClearConsole();
             ShowHeader("[bold]Delete order[/]");
 
             if (Tools.ValidateArray(_appData.Orders)) {
-                AnsiConsole.MarkupLine("[red bold]There are no orders to delete.[/]");
+                DefaultMarkupOutput("[red bold]There are no orders to delete.[/]");
                 return BackToMenuPrompt();
             }
 
@@ -129,14 +153,14 @@ namespace OOP_Main {
                 if (confirm) {
                     bool isDeleted = _appData.DeleteOrder(orderToDelete.OrderId);
                     if (isDeleted) {
-                        AnsiConsole.MarkupLine("[green]Order successfully deleted![/]");
+                        DefaultMarkupOutput("[green]Order successfully deleted![/]");
                     }
                     else {
-                        AnsiConsole.MarkupLine("[red]Failed to delete order.[/]");
+                        DefaultMarkupOutput("[red]Failed to delete order.[/]");
                     }
                 }
                 else {
-                    AnsiConsole.MarkupLine("[yellow]Deleting cancelled.[/]");
+                    DefaultMarkupOutput("[yellow]Deleting cancelled.[/]");
                 }
             }
 

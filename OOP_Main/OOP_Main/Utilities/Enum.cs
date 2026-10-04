@@ -7,6 +7,7 @@ namespace OOP_Main {
         [Description("Show orders")] ShowOrders,
         [Description("Show suppliers")] ShowSuppliers,
         [Description("Show products")] ShowProducts,
+        [Description("My account")] MyAccount,
         [Description("Create order")] CreateOrder,
         [Description("Add product")] AddProduct,
         [Description("Add supplier")] AddSupplier,

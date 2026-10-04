@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace OOP_Main {
     public class UserScreen: BaseScreen {
@@ -12,7 +13,7 @@ namespace OOP_Main {
         public override string Show() => ShowListScreen("Users", _appData.Users);
 
         public override string Delete() {
-            AnsiConsole.Clear();
+            ClearConsole();
             ShowHeader("[bold]Delete user[/]");
 
             var regularUsers = new List<User>();
@@ -21,7 +22,7 @@ namespace OOP_Main {
 
 
             if (Tools.ValidateArray(regularUsers)) {
-                AnsiConsole.MarkupLine("[red bold]There are no users to delete.[/]");
+                DefaultMarkupOutput("[red bold]There are no users to delete.[/]");
                 return BackToMenuPrompt();
             }
 
@@ -53,18 +54,44 @@ namespace OOP_Main {
                 if (confirm) {
                     bool isDeleted = _appData.DeleteUserById(userToDelete.Id);
                     if (isDeleted) {
-                        AnsiConsole.MarkupLine("[green]User successfully deleted![/]");
+                        DefaultMarkupOutput("[green]User successfully deleted![/]");
                     }
                     else {
-                        AnsiConsole.MarkupLine("[red]Failed to delete user.[/]");
+                        DefaultMarkupOutput("[red]Failed to delete user.[/]");
                     }
                 }
                 else {
-                    AnsiConsole.MarkupLine("[yellow]Deleting cancelled.[/]");
+                    DefaultMarkupOutput("[yellow]Deleting cancelled.[/]");
                 }
             }
 
             return BackToMenuPrompt();
+        }
+
+        public string CheckAccount() {
+            ClearConsole();
+            ShowHeader("[bold]My account[/]");
+
+            InternalFlashCard(CardRenderer.GetCardInfo(_appData.CurrentUser));
+            //DefaultMarkupOutput($"Your name: {_appData.CurrentUser.Username}");
+            //DefaultMarkupOutput($"Your status: {_appData.CurrentUser.Role}");
+            //DefaultMarkupOutput($"Your money balance: [{(_appData.CurrentUser.Account.Sum == 0 ? "red" : "green")}]{_appData.CurrentUser.Account.Sum} $[/]");
+
+            return BackToMenuPrompt("Top up money balance");
+        }
+
+        public string TopUpBalance() {
+            ClearConsole();
+            ShowHeader("[bold]Top up money balance[/]");
+
+            _appData.CurrentUser.RegisterAccountHandler(DefaultMarkupOutput);
+            double amount = DefaultTextPrompt<double>("How much you want to [green]top up your money balance?[/] ");
+
+            _appData.CurrentUser.TopUpAccount(amount);
+
+            StatusSpinner("Sending...");
+
+            return CheckAccount();
         }
     }
 }

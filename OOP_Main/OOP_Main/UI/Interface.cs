@@ -28,6 +28,9 @@ namespace OOP_Main {
                 case "Log in":
                     RunLoginFlow();
                     break;
+                case "Top up money balance":
+                    RunTopUpFlow();
+                    break;
                 default:
                     break;
             }
@@ -43,9 +46,14 @@ namespace OOP_Main {
             HandleNavigation(nextAction);
         }
 
+        public void RunTopUpFlow() {
+            string nextAction = _userScreen.TopUpBalance();
+            HandleNavigation(nextAction);
+        }
+
         public void BootUpScreen() {
             // Styled text with markup
-            AnsiConsole.MarkupLine("[bold blue]ECommerce[/] [green]v0.16[/]");
+            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.17[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...");
@@ -62,7 +70,7 @@ namespace OOP_Main {
         }
 
         public bool BootDownScreen() {
-            AnsiConsole.Clear();
+            ClearConsole();
             var exitChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("Are you sure you want to quit the app?")
@@ -83,8 +91,8 @@ namespace OOP_Main {
         }
 
         private string CheckAccessToCreateOrder() {
-            if (AppData.CurrentUser.CanBuy()) {
-                AnsiConsole.MarkupLine($"[red bold]The access is forbidden[/]");
+            if (!AppData.CurrentUser.CanBuy()) {
+                DefaultMarkupOutput($"[red bold]The access is forbidden[/]");
                 return BackToMenuPrompt(
                     GetEnumDescription(MenuOption.SignUp)
                 );
@@ -97,7 +105,7 @@ namespace OOP_Main {
                 return GoToPage();
             }
             else {
-                AnsiConsole.MarkupLine($"[red bold]The access is forbidden. Only for admin[/]");
+                DefaultMarkupOutput($"[red bold]The access is forbidden. Only for admin[/]");
                 return BackToMenuPrompt();
             }
         }
@@ -114,7 +122,7 @@ namespace OOP_Main {
         }
 
         public bool MainScreen() {
-            AnsiConsole.Clear();
+            ClearConsole();
 
             ShowHeader("[bold]Welcome to [green]ECommerce[/][/]");
 
@@ -127,6 +135,7 @@ namespace OOP_Main {
             };
 
             var menuList = new List<MenuOption>{
+                        MenuOption.MyAccount,
                         MenuOption.ShowOrders,
                         MenuOption.ShowProducts,
                         MenuOption.ShowSuppliers,
@@ -137,6 +146,7 @@ namespace OOP_Main {
             };
 
             var adminMenuList = new List<MenuOption>{
+                        MenuOption.MyAccount,
                         MenuOption.ShowUsers,
                         MenuOption.ShowOrders,
                         MenuOption.ShowProducts,
@@ -167,6 +177,10 @@ namespace OOP_Main {
             }
 
             switch (choice) {
+                    case MenuOption.MyAccount:
+                        string nextAction = _userScreen.CheckAccount();
+                        HandleNavigation(nextAction);
+                        break;
                     case MenuOption.ShowUsers:
                         CheckAdminAccessToPage(_userScreen.Show);
                         break;

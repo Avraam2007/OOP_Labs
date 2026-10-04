@@ -8,10 +8,9 @@ namespace OOP_Main {
         private readonly int _id;
         private string username;
         private string password;
-        public readonly bool isAdmin;
         private Account _account;
 
-        private readonly UserState _roleState;
+        private UserState _roleState;
 
         public string Username {
             get { return username; }
@@ -23,7 +22,22 @@ namespace OOP_Main {
             }
         }
         public int Id { get { return _id; } }
-        public string Role { get { return _roleState.GetRoleName(); } }
+        public string Role {
+            private set {
+                if (value == "Guest") {
+                    _roleState = new GuestState();
+                }
+                else if (value == "Administrator") {
+                    _roleState = new AdminState();
+                }
+                else {
+                    _roleState = new LoggedInState();
+                }
+            }
+            get { 
+                return _roleState.GetRoleName(); 
+            } 
+        }
         public string Password {
             get { return password; }
             private set {
@@ -42,16 +56,32 @@ namespace OOP_Main {
         }
         public User() { }
 
-        [JsonConstructor]
-        public User(int id, string username, string password, int startSum = 0, bool isAdmin = false) {
+
+        public User(int id, string username, string password, double startSum = 0, bool isAdmin = false) {
             this.Username = username;
             this.Password = password;
             this._id = id;
-            this.isAdmin = isAdmin;
             if (id == 0) {
                 _roleState = new GuestState();
             }
             else if (isAdmin) {
+                _roleState = new AdminState();
+            }
+            else {
+                _roleState = new LoggedInState();
+            }
+            this._account = new Account(startSum);
+        }
+
+        [JsonConstructor]
+        public User(int id, string username, string password, string Role, double startSum = 0) {
+            this.Username = username;
+            this.Password = password;
+            this._id = id;
+            if (id == 0 || Role == "Guest") {
+                _roleState = new GuestState();
+            }
+            else if (Role == "Administrator") {
                 _roleState = new AdminState();
             }
             else {

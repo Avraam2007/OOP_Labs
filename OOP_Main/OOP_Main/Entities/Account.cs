@@ -14,18 +14,28 @@ namespace OOP_Main.Entities {
                 if (value < 0) {
                     sum = 0;
                 }
-                sum = value;
+                sum = Math.Round(value, 2, MidpointRounding.AwayFromZero);
             } 
         }
         public Account(double sum) => this.Sum = sum;
-        public void Add(double sum) => this.Sum += sum;
+        public void Add(double sum) {
+            if (sum < 0) {
+                taken?.Invoke($"[bold red]Adding money should be positive[/]");
+            }
+            else if (sum > 1000) {
+                taken?.Invoke($"[bold red]Too much money. You should better send the money by parts.[/]");
+            }
+            else {
+                this.Sum += sum;
+            }
+        }
         public void Take(double sum) {
             if (this.sum >= sum) {
                 this.sum -= sum;
-                taken?.Invoke($"New transaction: -{sum} $");
+                taken?.Invoke($"[bold green]New transaction: -{sum} $[/]");
             }
             else {
-                taken?.Invoke($"Not enough money. Balance: {this.sum} $.");
+                taken?.Invoke($"[bold red]Not enough money. Balance: {this.sum} $.[/]");
             }
 
         }
