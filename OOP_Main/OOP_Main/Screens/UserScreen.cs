@@ -26,11 +26,13 @@ namespace OOP_Main {
                 return BackToMenuPrompt();
             }
 
-            var choices = new List<string>();
+            var userChoicesMap = new Dictionary<string, User>();
             foreach (var user in regularUsers) {
-                //$"({user.Id}) {user.Username}"
-                choices.Add(user.ToString());
+                userChoicesMap.Add(user.ToString(), user);
             }
+
+            var choices = userChoicesMap.Keys.ToList();
+
             choices.Add("Cancel");
 
             var selectedChoice = AnsiConsole.Prompt(
@@ -41,9 +43,7 @@ namespace OOP_Main {
 
             if (selectedChoice == "Cancel") return BackToMenuPrompt();
 
-            int userId = Convert.ToInt32(selectedChoice.Split(')')[0].TrimStart('('));
-
-            User userToDelete = _appData.Users.FirstOrDefault(u => u.Id == userId);
+            User userToDelete = userChoicesMap[selectedChoice];
 
             if (userToDelete != null) {
                 bool confirm = AnsiConsole.Confirm(

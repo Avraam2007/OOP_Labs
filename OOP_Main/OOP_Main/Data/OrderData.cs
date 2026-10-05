@@ -1,24 +1,15 @@
-﻿using OOP_Main.Builders;
+﻿using NOptional;
+using OOP_Main.Builders;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace OOP_Main {
-    public class OrderData: IBridgeJSON {
-        private const string OrdersFilePath = "DataStorage/orders.json";
-        public List<Order> Orders { get; private set; } = new List<Order>();
+    public class OrderData: BaseDataRepository<Order, int> {
+        public List<Order> Orders => Items;
 
-        public void Load() {
-            Orders = JsonStorage.LoadFromFile<List<Order>>(OrdersFilePath);
-        }
+        public OrderData() : base("DataStorage/orders.json") { }
 
-        public void Save() {
-            JsonStorage.SaveToFile(OrdersFilePath, Orders);
-        }
-
-        public void AddOrder(Order order) {
-            Orders.Add(order);
-            JsonStorage.SaveToFile(OrdersFilePath, Orders);
-        }
+        public void AddOrder(Order order) => Add(order);
 
         public void AddOrder(int buyerId, List<Product> catalog) {
             int newOrderId = Orders.Count > 0 ? Orders.Max(o => o.OrderId) : 0;
@@ -33,15 +24,7 @@ namespace OOP_Main {
             AddOrder(newOrder);
         }
 
-        public bool DeleteOrder(int id) {
-            Order orderToDelete = this.GetOrderById(id);
-            if (orderToDelete != null) {
-                Orders.Remove(orderToDelete);
-                JsonStorage.SaveToFile(OrdersFilePath, Orders);
-                return true;
-            }
-            return false;
-        }
+        public bool DeleteOrder(int id) => Remove(id);
 
         public List<Order> GetOrdersFromUser(int userId) {
             List<Order> ordersFromUser = new List<Order>();
@@ -51,10 +34,12 @@ namespace OOP_Main {
             return ordersFromUser;
         }
 
-        public Order GetOrderById(int id) {
+        public override IOptional<Order> Get(int id) {
             Order foundOrder = Orders.Find((order) => order.OrderId == id);
-            return foundOrder;
+            return Optional.OfNullable(foundOrder);
         }
+
+        public IOptional<Order> GetOrderById(int id) => this.Get(id);
 
 
     }

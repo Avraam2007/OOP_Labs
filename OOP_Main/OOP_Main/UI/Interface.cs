@@ -53,7 +53,7 @@ namespace OOP_Main {
 
         public void BootUpScreen() {
             // Styled text with markup
-            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.17[/]");
+            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.18[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...");
@@ -62,7 +62,7 @@ namespace OOP_Main {
 
         public void Start() {
             BootUpScreen();
-            AppData.CurrentUser = AppData.GetUserById(0) ?? new User(0, "Guest", "123");
+            AppData.CurrentUser = AppData.GetUserById(0).GetValueOrElse(new User(0, "Guest", "123"));
             bool isRunning = true;
             while (isRunning) {
                 isRunning = MainScreen();

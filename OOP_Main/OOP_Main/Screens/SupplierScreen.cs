@@ -34,11 +34,13 @@ namespace OOP_Main {
                 return BackToMenuPrompt();
             }
 
-            var choices = new List<string>();
+            var supplierChoicesMap = new Dictionary<string, Supplier>();
             foreach (var supplier in _appData.Suppliers) {
-                // $"({supplier.SupplierId}) {supplier.Name}"
-                choices.Add(supplier.ToString());
+                supplierChoicesMap.Add(supplier.ToString(), supplier);
             }
+
+            var choices = supplierChoicesMap.Keys.ToList();
+
             choices.Add("Cancel");
 
             var selectedChoice = AnsiConsole.Prompt(
@@ -49,8 +51,7 @@ namespace OOP_Main {
 
             if (selectedChoice == "Cancel") return BackToMenuPrompt();
 
-            int id = Convert.ToInt32(selectedChoice.Split(')')[0].TrimStart('('));
-            Supplier supplierToDelete = _appData.Suppliers.FirstOrDefault(sup => sup.SupplierId == id);
+            Supplier supplierToDelete = supplierChoicesMap[selectedChoice];
 
             if (supplierToDelete != null) {
                 bool confirm = AnsiConsole.Confirm(

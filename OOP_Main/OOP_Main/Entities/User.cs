@@ -4,7 +4,7 @@ using OOP_Main.States;
 using System;
 
 namespace OOP_Main {
-    public class User {
+    public class User: IIdentifiable<int> {
         private readonly int _id;
         private string username;
         private string password;

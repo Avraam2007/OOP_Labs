@@ -3,10 +3,13 @@ using System;
 using System.Collections.Generic;
 
 namespace OOP_Main {
-    public class Supplier {
+    public class Supplier: IIdentifiable<int> {
         private double rating;
         private int supplierId;
+
         public int SupplierId { get => supplierId; }
+
+        int IIdentifiable<int>.Id => this.SupplierId;
         public string Name { get; set; }
         public string ContactEmail { get; set; }
         public double Rating {
@@ -30,6 +33,8 @@ namespace OOP_Main {
             Rating = rating;
             this.supplierId = supplierId;
         }
+
+        public Supplier() { }
 
         public void AddProductToCatalog(Product product) {
             if (product != null) {

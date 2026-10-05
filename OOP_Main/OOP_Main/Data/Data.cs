@@ -1,5 +1,7 @@
-﻿using System;
+﻿using NOptional;
+using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace OOP_Main {
     public class Data {
@@ -58,22 +60,48 @@ namespace OOP_Main {
 
         public bool DeleteSupplierByName(string name) => _supplierData.DeleteSupplierByName(name);
 
-        public bool DeleteProductByName(string name) => _productData.DeleteProductByName(name, Suppliers);
-        public bool DeleteProductByArticle(string article) => _productData.DeleteProductByArticle(article, Suppliers);
+        public bool DeleteProductByName(string name) {
+            bool isDeleted = _productData.DeleteProductByName(name);
 
-        public User GetUserById(int id) => _userData.GetUserById(id);
+            if (isDeleted) {
+                foreach (var supplier in _supplierData.Suppliers) {
+                    supplier.Catalog.RemoveAll(product => product.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                }
+
+                _supplierData.Save();
+
+                return true;
+            }
+            return false;
+        }
+        public bool DeleteProductByArticle(string article) {
+            bool isDeleted = _productData.DeleteProductByArticle(article);
+
+            if (isDeleted) {
+                foreach (var supplier in _supplierData.Suppliers) {
+                    supplier.Catalog.RemoveAll(product => product.Article.Equals(article, StringComparison.OrdinalIgnoreCase));
+                }
+
+                _supplierData.Save();
+
+                return true;
+            }
+            return false;
+        }
+
+        public IOptional<User> GetUserById(int id) => _userData.GetUserById(id);
 
         public List<Order> GetOrdersFromUser(int userId) => _orderData.GetOrdersFromUser(userId);
 
-        public Order GetOrderById(int id) => _orderData.GetOrderById(id);
+        public IOptional<Order> GetOrderById(int id) => _orderData.GetOrderById(id);
 
-        public Product GetProductByArticle(string article) => _productData.GetProductByArticle(article);
+        public IOptional<Product> GetProductByArticle(string article) => _productData.GetProductByArticle(article);
 
-        public Product GetProductByName(string name) => _productData.GetProductByName(name);
+        public IOptional<Product> GetProductByName(string name) => _productData.GetProductByName(name);
 
-        public User GetUserByUsername(string username) => _userData.GetUserByUsername(username);
+        public IOptional<User> GetUserByUsername(string username) => _userData.GetUserByUsername(username);
 
-        public Supplier GetSupplierByName(string name) => _supplierData.GetSupplierByName(name);
+        public IOptional<Supplier> GetSupplierByName(string name) => _supplierData.GetSupplierByName(name);
 
         public void ChangeProductPriceByArticle(string article, double newPrice) => _productData.ChangeProductPriceByArticle(article, newPrice);
 

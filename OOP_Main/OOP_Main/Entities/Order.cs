@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 
 namespace OOP_Main {
-    public class Order: ICloneable {
+    public class Order: ICloneable, IIdentifiable<int> {
         private int orderId;
         public int OrderId { get => orderId; set { orderId = value; } }
+
+        int IIdentifiable<int>.Id => this.OrderId;
         public List<Product> Products { get; set; }
         public int BuyerId { get;  set; }
 

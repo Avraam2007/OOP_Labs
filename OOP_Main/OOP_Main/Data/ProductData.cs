@@ -1,63 +1,41 @@
-﻿using System;
+﻿using NOptional;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace OOP_Main {
-    public class ProductData: IBridgeJSON {
-        private const string ProductsFilePath = "DataStorage/products.json";
-        public List<Product> Products { get; private set; } = new List<Product>();
+    public class ProductData: BaseDataRepository<Product, string> {
+        public List<Product> Products => Items;
 
-        public void Load() {
-            Products = JsonStorage.LoadFromFile<List<Product>>(ProductsFilePath);
-        }
-        public void Save() {
-            JsonStorage.SaveToFile(ProductsFilePath, Products);
-        }
+        public ProductData() : base("DataStorage/products.json") { }
 
-        public void AddProduct(Product product) {
-            Products.Add(product);
-            JsonStorage.SaveToFile(ProductsFilePath, Products);
-        }
+        public void AddProduct(Product product) => Add(product);
 
-        public bool DeleteProductByName(string name, List<Supplier> suppliers) {
-            Product productToDelete = this.GetProductByName(name);
-            if (productToDelete != null) {
-                Products.Remove(productToDelete);
-                JsonStorage.SaveToFile(ProductsFilePath, Products);
+        public bool DeleteProductByName(string name) {
+            var productToDelete = this.GetProductByName(name);
 
-                foreach (var supplier in suppliers) {
-                    supplier.Catalog.RemoveAll(product => product.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-                }
-                JsonStorage.SaveToFile(SupplierData.SuppliersFilePath, suppliers);
-
-                return true;
+            if (productToDelete.IsEmpty()) {
+                return false;
             }
-            return false;
+
+            Products.Remove(productToDelete.GetValueOrElseThrow());
+            this.Save();
+
+            return true;
         }
 
-        public bool DeleteProductByArticle(string article, List<Supplier> suppliers) {
-            Product productToDelete = this.GetProductByArticle(article);
-            if (productToDelete != null) {
-                Products.Remove(productToDelete);
-                JsonStorage.SaveToFile(ProductsFilePath, Products);
+        public bool DeleteProductByArticle(string article) => Remove(article);
 
-                foreach (var supplier in suppliers) {
-                    supplier.Catalog.RemoveAll(product => product.Article.Equals(article, StringComparison.OrdinalIgnoreCase));
-                }
-                JsonStorage.SaveToFile(SupplierData.SuppliersFilePath, suppliers);
-                return true;
-            }
-            return false;
+        public override IOptional<Product> Get(string article) {
+            var foundProduct = Products.Find((product) => product.Article == article);
+            return Optional.OfNullable(foundProduct);
         }
 
-        public Product GetProductByArticle(string article) {
-            Product foundProduct = Products.Find((product) => product.Article == article);
-            return foundProduct;
-        }
+        public IOptional<Product> GetProductByArticle(string article) => this.Get(article);
 
-        public Product GetProductByName(string name) {
-            Product foundProduct = Products.Find((product) => product.Name == name);
-            return foundProduct;
+        public IOptional<Product> GetProductByName(string name) {
+            var foundProduct = Products.Find((product) => product.Name == name);
+            return Optional.OfNullable(foundProduct);
         }
 
         public void ChangeProductPriceByArticle(string article, double newPrice) {
@@ -73,10 +51,12 @@ namespace OOP_Main {
         }
 
         public string GenerateNextProductArticle(Type productType) {
-            var existingProducts = Products
+            var foundExistingProducts = Products
                 .Select(p => GetBaseProduct(p))
                 .Where(p => p.GetType() == productType)
                 .ToList();
+
+            IOptional<List<Product>> existingProducts = Optional.Of(foundExistingProducts);
 
             string prefix = "PRD";
 
@@ -87,13 +67,15 @@ namespace OOP_Main {
 
             int maxNumber = 0;
 
-            if (existingProducts != null) {
-                foreach (var product in existingProducts) {
-                    if (product.Article != null && product.Article.StartsWith(prefix + "-")) {
-                        string numberPart = product.Article.Substring(prefix.Length + 1);
-                        if (int.TryParse(numberPart, out int num) && num > maxNumber) {
-                            maxNumber = num;
-                        }
+            if (existingProducts.IsEmpty()) {
+                throw new NullReferenceException();
+            }
+
+            foreach (var product in existingProducts.GetValueOrElseThrow()) {
+                if (product.Article != null && product.Article.StartsWith(prefix + "-")) {
+                    string numberPart = product.Article.Substring(prefix.Length + 1);
+                    if (int.TryParse(numberPart, out int num) && num > maxNumber) {
+                        maxNumber = num;
                     }
                 }
             }

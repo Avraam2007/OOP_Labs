@@ -44,6 +44,9 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NOptional, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NOptional.0.3.0\lib\netstandard2.0\NOptional.dll</HintPath>
+    </Reference>
     <Reference Include="Spectre.Console, Version=0.0.0.0, Culture=neutral, PublicKeyToken=170fe27f8af98a30, processorArchitecture=MSIL">
       <HintPath>..\packages\Spectre.Console.0.57.2\lib\netstandard2.0\Spectre.Console.dll</HintPath>
     </Reference>
@@ -79,6 +82,7 @@
   <ItemGroup>
     <Compile Include="Builders\Director.cs" />
     <Compile Include="Builders\OrderBuilder.cs" />
+    <Compile Include="Data\BaseData.cs" />
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Builders\IBuilder.cs" />
     <Compile Include="Screens\AuthScreen.cs" />
@@ -109,6 +113,7 @@
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Data\OrderData.cs" />
     <Compile Include="Screens\OrderScreen.cs" />
+    <Compile Include="Utilities\Exceptions.cs" />
     <Compile Include="Utilities\OrderStatus.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Data\ProductData.cs" />

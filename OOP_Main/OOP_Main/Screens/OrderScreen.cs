@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using NOptional;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,8 +59,9 @@ namespace OOP_Main {
                     continue;
                 }
 
-                Product chosenProduct = _appData.GetProductByName(productChoice);
-                if (chosenProduct != null) {
+                IOptional<Product> foundProduct = _appData.GetProductByName(productChoice);
+                if (foundProduct.HasValue()) {
+                    Product chosenProduct = foundProduct.Value;
                     int amount = DefaultTextPrompt<int>("Enter [green]amount[/] of this product");
 
                     if (amount > 0) {
@@ -87,7 +89,7 @@ namespace OOP_Main {
                 _appData.AddOrder(userId, catalog);
                 int newOrderID = _appData.GetOrdersFromUser(userId).LastOrDefault().OrderId;
 
-                Order newOrder = _appData.GetOrderById(newOrderID);
+                Order newOrder = _appData.GetOrderById(newOrderID).Value;
 
                 double totalPrice = newOrder.GetTotalPrice();
 
@@ -126,11 +128,13 @@ namespace OOP_Main {
                 return BackToMenuPrompt();
             }
 
-            var choices = new List<string>();
+            var orderChoicesMap = new Dictionary<string, Order>();
             foreach (var order in _appData.Orders) {
-                // $"({order.OrderId}) Buyer ID: {order.BuyerId}"
-                choices.Add(order.ToString());
+                orderChoicesMap.Add(order.ToString(), order);
             }
+
+            var choices = orderChoicesMap.Keys.ToList();
+
             choices.Add("Cancel");
 
             var selectedChoice = AnsiConsole.Prompt(
@@ -140,18 +144,17 @@ namespace OOP_Main {
                     .AddChoices(choices));
 
             if (selectedChoice == "Cancel") return BackToMenuPrompt();
+            IOptional<Order> orderToDelete = Optional.OfNullable(orderChoicesMap[selectedChoice]);
 
-            int id = Convert.ToInt32(selectedChoice.Split(')')[0].TrimStart('('));
-            Order orderToDelete = _appData.Orders.FirstOrDefault(order => order.OrderId == id);
-
-            if (orderToDelete != null) {
+            if (orderToDelete.HasValue()) {
+                int orderId = orderToDelete.Value.OrderId;
                 bool confirm = AnsiConsole.Confirm(
-                    $"Are you sure you want to delete this order ({orderToDelete.OrderId})?",
+                    $"Are you sure you want to delete this order ({orderId})?",
                     defaultValue: false
                 );
 
                 if (confirm) {
-                    bool isDeleted = _appData.DeleteOrder(orderToDelete.OrderId);
+                    bool isDeleted = _appData.DeleteOrder(orderId);
                     if (isDeleted) {
                         DefaultMarkupOutput("[green]Order successfully deleted![/]");
                     }

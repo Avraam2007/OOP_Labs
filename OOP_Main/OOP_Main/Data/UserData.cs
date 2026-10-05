@@ -3,23 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NOptional;
+namespace OOP_Main 
+    {
+    public class UserData: BaseDataRepository<User, int> {
+        public List<User> Users => Items;
 
-namespace OOP_Main {
-    internal class UserData: IBridgeJSON {
-        private const string UsersFilePath = "DataStorage/users.json";
-        public List<User> Users { get; private set; } = new List<User>();
-        public void Load() {
-            Users = JsonStorage.LoadFromFile<List<User>>(UsersFilePath);
-        }
+        public UserData() : base("DataStorage/users.json") { }
 
-        public void Save() {
-            JsonStorage.SaveToFile(UsersFilePath, Users);
-        }
-
-        public void AddUser(User user) {
-            Users.Add(user);
-            JsonStorage.SaveToFile(UsersFilePath, Users);
-        }
+        public void AddUser(User user) => Add(user);
 
         public void AddUser(string name, string password, bool isAdmin = false) {
             int newUserId = Users.Count > 1 ? Users.Max(u => u.Id) : 0;
@@ -29,34 +21,28 @@ namespace OOP_Main {
             AddUser(newUser);
         }
 
-        public bool DeleteUserById(int id) {
-            User userToDelete = this.GetUserById(id);
-            if (userToDelete != null) {
-                Users.Remove(userToDelete);
-                JsonStorage.SaveToFile(UsersFilePath, Users);
-                return true;
-            }
-            return false;
-        }
+        public bool DeleteUserById(int id) => Remove(id);
 
         public bool DeleteUserByUsername(string username) {
-            User userToDelete = this.GetUserByUsername(username);
-            if (userToDelete != null) {
-                Users.Remove(userToDelete);
-                JsonStorage.SaveToFile(UsersFilePath, Users);
+            IOptional<User> userToDelete = this.GetUserByUsername(username);
+            if (userToDelete.HasValue()) {
+                Users.Remove(userToDelete.GetValueOrElseThrow());
+                Save();
                 return true;
             }
             return false;
         }
 
-        public User GetUserById(int id) {
+        public override IOptional<User> Get(int id) {
             User foundUser = Users.Find((user) => user.Id == id);
-            return foundUser;
+            return Optional.OfNullable(foundUser);
         }
 
-        public User GetUserByUsername(string username) {
+        public IOptional<User> GetUserById(int id) => this.Get(id);
+
+        public IOptional<User> GetUserByUsername(string username) {
             User foundUser = Users.Find((user) => user.Username == username);
-            return foundUser;
+            return Optional.OfNullable(foundUser);
         }
     }
 }

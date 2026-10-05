@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using NOptional;
+using Spectre.Console;
 using System;
 
 namespace OOP_Main {
@@ -13,14 +14,15 @@ namespace OOP_Main {
 
             string password = PasswordPrompt("What's your [green]password[/]?");
 
-            User user = _appData.GetUserByUsername(username);
+            IOptional<User> foundUser = _appData.GetUserByUsername(username);
 
-            if (user == null || user.Password != password || user.IsGuest()) {
+            if (foundUser.IsEmpty() || foundUser.Value.Password != password || foundUser.Value.IsGuest()) {
                 DefaultMarkupOutput($"[red bold]Invalid username or password. Try again[/]");
                 return BackToMenuPrompt();
 
             }
             else {
+                User user = foundUser.Value;
                 if (_appData.CurrentUser == null || _appData.CurrentUser != user) {
                     _appData.CurrentUser = user;
                 }
@@ -35,7 +37,7 @@ namespace OOP_Main {
 
             string username = DefaultTextPrompt<string>("Enter your [green]username[/]:");
 
-            if (_appData.GetUserByUsername(username) != null) {
+            if (_appData.GetUserByUsername(username).HasValue()) {
                 DefaultMarkupOutput($"[red bold]Sorry, this account was created earlier. You can log in to this account instead[/]");
                 return BackToMenuPrompt(
                     GetEnumDescription(MenuOption.LogIn)
@@ -49,9 +51,9 @@ namespace OOP_Main {
             if (confirmPassword == password) {
                 _appData.AddUser(username, password);
 
-                int createdUserId = _appData.GetUserByUsername(username).Id;
+                int createdUserId = _appData.GetUserByUsername(username).Value.Id;
 
-                _appData.CurrentUser = _appData.GetUserById(createdUserId);
+                _appData.CurrentUser = _appData.GetUserById(createdUserId).Value;
                 DefaultMarkupOutput($"[green bold]Account was created![/]");
                 return BackToMenuPrompt();
             }

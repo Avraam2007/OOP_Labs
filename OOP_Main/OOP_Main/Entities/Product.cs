@@ -1,11 +1,13 @@
 ﻿using System;
 
 namespace OOP_Main {
-    public abstract class Product {
+    public abstract class Product: IIdentifiable<string> {
         private string article;
         private string name;
         private double price;
         public int SupplierId { get; set; }
+
+        string IIdentifiable<string>.Id => this.Article;
         public virtual string Article {
             get {
                 return article;

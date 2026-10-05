@@ -19,7 +19,7 @@ namespace OOP_Main {
                 changedProduct = new ExtendedWarrantyDecorator(newProduct, years: 1);
             }
             _appData.AddProduct(changedProduct);
-            _appData.GetSupplierByName(supplierChoice).AddProductToCatalog(changedProduct);
+            _appData.GetSupplierByName(supplierChoice).Value.AddProductToCatalog(changedProduct);
             DefaultMarkupOutput($"[green bold]New product is created! You can check it on \"{GetEnumDescription(MenuOption.ShowProducts)}\" screen.[/]");
         }
 
@@ -88,7 +88,7 @@ namespace OOP_Main {
 
             string supplierChoice = AnsiConsole.Prompt(supplierPrompt);
 
-            int supplierId = _appData.GetSupplierByName(supplierChoice).SupplierId;
+            int supplierId = _appData.GetSupplierByName(supplierChoice).GetValueOrElseThrow().SupplierId;
 
             switch (categoryChoice) {
                 case "Electronic product":
