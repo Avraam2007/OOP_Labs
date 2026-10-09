@@ -15,7 +15,7 @@ namespace OOP_Main {
         public List<Order> Orders => _orderData.Orders;
         public List<Supplier> Suppliers => _supplierData.Suppliers;
 
-        public User CurrentUser { get; set; }
+        public IOptional<User> CurrentUser { get; set; }
 
         public Data() {
             _userData = new UserData();

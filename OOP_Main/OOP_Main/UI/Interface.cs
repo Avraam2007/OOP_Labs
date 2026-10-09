@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using NOptional;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 
@@ -53,7 +54,7 @@ namespace OOP_Main {
 
         public void BootUpScreen() {
             // Styled text with markup
-            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.18[/]");
+            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.19[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...");
@@ -62,7 +63,7 @@ namespace OOP_Main {
 
         public void Start() {
             BootUpScreen();
-            AppData.CurrentUser = AppData.GetUserById(0).GetValueOrElse(new User(0, "Guest", "123"));
+            AppData.CurrentUser = Optional.OfNullable(AppData.GetUserById(0).GetValueOrElse(new User(0, "Guest", "123")));
             bool isRunning = true;
             while (isRunning) {
                 isRunning = MainScreen();
@@ -91,8 +92,8 @@ namespace OOP_Main {
         }
 
         private string CheckAccessToCreateOrder() {
-            if (!AppData.CurrentUser.CanBuy()) {
-                DefaultMarkupOutput($"[red bold]The access is forbidden[/]");
+            if (!AppData.CurrentUser.Value.CanBuy()) {
+                DefaultErrorOutput("The access is forbidden");
                 return BackToMenuPrompt(
                     GetEnumDescription(MenuOption.SignUp)
                 );
@@ -105,7 +106,7 @@ namespace OOP_Main {
                 return GoToPage();
             }
             else {
-                DefaultMarkupOutput($"[red bold]The access is forbidden. Only for admin[/]");
+                DefaultErrorOutput("The access is forbidden. Only for admin");
                 return BackToMenuPrompt();
             }
         }
@@ -124,7 +125,7 @@ namespace OOP_Main {
         public bool MainScreen() {
             ClearConsole();
 
-            ShowHeader("[bold]Welcome to [green]ECommerce[/][/]");
+            ShowHeader("Welcome to [green]ECommerce[/]");
 
             List<MenuOption> guestMenuList = new List<MenuOption>{
                         MenuOption.ShowProducts,
@@ -169,7 +170,7 @@ namespace OOP_Main {
             if (CheckIfUserIsAdmin(AppData.CurrentUser)) {
                 choice = MainMenuList(adminMenuList);
             }
-            else if (!AppData.CurrentUser.IsGuest()) {
+            else if (!AppData.CurrentUser.Value.IsGuest()) {
                 choice = MainMenuList(menuList);
             }
             else {

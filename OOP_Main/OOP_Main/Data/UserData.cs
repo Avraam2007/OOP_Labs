@@ -33,7 +33,7 @@ namespace OOP_Main
             return false;
         }
 
-        public override IOptional<User> Get(int id) {
+        protected override IOptional<User> Get(int id) {
             User foundUser = Users.Find((user) => user.Id == id);
             return Optional.OfNullable(foundUser);
         }

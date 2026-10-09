@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using NOptional;
+using Spectre.Console;
 using Spectre.Console.Rendering;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,14 @@ namespace OOP_Main {
             AnsiConsole.MarkupLine(text);
         }
 
+        protected static void DefaultErrorOutput(string message) {
+            DefaultMarkupOutput($"[red bold]{message}[/]");
+        }
+
+        protected static void DefaultSuccessOutput(string message) {
+            DefaultMarkupOutput($"[green bold]{message}[/]");
+        }
+
         protected static void ClearConsole() {
             AnsiConsole.Clear();
         }
@@ -44,7 +53,7 @@ namespace OOP_Main {
             return AnsiConsole.Prompt(passwordPrompt);
         };
 
-        protected static void InternalFlashCard(Dictionary<string, Spectre.Console.Text> dataForCard) {
+        protected static void InternalFlashCard(Dictionary<string, IRenderable> dataForCard) {
             var contentElements = new List<IRenderable>();
             foreach (var element in dataForCard) {
                 contentElements.Add(element.Value);
@@ -59,7 +68,7 @@ namespace OOP_Main {
 
         protected static Action<string> ShowHeader = text => {
             var logoPanel = new Panel(
-                new Markup(text, new Style(foreground: Color.Blue))
+                new Markup($"[bold]{text}[/]", new Style(foreground: Color.Blue))
                 )
                 .BorderColor(Color.Blue)
                 .Padding(2, 2);
@@ -69,9 +78,10 @@ namespace OOP_Main {
             AnsiConsole.Write(new Rule());
         };
 
-        protected static Predicate<User> CheckIfUserIsAdmin = currentUser => {
-            return currentUser != null && currentUser.IsAdmin();
-        };
+        protected static bool CheckIfUserIsAdmin(IOptional<User> currentUser) {
+            return currentUser.HasValue() && currentUser.Value.IsAdmin();
+        }
+        protected static bool CheckIfUserIsAdmin(User currentUser) => CheckIfUserIsAdmin(Optional.OfNullable(currentUser));
 
         protected static string BackToMenuPrompt(string extraOption = "") {
             List<string> options = new List<string> { "Back to menu" };
@@ -100,7 +110,7 @@ namespace OOP_Main {
             ShowHeader(header);
 
             if (items == null || !items.Any()) {
-                DefaultMarkupOutput($"[red bold]Sorry, we didn't find any {header.ToLower()} in the store. {extraErrorMessage}[/]");
+                DefaultErrorOutput($"Sorry, we didn't find any {header.ToLower()} in the store. {extraErrorMessage}");
                 return BackToMenuPrompt();
             }
             else {

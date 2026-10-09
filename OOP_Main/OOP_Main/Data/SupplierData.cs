@@ -31,7 +31,7 @@ namespace OOP_Main {
 
         public bool DeleteSupplierById(int id) => Remove(id);
 
-        public override IOptional<Supplier> Get(int id) {
+        protected override IOptional<Supplier> Get(int id) {
             Supplier foundSupplier = Suppliers.Find((supplier) => supplier.SupplierId == id);
             return Optional.OfNullable(foundSupplier);
         }

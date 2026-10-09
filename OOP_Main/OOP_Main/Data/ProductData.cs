@@ -26,7 +26,7 @@ namespace OOP_Main {
 
         public bool DeleteProductByArticle(string article) => Remove(article);
 
-        public override IOptional<Product> Get(string article) {
+        protected override IOptional<Product> Get(string article) {
             var foundProduct = Products.Find((product) => product.Article == article);
             return Optional.OfNullable(foundProduct);
         }

@@ -90,9 +90,10 @@
   <Class Name="OOP_Main.AuthScreen">
     <Position X="10.75" Y="13" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAEEAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Screens\AuthScreen.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.OrderScreen">
     <Position X="15.75" Y="13" Width="1.75" />
@@ -100,6 +101,7 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Screens\OrderScreen.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.ProductScreen">
     <Position X="8.25" Y="13" Width="1.75" />
@@ -107,6 +109,7 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEECEACAAAAAAAAAAA=</HashCode>
       <FileName>Screens\ProductScreen.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.UIHelper">
     <Position X="15.25" Y="4.25" Width="2.25" />
@@ -121,16 +124,17 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAICAAAAAAgACAAAAEIIAGAAAAIBABAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgEICAAAAAAgACAAAAEIIAGAAAAIBABAA=</HashCode>
       <FileName>UI\UIHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.UserScreen">
     <Position X="5.75" Y="13" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEBEAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEBAAAAAAQAAAAAAA=</HashCode>
       <FileName>Screens\UserScreen.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.JsonStorage">
     <Position X="13" Y="16.25" Width="1.5" />
@@ -152,14 +156,14 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Screens\SupplierScreen.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.BaseScreen">
     <Position X="10.75" Y="10" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAEEAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Screens\BaseScreen.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.OrderData">
     <Position X="8.25" Y="20" Width="2.25" />
@@ -259,12 +263,9 @@
   <Class Name="OOP_Main.Entities.Account">
     <Position X="23" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIABAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEABAAAAAQ=</HashCode>
+      <HashCode>AAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAQ=</HashCode>
       <FileName>Entities\Account.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="taken" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="OOP_Main.States.OrderState">
     <Position X="6" Y="4.25" Width="1.5" />
@@ -382,7 +383,7 @@
   <Class Name="OOP_Main.User">
     <Position X="20" Y="1.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAEABAAIAQAAEkQRACAEACAAAAIACAAAQAgAAAEA=</HashCode>
+      <HashCode>AAACAEAAAAIAQAAEkQRACAEACAAAAIACAAAQAgAAAEA=</HashCode>
       <FileName>Entities\User.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -393,7 +394,7 @@
   <Interface Name="OOP_Main.IScreen">
     <Position X="10.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IScreen.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -432,12 +433,5 @@
       <FileName>Utilities\OrderStatus.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Delegate Name="OOP_Main.Entities.AccountHandler">
-    <Position X="23" Y="6" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Entities\Account.cs</FileName>
-    </TypeIdentifier>
-  </Delegate>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

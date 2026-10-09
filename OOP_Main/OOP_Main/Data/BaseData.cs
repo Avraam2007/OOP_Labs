@@ -27,12 +27,12 @@ namespace OOP_Main {
             JsonStorage.SaveToFile(FilePath, Items);
         }
 
-        public virtual void Add(T obj) {
+        protected virtual void Add(T obj) {
             Items.Add(obj);
             this.Save();
         }
 
-        public virtual bool Remove(TId id) {
+        protected virtual bool Remove(TId id) {
             IOptional<T> itemToDelete = this.Get(id);
             if (itemToDelete.HasValue()) {
                 Items.Remove(itemToDelete.GetValueOrElseThrow());
@@ -42,6 +42,6 @@ namespace OOP_Main {
             return false;
         }
 
-        public abstract IOptional<T> Get(TId id);
+        protected abstract IOptional<T> Get(TId id);
     }
 }

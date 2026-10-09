@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace OOP_Main {
-    public class SupplierScreen: BaseScreen {
+    public class SupplierScreen: BaseScreen, IScreen {
         public SupplierScreen(Data appData): base(appData) { }
 
-        public override string Show() => ShowListScreen("Suppliers", _appData.Suppliers);
+        public string Show() => ShowListScreen("Suppliers", _appData.Suppliers);
 
-        public override string Create() {
+        public string Create() {
             ClearConsole();
-            ShowHeader("[bold]Creating supplier[/]");
+            ShowHeader("Creating supplier");
 
             string name = DefaultTextPrompt<string>("Enter supplier [green]name[/]:");
 
@@ -25,12 +25,12 @@ namespace OOP_Main {
             return BackToMenuPrompt();
         }
 
-        public override string Delete() {
+        public string Delete() {
             ClearConsole();
-            ShowHeader("[bold]Delete supplier[/]");
+            ShowHeader("Delete supplier");
 
             if (Tools.ValidateArray(_appData.Suppliers)) {
-                DefaultMarkupOutput("[red bold]There are no suppliers to delete.[/]");
+                DefaultErrorOutput("There are no suppliers to delete.");
                 return BackToMenuPrompt();
             }
 
@@ -65,7 +65,7 @@ namespace OOP_Main {
                         DefaultMarkupOutput("[green]Supplier successfully deleted![/]");
                     }
                     else {
-                        DefaultMarkupOutput("[red]Failed to delete supplier.[/]");
+                        DefaultErrorOutput("Failed to delete supplier.");
                     }
                 }
                 else {

@@ -32,7 +32,7 @@ namespace OOP_Main.Utilities {
             public double CurrentBalance { get; }
 
             public InsufficientFundsException(double requiredAmount, double currentBalance)
-                : base($"Not enough! Потрібно: {requiredAmount}$, доступно: {currentBalance}$.") {
+                : base($"Not enough! Requires: {requiredAmount}$, balance: {currentBalance}$.") {
                 RequiredAmount = requiredAmount;
                 CurrentBalance = currentBalance;
             }

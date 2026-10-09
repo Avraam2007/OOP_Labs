@@ -52,10 +52,6 @@ namespace OOP_Main {
                 AnsiConsole.MarkupLine($"[red bold]Unexpected Error loading '{filePath}':[/] {ex.Message}");
                 return new T();
             }
-            //catch (Exception ex) {
-            //    AnsiConsole.WriteException(ex, ExceptionFormats.ShortenEverything);
-            //    return new T();
-            //}
         }
 
         public static void SaveToFile<T>(string filePath, T data) {
@@ -68,8 +64,14 @@ namespace OOP_Main {
                 string json = JsonConvert.SerializeObject(data, Settings);
                 File.WriteAllText(filePath, json);
             }
+            catch (UnauthorizedAccessException ex) {
+                AnsiConsole.MarkupLine($"[red bold]Access Denied:[/] Cannot write '{filePath}'. {ex.Message}");
+            }
+            catch (IOException ex) {
+                AnsiConsole.MarkupLine($"[red bold]I/O Error:[/] File '{filePath}' might be locked by another process. {ex.Message}");
+            }
             catch (Exception ex) {
-                Console.WriteLine($"Error saving file {filePath}: {ex.Message}");
+                AnsiConsole.MarkupLine($"Error saving file {filePath}: {ex.Message}");
             }
         }
     }

@@ -3,14 +3,15 @@ using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static OOP_Main.Utilities.Exceptions;
 
 namespace OOP_Main {
-    public class OrderScreen: BaseScreen {
+    public class OrderScreen: BaseScreen, IScreen {
         public OrderScreen(Data appData): base(appData) { }
 
-        public override string Show() {
-            if (_appData.CurrentUser == null) {
-                DefaultMarkupOutput($"[red bold]The access is forbidden[/]");
+        public string Show() {
+            if (_appData.CurrentUser.IsEmpty()) {
+                DefaultErrorOutput($"The access is forbidden");
                 return BackToMenuPrompt(
                     GetEnumDescription(MenuOption.SignUp)
                 );
@@ -19,17 +20,17 @@ namespace OOP_Main {
                 "Orders",
                 CheckIfUserIsAdmin(_appData.CurrentUser) ?
                 _appData.Orders :
-                _appData.GetOrdersFromUser(_appData.CurrentUser.Id),
+                _appData.GetOrdersFromUser(_appData.CurrentUser.Value.Id),
                 "You can create it."
             );
         }
 
-        public override string Create() {
+        public string Create() {
             ClearConsole();
-            ShowHeader("[bold]Creating order[/]");
+            ShowHeader("Creating order");
 
             if (Tools.ValidateArray(_appData.Products)) {
-                DefaultMarkupOutput("[red bold]No products found. Call the admin to fix this issue.[/]");
+                DefaultErrorOutput("No products found. Call the admin to fix this issue.");
                 return BackToMenuPrompt();
             }
 
@@ -63,29 +64,26 @@ namespace OOP_Main {
                 if (foundProduct.HasValue()) {
                     Product chosenProduct = foundProduct.Value;
                     int amount = DefaultTextPrompt<int>("Enter [green]amount[/] of this product");
-
-                    if (amount > 0) {
-                        for (int i = 0; i < amount; i++) {
-                            catalog.Add(chosenProduct);
-                        }
-                    }
-                    else {
-                        DefaultMarkupOutput($"[red bold]Amount should be more than 0. Try again[/]");
+                    
+                    if (amount <= 0) {
+                        DefaultErrorOutput($"Amount should be more than 0. Try again");
                         continue;
+                    }
+
+                    for (int i = 0; i < amount; i++) {
+                        catalog.Add(chosenProduct);
                     }
                 }
                 else {
-                    DefaultMarkupOutput($"[red bold]Sorry, we didn't found this product. Try again[/]");
+                    DefaultErrorOutput($"Sorry, we didn't found this product. Try again");
                 }
                 productNames.Remove(productChoice);
                 ClearConsole();
-                ShowHeader("[bold]Creating order[/]");
+                ShowHeader("Creating order");
             }
 
             if (catalog.Count > 0) {
-                _appData.CurrentUser.RegisterAccountHandler(DefaultMarkupOutput);
-
-                int userId = _appData.CurrentUser.Id;
+                int userId = _appData.CurrentUser.Value.Id;
                 _appData.AddOrder(userId, catalog);
                 int newOrderID = _appData.GetOrdersFromUser(userId).LastOrDefault().OrderId;
 
@@ -97,19 +95,23 @@ namespace OOP_Main {
 
                 if (!acceptOrder) {
                     _appData.DeleteOrder(newOrderID);
-                    newOrder = null;
                     return BackToMenuPrompt();
                 }
 
-                _appData.CurrentUser.TakeMoney(totalPrice);
-                if (_appData.CurrentUser.Account.Sum > totalPrice) {
+                try {
+                    _appData.CurrentUser.Value.TakeMoney(totalPrice);
+                    DefaultMarkupOutput($"[bold green]New transaction: -{totalPrice} $[/]");
                     newOrder.Status = OrderStatus.Paid;
                     DefaultMarkupOutput($"[bold green rapidblink]YOUR NEW ORDER[/]");
                     InternalFlashCard(CardRenderer.GetCardInfo(newOrder));
                 }
-                else {
+                catch (InsufficientFundsException ex) {
+                    DefaultErrorOutput(ex.Message);
                     _appData.DeleteOrder(newOrderID);
-                    newOrder = null;
+                }
+                catch (ArgumentException ex) {
+                    DefaultErrorOutput(ex.Message);
+                    _appData.DeleteOrder(newOrderID);
                 }
 
                 return BackToMenuPrompt();
@@ -119,12 +121,12 @@ namespace OOP_Main {
         }
 
 
-        public override string Delete() {
+        public string Delete() {
             ClearConsole();
-            ShowHeader("[bold]Delete order[/]");
+            ShowHeader("Delete order");
 
             if (Tools.ValidateArray(_appData.Orders)) {
-                DefaultMarkupOutput("[red bold]There are no orders to delete.[/]");
+                DefaultErrorOutput("There are no orders to delete.");
                 return BackToMenuPrompt();
             }
 
@@ -159,7 +161,7 @@ namespace OOP_Main {
                         DefaultMarkupOutput("[green]Order successfully deleted![/]");
                     }
                     else {
-                        DefaultMarkupOutput("[red]Failed to delete order.[/]");
+                        DefaultErrorOutput("Failed to delete order.");
                     }
                 }
                 else {

@@ -1,9 +1,10 @@
 ﻿using Spectre.Console;
+using Spectre.Console.Rendering;
 using System.Collections.Generic;
 
 namespace OOP_Main {
     public static class CardRenderer {
-        public static Dictionary<string, Text> GetCardInfo(object item) {
+        public static Dictionary<string, IRenderable> GetCardInfo(object item) {
             switch (item) {
                 case User user:
                     return GetUserCard(user);
@@ -21,14 +22,14 @@ namespace OOP_Main {
                     return GetSupplierCard(supplier);
 
                 default:
-                    return new Dictionary<string, Text> {
+                    return new Dictionary<string, IRenderable> {
                         ["header"] = new Text(item?.ToString() ?? string.Empty)
                     };
             }
         }
 
-        private static Dictionary<string, Text> GetUserCard(User user) {
-            return new Dictionary<string, Text> {
+        private static Dictionary<string, IRenderable> GetUserCard(User user) {
+            return new Dictionary<string, IRenderable> {
                 ["header"] = new Text($"{user.Username}\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["id"] = new Text($"ID: {user.Id}\n"),
                 ["role"] = new Text($"Role: {user.Role}\n"),
@@ -36,8 +37,8 @@ namespace OOP_Main {
             };
         }
 
-        private static Dictionary<string, Text> GetOrderCard(Order order) {
-            var card = new Dictionary<string, Text> {
+        private static Dictionary<string, IRenderable> GetOrderCard(Order order) {
+            var card = new Dictionary<string, IRenderable> {
                 ["header"] = new Text($"ORDER #{order.OrderId}\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["buyer"] = new Text($"Buyer ID: {order.BuyerId}\n"),
                 ["total"] = new Text($"Total price: {order.GetTotalPrice()}$\n"),
@@ -72,9 +73,9 @@ namespace OOP_Main {
              return card;
         }
 
-        private static Dictionary<string, Text> GetProductCard(Product product) {
+        private static Dictionary<string, IRenderable> GetProductCard(Product product) {
             string categoryTitle = Tools.GetTypeName(product).AddSpacesBetweenCapitalizedWords().ToUpper();
-            var card = new Dictionary<string, Text> {
+            var card = new Dictionary<string, IRenderable> {
                 ["header"] = new Text($"{categoryTitle} \"{product.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["article"] = new Text($"Article: {product.Article}\n"),
                 ["price"] = new Text($"Price: {product.Price}$\n")
@@ -109,9 +110,9 @@ namespace OOP_Main {
             return card;
         }
 
-        private static Dictionary<string, Text> GetProductDecoratorCard(ProductDecorator decorator) {
+        private static Dictionary<string, IRenderable> GetProductDecoratorCard(ProductDecorator decorator) {
             string categoryTitle = Tools.GetTypeName(decorator).AddSpacesBetweenCapitalizedWords().ToUpper();
-            var card = new Dictionary<string, Text> {
+            var card = new Dictionary<string, IRenderable> {
                 ["header"] = new Text($"{categoryTitle} \"{decorator.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["article"] = new Text($"Article: {decorator.Article}\n"),
                 ["price"] = new Text($"Price: {decorator.Price}$\n")
@@ -139,8 +140,8 @@ namespace OOP_Main {
             return card;
         }
 
-        private static Dictionary<string, Text> GetSupplierCard(Supplier supplier) {
-            var card = new Dictionary<string, Text> {
+        private static Dictionary<string, IRenderable> GetSupplierCard(Supplier supplier) {
+            var card = new Dictionary<string, IRenderable> {
                 ["header"] = new Text($"SUPPLIER \"{supplier.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["rating"] = new Text($"Rating: {supplier.Rating}/5.0\n"),
                 ["id"] = new Text($"Supplier ID: {supplier.SupplierId}\n"),

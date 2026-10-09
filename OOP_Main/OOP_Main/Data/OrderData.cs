@@ -34,7 +34,7 @@ namespace OOP_Main {
             return ordersFromUser;
         }
 
-        public override IOptional<Order> Get(int id) {
+        protected override IOptional<Order> Get(int id) {
             Order foundOrder = Orders.Find((order) => order.OrderId == id);
             return Optional.OfNullable(foundOrder);
         }

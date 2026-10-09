@@ -3,12 +3,12 @@ using Spectre.Console;
 using System;
 
 namespace OOP_Main {
-    public class AuthScreen: BaseScreen {
+    public class AuthScreen: BaseScreen, ICreateScreen {
         public AuthScreen(Data appData): base(appData) { }
 
         public string LoginScreen() {
             ClearConsole();
-            ShowHeader("[bold]Log in[/]");
+            ShowHeader("Log in");
 
             string username = DefaultTextPrompt<string>("What's your [green]username[/]?");
 
@@ -17,28 +17,26 @@ namespace OOP_Main {
             IOptional<User> foundUser = _appData.GetUserByUsername(username);
 
             if (foundUser.IsEmpty() || foundUser.Value.Password != password || foundUser.Value.IsGuest()) {
-                DefaultMarkupOutput($"[red bold]Invalid username or password. Try again[/]");
-                return BackToMenuPrompt();
+                DefaultErrorOutput($"Invalid username or password. Try again");
 
             }
             else {
-                User user = foundUser.Value;
-                if (_appData.CurrentUser == null || _appData.CurrentUser != user) {
-                    _appData.CurrentUser = user;
+                if (_appData.CurrentUser.IsEmpty() || _appData.CurrentUser != foundUser) {
+                    _appData.CurrentUser = foundUser;
                 }
-                DefaultMarkupOutput($"[green bold]Welcome back, {username}![/]");
+                DefaultSuccessOutput($"Welcome back, {username}!");
             }
             return BackToMenuPrompt();
         }
 
-        public override string Create() {
+        public string Create() {
             ClearConsole();
-            ShowHeader("[bold]Sign up[/]");
+            ShowHeader("Sign up");
 
             string username = DefaultTextPrompt<string>("Enter your [green]username[/]:");
 
             if (_appData.GetUserByUsername(username).HasValue()) {
-                DefaultMarkupOutput($"[red bold]Sorry, this account was created earlier. You can log in to this account instead[/]");
+                DefaultErrorOutput($"Sorry, this user was created earlier. You can log in to this account instead");
                 return BackToMenuPrompt(
                     GetEnumDescription(MenuOption.LogIn)
                 );
@@ -49,26 +47,24 @@ namespace OOP_Main {
             string confirmPassword = PasswordPrompt("Confirm your [green]password[/]:");
 
             if (confirmPassword == password) {
-                _appData.AddUser(username, password);
+                try {
+                    _appData.AddUser(username, password);
 
-                int createdUserId = _appData.GetUserByUsername(username).Value.Id;
+                    int createdUserId = _appData.GetUserByUsername(username).Value.Id;
 
-                _appData.CurrentUser = _appData.GetUserById(createdUserId).Value;
-                DefaultMarkupOutput($"[green bold]Account was created![/]");
+                    _appData.CurrentUser = _appData.GetUserById(createdUserId);
+                    DefaultSuccessOutput("Account was created!");
+                }
+                catch (ArgumentException e) {
+                    DefaultErrorOutput(e.Message);
+                    return BackToMenuPrompt();
+                }
                 return BackToMenuPrompt();
             }
             else {
-                DefaultMarkupOutput($"[red bold]Incorrect password. Try again[/]");
+                DefaultErrorOutput($"Incorrect password. Try again");
                 return BackToMenuPrompt();
             }
-        }
-
-        public override string Show() {
-            throw new NotImplementedException();
-        }
-
-        public override string Delete() {
-            throw new NotImplementedException();
         }
     }
 }

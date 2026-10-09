@@ -106,7 +106,5 @@ namespace OOP_Main {
         public bool IsGuest() => this.Role == "Guest";
 
         public bool IsAdmin() => this.Role == "Administrator";
-
-        public void RegisterAccountHandler(AccountHandler del) => _account.RegisterHandler(del);
     }
 }
