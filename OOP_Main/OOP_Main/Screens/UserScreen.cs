@@ -44,7 +44,7 @@ namespace OOP_Main {
             User userToDelete = userChoicesMap[selectedChoice];
 
             if (userToDelete != null) {
-                bool confirm = AnsiConsole.Confirm(
+                bool confirm = DefaultConfirm(
                     $"Are you sure you want to delete [red]\"{userToDelete.Username}\"[/] ({userToDelete.Id})?",
                     defaultValue: false
                 );

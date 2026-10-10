@@ -158,7 +158,7 @@ namespace OOP_Main {
 
             if (foundProduct.HasValue()) {
                 var productToDelete = foundProduct.Value;
-                bool confirm = AnsiConsole.Confirm(
+                bool confirm = DefaultConfirm(
                     $"Are you sure you want to delete [red]\"{productToDelete.Name}\"[/] ({productToDelete.Article})?",
                     defaultValue: false
                 );

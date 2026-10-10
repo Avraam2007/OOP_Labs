@@ -54,7 +54,7 @@ namespace OOP_Main {
             Supplier supplierToDelete = supplierChoicesMap[selectedChoice];
 
             if (supplierToDelete != null) {
-                bool confirm = AnsiConsole.Confirm(
+                bool confirm = DefaultConfirm(
                     $"Are you sure you want to delete [red]\"{supplierToDelete.Name}\"[/] ({supplierToDelete.SupplierId})?",
                     defaultValue: false
                 );
