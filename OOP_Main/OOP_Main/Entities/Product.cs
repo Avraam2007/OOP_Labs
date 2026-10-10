@@ -60,7 +60,7 @@ namespace OOP_Main {
             return false;
         }
         public override int GetHashCode() => Article?.GetHashCode() ?? 0;
-        public override string ToString() => $"{Name} ({Article}) - {Price}$";
+        public override string ToString() => $"({Article}) {Name} - {Price}$";
 
         public abstract double CalculateShippingCost();
     }

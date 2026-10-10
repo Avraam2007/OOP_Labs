@@ -20,7 +20,7 @@ namespace OOP_Main {
             double rating = DefaultTextPrompt<double>("Enter supplier [green]rating (from 1.0 to 5.0)[/]:");
 
             _appData.AddSupplier(name, email, rating);
-            DefaultMarkupOutput($"[green bold]New supplier is created! You can check it on \"{GetEnumDescription(MenuOption.ShowSuppliers)}\" screen.[/]");
+            DefaultSuccessOutput($"New supplier is created! You can check it on \"{GetEnumDescription(MenuOption.ShowSuppliers)}\" screen.");
 
             return BackToMenuPrompt();
         }
@@ -62,7 +62,7 @@ namespace OOP_Main {
                 if (confirm) {
                     bool isDeleted = _appData.DeleteSupplierByName(supplierToDelete.Name);
                     if (isDeleted) {
-                        DefaultMarkupOutput("[green]Supplier successfully deleted![/]");
+                        DefaultSuccessOutput("Supplier successfully deleted!");
                     }
                     else {
                         DefaultErrorOutput("Failed to delete supplier.");

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using static OOP_Main.Utilities.Exceptions;
 
 namespace OOP_Main {
     public class ProductScreen: BaseScreen, IScreen {
@@ -18,9 +19,14 @@ namespace OOP_Main {
             if (isExtendedWarranty) {
                 changedProduct = new ExtendedWarrantyDecorator(newProduct, years: 1);
             }
-            _appData.AddProduct(changedProduct);
-            _appData.GetSupplierByName(supplierChoice).Value.AddProductToCatalog(changedProduct);
-            DefaultSuccessOutput($"New product is created! You can check it on \"{GetEnumDescription(MenuOption.ShowProducts)}\" screen.");
+            try {
+                _appData.AddProduct(changedProduct);
+                _appData.GetSupplierByName(supplierChoice).Value.AddProductToCatalog(changedProduct);
+                DefaultSuccessOutput($"New product is created! You can check it on \"{GetEnumDescription(MenuOption.ShowProducts)}\" screen.");
+            }
+            catch (ArgumentException ex) {
+                DefaultErrorOutput(ex.Message);
+            }
         }
 
         public string Create() {
@@ -117,7 +123,7 @@ namespace OOP_Main {
                     }
                     break;
                 default:
-                    DefaultMarkupOutput("[red]Factory for this category is not implemented yet.[/]");
+                    DefaultErrorOutput("Factory for this category is not implemented yet.");
                     break;
             }
 
@@ -135,7 +141,7 @@ namespace OOP_Main {
 
             var choices = new List<string>();
             foreach (var p in _appData.Products) {
-                choices.Add($"({p.Article}) {p.Name} - {p.Price}$");
+                choices.Add(p.ToString());
             }
             choices.Add("Cancel");
 
@@ -148,9 +154,10 @@ namespace OOP_Main {
             if (selectedChoice == "Cancel") return BackToMenuPrompt();
 
             string article = selectedChoice.Split(')')[0].TrimStart('(');
-            Product productToDelete = _appData.Products.FirstOrDefault(p => p.Article == article);
+            var foundProduct = _appData.GetProductByArticle(article);
 
-            if (productToDelete != null) {
+            if (foundProduct.HasValue()) {
+                var productToDelete = foundProduct.Value;
                 bool confirm = AnsiConsole.Confirm(
                     $"Are you sure you want to delete [red]\"{productToDelete.Name}\"[/] ({productToDelete.Article})?",
                     defaultValue: false
@@ -194,9 +201,12 @@ namespace OOP_Main {
                 try {
                     productChoice.Price = newPrice;
                     _appData.ChangeProductPriceByArticle(productChoice.Article, newPrice);
-                    DefaultMarkupOutput("[green]Product updated successfully![/]");
+                    DefaultSuccessOutput("Product updated successfully!");
                 }
                 catch (ArgumentException ex) {
+                    DefaultErrorOutput(ex.Message);
+                }
+                catch (EntityNotFoundException ex) {
                     DefaultErrorOutput(ex.Message);
                 }
             }

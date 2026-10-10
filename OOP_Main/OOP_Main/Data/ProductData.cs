@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static OOP_Main.Utilities.Exceptions;
 
 namespace OOP_Main {
     public class ProductData: BaseDataRepository<Product, string> {
@@ -39,13 +40,17 @@ namespace OOP_Main {
         }
 
         public void ChangeProductPriceByArticle(string article, double newPrice) {
-            Products.Find((product) => product.Article == article).Price = newPrice;
+            var foundProduct = this.GetProductByArticle(article);
+            if (foundProduct.IsEmpty()) {
+                throw new EntityNotFoundException(nameof(foundProduct.Value), article);
+            }
+            this.GetProductByArticle(article).Value.Price = newPrice;
         }
 
         private static Product GetBaseProduct(Product product) {
             // Рекурсивно знімаємо всі декоратори, щоб дістатися до Cloth, Sofa тощо
-            while (product is ProductDecorator decorator && decorator.TargetProduct != null) {
-                product = decorator.TargetProduct;
+            while (product is ProductDecorator decorator && decorator.TargetProduct.HasValue()) {
+                product = decorator.TargetProduct.GetValueOrElseThrow();
             }
             return product;
         }

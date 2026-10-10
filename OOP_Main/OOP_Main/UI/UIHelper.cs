@@ -42,9 +42,9 @@ namespace OOP_Main {
             DefaultMarkupOutput($"[green bold]{message}[/]");
         }
 
-        protected static void ClearConsole() {
+        protected static Action ClearConsole = () => {
             AnsiConsole.Clear();
-        }
+        };
 
         protected static ConsolePromptHandler PasswordPrompt = text => {
             var passwordPrompt = new TextPrompt<string>(text)
@@ -101,15 +101,15 @@ namespace OOP_Main {
             DefaultMarkupOutput($"Page {currentPage} of {totalPages}");
         };
 
-        protected Func<string, bool> DefaultConfirm = (string text) => {
-            return AnsiConsole.Confirm(text);
-        };
+        protected bool DefaultConfirm(string text, bool defaultValue = true) {
+            return AnsiConsole.Confirm(text, defaultValue);
+        }
 
         protected string ShowListScreen<T>(string header, IEnumerable<T> items, string extraErrorMessage = "") where T : class {
             ClearConsole();
             ShowHeader(header);
 
-            if (items == null || !items.Any()) {
+            if (Tools.ValidateArray(items)) {
                 DefaultErrorOutput($"Sorry, we didn't find any {header.ToLower()} in the store. {extraErrorMessage}");
                 return BackToMenuPrompt();
             }

@@ -22,9 +22,7 @@ namespace OOP_Main {
 
         protected override string GetDecoratedArticle(string baseArticle) => $"EXTWAR-{baseArticle}";
 
-        public override double CalculateShippingCost() => TargetProduct?.CalculateShippingCost() ?? 0;
-
-        public override double Price => TargetProduct.Price + (TargetProduct.Price * 0.10 * _years);
-        public override string Name => $"{TargetProduct.Name} (+{_years} yr Warranty)";
+        public override double Price => this.GetProductPrice() + (this.GetProductPrice() * 0.10 * _years);
+        public override string Name => $"{this.GetName()} (+{_years} yr Warranty)";
     }
 }

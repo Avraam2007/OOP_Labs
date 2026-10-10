@@ -100,7 +100,7 @@ namespace OOP_Main {
 
                 try {
                     _appData.CurrentUser.Value.TakeMoney(totalPrice);
-                    DefaultMarkupOutput($"[bold green]New transaction: -{totalPrice} $[/]");
+                    DefaultSuccessOutput($"New transaction: -{totalPrice} $");
                     newOrder.Status = OrderStatus.Paid;
                     DefaultMarkupOutput($"[bold green rapidblink]YOUR NEW ORDER[/]");
                     InternalFlashCard(CardRenderer.GetCardInfo(newOrder));
@@ -150,7 +150,7 @@ namespace OOP_Main {
 
             if (orderToDelete.HasValue()) {
                 int orderId = orderToDelete.Value.OrderId;
-                bool confirm = AnsiConsole.Confirm(
+                bool confirm = DefaultConfirm(
                     $"Are you sure you want to delete this order ({orderId})?",
                     defaultValue: false
                 );
@@ -158,7 +158,7 @@ namespace OOP_Main {
                 if (confirm) {
                     bool isDeleted = _appData.DeleteOrder(orderId);
                     if (isDeleted) {
-                        DefaultMarkupOutput("[green]Order successfully deleted![/]");
+                        DefaultSuccessOutput("Order successfully deleted!");
                     }
                     else {
                         DefaultErrorOutput("Failed to delete order.");

@@ -52,7 +52,7 @@ namespace OOP_Main {
                 if (confirm) {
                     bool isDeleted = _appData.DeleteUserById(userToDelete.Id);
                     if (isDeleted) {
-                        DefaultMarkupOutput("[green]User successfully deleted![/]");
+                        DefaultSuccessOutput("User successfully deleted!");
                     }
                     else {
                         DefaultErrorOutput("Failed to delete user.");

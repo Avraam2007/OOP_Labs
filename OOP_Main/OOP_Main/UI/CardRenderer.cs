@@ -83,7 +83,7 @@ namespace OOP_Main {
 
             switch (product) {
                 case ProductDecorator decorator:
-                    return GetProductCard(decorator.TargetProduct);
+                    return GetProductCard(decorator.TargetProduct.GetValueOrElseThrow());
                 case ElectronicProduct ep:
                     card["power"] = new Text($"Power: {ep.Power} W\n");
                     card["voltage"] = new Text($"Max Voltage: {ep.MaxVoltage} V\n");
@@ -120,14 +120,14 @@ namespace OOP_Main {
 
             var innerProduct = decorator.TargetProduct;
 
-            if (innerProduct == null) {
+            if (innerProduct.IsEmpty()) {
                 card["empty_product"] = new Text("  (No product in this decorator)\n", new Style(foreground: Color.Red));
                 return card;
             }
 
-            var productSpecs = GetProductCard(innerProduct);
+            var productSpecs = GetProductCard(innerProduct.Value);
 
-            card[$"prod_name"] = new Text($"\n  [{innerProduct.Article}] {innerProduct.Name}\n", new Style(foreground: Color.Green, decoration: Decoration.Bold));
+            card[$"prod_name"] = new Text($"\n  [{innerProduct.Value.Article}] {innerProduct.Value.Name}\n", new Style(foreground: Color.Green, decoration: Decoration.Bold));
 
             foreach (var spec in productSpecs) {
                 if (spec.Key == "header") continue;

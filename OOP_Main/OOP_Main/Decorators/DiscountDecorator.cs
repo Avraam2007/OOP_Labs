@@ -28,10 +28,8 @@ namespace OOP_Main {
 
         protected override string GetDecoratedArticle(string baseArticle) => $"DISC-{baseArticle}";
 
-        public override double CalculateShippingCost() => TargetProduct?.CalculateShippingCost() ?? 0;
-
-        public override double Price => TargetProduct != null 
-            ? TargetProduct.Price * (1.0 - (DiscountPercent / 100.0)) : base.Price;
-        public override string Name => TargetProduct != null ? $"{TargetProduct.Name} ({DiscountPercent}% OFF)" : base.Name;
+        public override double Price => TargetProduct.HasValue()
+            ? this.GetProductPrice() * (1.0 - (DiscountPercent / 100.0)) : base.Price;
+        public override string Name => TargetProduct.HasValue() ? $"{this.GetName()} ({DiscountPercent}% OFF)" : base.Name;
     }
 }
