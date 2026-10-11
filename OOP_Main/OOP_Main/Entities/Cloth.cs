@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOP_Main.Utilities;
+using System;
 
 namespace OOP_Main {
     public class Cloth : Product {

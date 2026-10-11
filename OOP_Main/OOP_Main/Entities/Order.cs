@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using OOP_Main.States;
 using OOP_Main.States.OrderStates;
+using OOP_Main.Utilities;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +12,8 @@ namespace OOP_Main {
 
         int IIdentifiable<int>.Id => this.OrderId;
         public List<Product> Products { get; set; }
+
+        public DateTime Date { get; set; }
         public int BuyerId { get;  set; }
 
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
@@ -21,11 +24,12 @@ namespace OOP_Main {
         }
 
         [JsonConstructor]
-        public Order(int orderId, int buyerId, List<Product> products) {
+        public Order(int orderId, int buyerId, List<Product> products, DateTime date) {
             this.OrderId = orderId;
             this.BuyerId = buyerId;
             Products = products;
             this._state = new PendingState();
+            this.Date = date;
         }
 
         public Order(int orderId, int buyerId) {

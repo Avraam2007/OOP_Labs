@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace OOP_Main.Builders {
     public interface IBuilder {
@@ -9,6 +10,8 @@ namespace OOP_Main.Builders {
         void SetCustomer(int buyerId);
 
         void AddCatalog(List<Product> products);
+
+        void AddDate(DateTime date);
 
         void SetStatus(OrderStatus status);
     }

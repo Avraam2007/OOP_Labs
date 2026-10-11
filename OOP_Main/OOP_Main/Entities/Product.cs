@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOP_Main.Utilities;
+using System;
 
 namespace OOP_Main {
     public abstract class Product: IIdentifiable<string> {
@@ -15,7 +16,10 @@ namespace OOP_Main {
             set {
                 string polishedArticle = value.Trim();
                 if (string.IsNullOrWhiteSpace(polishedArticle)) {
-                    throw new ArgumentException("Article shouldn\'t be empty", nameof(polishedArticle));
+                    throw new ArgumentNullException("Article shouldn\'t be empty", nameof(polishedArticle));
+                }
+                if (!Tools.IsValidArticle(polishedArticle)) {
+                    throw new ArgumentException("Article doesn't meet requirements", nameof(polishedArticle));
                 }
                 article = polishedArticle;
             }

@@ -54,7 +54,7 @@ namespace OOP_Main {
 
         public void BootUpScreen() {
             // Styled text with markup
-            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.19[/]");
+            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.20[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...");

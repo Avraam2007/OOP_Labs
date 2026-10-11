@@ -29,6 +29,10 @@ namespace OOP_Main.Builders {
             _order.Products = products;
         }
 
+        public void AddDate(DateTime date) {
+            _order.Date = date;
+        }
+
         public void SetStatus(OrderStatus orderStatus) {
             _order.Status = orderStatus;
         }

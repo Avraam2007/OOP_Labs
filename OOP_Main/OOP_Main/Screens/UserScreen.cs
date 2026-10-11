@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using OOP_Main.Utilities;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,9 +72,6 @@ namespace OOP_Main {
             ShowHeader("My account");
 
             InternalFlashCard(CardRenderer.GetCardInfo(_appData.CurrentUser.Value));
-            //DefaultMarkupOutput($"Your name: {_appData.CurrentUser.Username}");
-            //DefaultMarkupOutput($"Your status: {_appData.CurrentUser.Role}");
-            //DefaultMarkupOutput($"Your money balance: [{(_appData.CurrentUser.Account.Sum == 0 ? "red" : "green")}]{_appData.CurrentUser.Account.Sum} $[/]");
 
             return BackToMenuPrompt("Top up money balance");
         }

@@ -1,17 +1,27 @@
-﻿using Spectre.Console;
+﻿using OOP_Main.Utilities;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 
 namespace OOP_Main {
     public class Supplier: IIdentifiable<int> {
         private double rating;
-        private int supplierId;
+        private readonly int supplierId;
+        private string _contactEmail;
 
         public int SupplierId { get => supplierId; }
 
         int IIdentifiable<int>.Id => this.SupplierId;
         public string Name { get; set; }
-        public string ContactEmail { get; set; }
+        public string ContactEmail { 
+            get => this._contactEmail;
+            set {
+                if (!Tools.IsValidEmail(value)) {
+                    throw new ArgumentException("Email doesn't meet requirements", nameof(value));
+                }
+                this._contactEmail = value;
+            } 
+        }
         public double Rating {
             get {
                 return rating;

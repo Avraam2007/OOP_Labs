@@ -16,11 +16,13 @@ namespace OOP_Main.Builders {
         public void BuildEmptyOrder(int orderId, int buyerId) {
             this._builder.SetOrderId(orderId);
             this._builder.SetCustomer(buyerId);
+            this._builder.AddDate(DateTime.Now);
         }
 
         public void BuildOrderWithProducts(int orderId, int buyerId, List<Product> products) {
             this._builder.SetOrderId(orderId);
             this._builder.SetCustomer(buyerId);
+            this._builder.AddDate(DateTime.Now);
             this._builder.AddCatalog(products);
         }
 
@@ -28,6 +30,7 @@ namespace OOP_Main.Builders {
             this._builder.SetOrderId(orderId);
             this._builder.SetCustomer(buyerId);
             this._builder.AddCatalog(products);
+            this._builder.AddDate(DateTime.Now);
             this._builder.SetStatus(orderStatus);
         }
     }

@@ -1,9 +1,10 @@
-﻿using Spectre.Console;
+﻿using OOP_Main.Utilities;
+using Spectre.Console;
 using Spectre.Console.Rendering;
 using System.Collections.Generic;
 
 namespace OOP_Main {
-    public static class CardRenderer {
+    public struct CardRenderer {
         public static Dictionary<string, IRenderable> GetCardInfo(object item) {
             switch (item) {
                 case User user:

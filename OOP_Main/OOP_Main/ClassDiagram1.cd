@@ -41,7 +41,7 @@
   <Class Name="OOP_Main.Order" BaseTypeListCollapsed="true">
     <Position X="2.75" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>EAAABAAEQAIAAgKEgAAASEAAAQCIQYAAAAACAJBAABQ=</HashCode>
+      <HashCode>EAAABAAEQAIAAgKEgAAASEAAAQCIQYABAAACAJBAABQ=</HashCode>
       <FileName>Entities\Order.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -75,17 +75,10 @@
   <Class Name="OOP_Main.Supplier" BaseTypeListCollapsed="true">
     <Position X="29.25" Y="11.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AiAAAAAAAAAEAAAEgAAAAAQBAQAARIEAAAAAAJAgBAA=</HashCode>
+      <HashCode>giAAAAAAAAAEAAAEgAAAAAQBAQAARIEAAAAAAJAgBAA=</HashCode>
       <FileName>Entities\Supplier.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="OOP_Main.Tools">
-    <Position X="15" Y="1.5" Width="2.75" />
-    <TypeIdentifier>
-      <HashCode>AAEAAAABBAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Utilities\Tools.cs</FileName>
-    </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.AuthScreen">
     <Position X="10.75" Y="13" Width="1.75" />
@@ -112,7 +105,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.UIHelper">
-    <Position X="15.25" Y="4.25" Width="2.25" />
+    <Position X="15.25" Y="4.25" Width="2.75" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -124,7 +117,7 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgEICAAAAAAgACAAAAEIIAGAAAAIBABAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgEICAAAAAAgACAAAAEIIAGAAEAIBABAA=</HashCode>
       <FileName>UI\UIHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -137,17 +130,10 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.JsonStorage">
-    <Position X="13" Y="16.25" Width="1.5" />
+    <Position X="12.75" Y="16.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAEAA=</HashCode>
       <FileName>Data\JsonStorage.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="OOP_Main.CardRenderer">
-    <Position X="12.75" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAIJAAAAAAAAQA=</HashCode>
-      <FileName>UI\CardRenderer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.SupplierScreen">
@@ -215,7 +201,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.OrderStatusExtensions">
-    <Position X="7.75" Y="1.25" Width="1.75" />
+    <Position X="7.75" Y="1.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAIAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utilities\OrderStatus.cs</FileName>
@@ -224,26 +210,26 @@
   <Class Name="OOP_Main.DiscountDecorator">
     <Position X="29.5" Y="25.25" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAQAAAAAAAAAAAAQACAAAAAAAAAIAIAIAAAA=</HashCode>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAQAAAAAAAAAAAIAIAIAAAA=</HashCode>
       <FileName>Decorators\DiscountDecorator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.ExtendedWarrantyDecorator">
     <Position X="26.5" Y="25.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAQAAAAAAAAAAAAYACAAAIAAAAAAAAAIAAAA=</HashCode>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAYAAAAAIAAAAAAAAAIAAAA=</HashCode>
       <FileName>Decorators\ExtendedWarrantyDecorator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.ProductDecorator">
     <Position X="28" Y="21.25" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAEAAAgAAAAAQAGAAAAIAAAAAAAAIAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAEAAAgAAAAAQAGAAAAIAAAAAAAAIABAA=</HashCode>
       <FileName>Decorators\ProductDecorator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Builders.Director">
-    <Position X="0.5" Y="7.75" Width="1.5" />
+    <Position X="0.5" Y="7.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAAAAAAAAgAEIAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>Builders\Director.cs</FileName>
@@ -252,7 +238,7 @@
   <Class Name="OOP_Main.Builders.OrderBuilder" BaseTypeListCollapsed="true">
     <Position X="0.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQACAAAABAAgAAAQAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAQACAAgABAAgAAAQAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Builders\OrderBuilder.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -391,8 +377,43 @@
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="OOP_Main.Utilities.Tools">
+    <Position X="13.25" Y="1" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAABBAAAAAAAAAACAAAAAAAAAAAAAABABBAAAAA=</HashCode>
+      <FileName>Utilities\Tools.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.Utilities.ValidationService">
+    <Position X="17" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAABABBAAAEA=</HashCode>
+      <FileName>Utilities\ValidationTools.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.UI.RecieptGenerator">
+    <Position X="14" Y="10.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>UI\RecieptGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.TextStorage">
+    <Position X="15" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Data\TextStorage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="OOP_Main.CardRenderer">
+    <Position X="20.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAIJAAAAAAAAQA=</HashCode>
+      <FileName>UI\CardRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Interface Name="OOP_Main.IScreen">
-    <Position X="10.75" Y="7.25" Width="1.5" />
+    <Position X="10.75" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IScreen.cs</FileName>
@@ -408,7 +429,7 @@
   <Interface Name="OOP_Main.Builders.IBuilder">
     <Position X="0.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAAAABAAgAAAQAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAgABAAgAAAQAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Builders\IBuilder.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -417,6 +438,27 @@
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Data\BaseData.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOP_Main.IShowScreen">
+    <Position X="8.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IScreen.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOP_Main.ICreateScreen">
+    <Position X="13" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IScreen.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOP_Main.IDeleteScreen">
+    <Position X="10.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IScreen.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="OOP_Main.MenuOption">

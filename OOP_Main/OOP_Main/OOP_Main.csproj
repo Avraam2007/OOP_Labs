@@ -83,6 +83,7 @@
     <Compile Include="Builders\Director.cs" />
     <Compile Include="Builders\OrderBuilder.cs" />
     <Compile Include="Data\BaseData.cs" />
+    <Compile Include="Data\TextStorage.cs" />
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Builders\IBuilder.cs" />
     <Compile Include="Screens\AuthScreen.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Decorators\DiscountDecorator.cs" />
     <Compile Include="Entities\ElectronicProduct.cs" />
     <Compile Include="Factories\ElectronicProductFactory.cs" />
+    <Compile Include="UI\RecieptGenerator.cs" />
     <Compile Include="Utilities\Enum.cs" />
     <Compile Include="Decorators\ExtendedWarrantyDecorator.cs" />
     <Compile Include="Entities\Furniture.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Data\UserData.cs" />
     <Compile Include="Screens\UserScreen.cs" />
+    <Compile Include="Utilities\ValidationTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

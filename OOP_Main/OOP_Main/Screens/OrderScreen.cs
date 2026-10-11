@@ -1,4 +1,6 @@
 ﻿using NOptional;
+using OOP_Main.UI;
+using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -17,11 +19,11 @@ namespace OOP_Main {
                 );
             }
             return ShowListScreen(
-                "Orders",
-                CheckIfUserIsAdmin(_appData.CurrentUser) ?
+                header: "Orders",
+                items: CheckIfUserIsAdmin(_appData.CurrentUser) ?
                 _appData.Orders :
                 _appData.GetOrdersFromUser(_appData.CurrentUser.Value.Id),
-                "You can create it."
+                extraErrorMessage: "You can create it."
             );
         }
 
@@ -102,14 +104,29 @@ namespace OOP_Main {
                     _appData.CurrentUser.Value.TakeMoney(totalPrice);
                     DefaultSuccessOutput($"New transaction: -{totalPrice} $");
                     newOrder.Status = OrderStatus.Paid;
+                    string orderReciept = RecieptGenerator.BuildOrderReceipt(newOrder, _appData.CurrentUser.Value);
                     DefaultMarkupOutput($"[bold green rapidblink]YOUR NEW ORDER[/]");
-                    InternalFlashCard(CardRenderer.GetCardInfo(newOrder));
+                    var panel = new Panel(orderReciept)
+                        .BorderColor(Color.Blue)
+                        .DoubleBorder()
+                        .Padding(4, 2);
+
+                    AnsiConsole.Write(panel);
+
+                    string username = _appData.CurrentUser.MapValue(user => user.Username).GetValueOrElse(newOrder.BuyerId.ToString());
+                    string savePath = $"DataStorage/reciept_order_{newOrderID}_from_{username}.txt";
+
+                    RecieptGenerator.SaveReciept(orderReciept, savePath);
                 }
                 catch (InsufficientFundsException ex) {
                     DefaultErrorOutput(ex.Message);
                     _appData.DeleteOrder(newOrderID);
                 }
                 catch (ArgumentException ex) {
+                    DefaultErrorOutput(ex.Message);
+                    _appData.DeleteOrder(newOrderID);
+                }
+                catch (ECommerceException ex) {
                     DefaultErrorOutput(ex.Message);
                     _appData.DeleteOrder(newOrderID);
                 }
@@ -143,6 +160,8 @@ namespace OOP_Main {
                 new SelectionPrompt<string>()
                     .Title("Select a order to delete:")
                     .PageSize(10)
+                    .AddCancelResult("Cancel")
+                    .WrapAround()
                     .AddChoices(choices));
 
             if (selectedChoice == "Cancel") return BackToMenuPrompt();

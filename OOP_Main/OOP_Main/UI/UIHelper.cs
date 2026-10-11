@@ -1,4 +1,5 @@
 ﻿using NOptional;
+using OOP_Main.Utilities;
 using Spectre.Console;
 using Spectre.Console.Rendering;
 using System;
@@ -26,8 +27,9 @@ namespace OOP_Main {
 
         protected static T DefaultTextPrompt<T>(string text) {
             var prompt = new TextPrompt<T>(text);
+            T value = AnsiConsole.Prompt(prompt);
 
-            return AnsiConsole.Prompt(prompt);
+            return value is string val ? (T)(object)Markup.Escape(val) : value;
         }
 
         protected static void DefaultMarkupOutput(string text) {

@@ -2,13 +2,8 @@
 using static OOP_Main.Utilities.Exceptions;
 
 namespace OOP_Main.Entities {
-    //public delegate void AccountHandler(string message);
     public class Account {
         private double sum;
-        //AccountHandler taken;
-        //public void RegisterHandler(AccountHandler del) {
-        //    taken = del;
-        //}
         public double Sum {
             get => sum;
             set {
@@ -35,7 +30,7 @@ namespace OOP_Main.Entities {
                 throw new ArgumentOutOfRangeException(nameof(amount), "Taking money should be positive");
             }
             if (this.Sum < amount) {
-                throw new InsufficientFundsException(sum, this.Sum);
+                throw new InsufficientFundsException(amount - this.Sum, this.Sum);
             }
             else {
                 this.Sum -= amount;

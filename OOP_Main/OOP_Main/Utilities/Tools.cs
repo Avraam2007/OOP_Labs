@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace OOP_Main {
+namespace OOP_Main.Utilities {
     public static class Tools {
         public static bool ValidateArray<T>(IEnumerable<T> arr) {
             return (arr is null || !arr.Any());
@@ -24,5 +23,11 @@ namespace OOP_Main {
             string ans = Regex.Replace(text, "([A-Z])", " $1", RegexOptions.Compiled);
             return ans;
         }
+
+        public static bool IsValidArticle(string article) => ValidationService.IsValidArticle(article);
+
+        public static bool IsValidEmail(string email) => ValidationService.IsValidEmail(email);
+
+        public static bool IsValidPhone(string phone) => ValidationService.IsValidPhone(phone);
     }
 }
