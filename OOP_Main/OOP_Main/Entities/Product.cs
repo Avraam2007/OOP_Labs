@@ -2,7 +2,7 @@
 using System;
 
 namespace OOP_Main {
-    public abstract class Product: IIdentifiable<string> {
+    public abstract class Product: IIdentifiable<string>, IComparable<Product> {
         private string article;
         private string name;
         private double price;
@@ -65,7 +65,10 @@ namespace OOP_Main {
         }
         public override int GetHashCode() => Article?.GetHashCode() ?? 0;
         public override string ToString() => $"({Article}) {Name} - {Price}$";
-
+        public int CompareTo(Product other) {
+            if (other == null) return 1;
+            return string.Compare(this.Article, other.Article, StringComparison.OrdinalIgnoreCase);
+        }
         public abstract double CalculateShippingCost();
     }
 }

@@ -28,8 +28,14 @@ namespace OOP_Main {
             }
             return false;
         }
-
-        public bool DeleteSupplierById(int id) => Remove(id);
+        public bool DeleteSupplierById(int id) {
+            bool isDeleted = Remove(id);
+            if (isDeleted) {
+                this.Save();
+                return true;
+            }
+            else { return false; }
+        }
 
         protected override IOptional<Supplier> Get(int id) {
             Supplier foundSupplier = Suppliers.Find((supplier) => supplier.SupplierId == id);

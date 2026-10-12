@@ -24,7 +24,14 @@ namespace OOP_Main {
             AddOrder(newOrder);
         }
 
-        public bool DeleteOrder(int id) => Remove(id);
+        public bool DeleteOrder(int id) {
+            bool isDeleted = Remove(id);
+            if (isDeleted) {
+                this.Save();
+                return true;
+            }
+            else { return false; }
+        }
 
         public List<Order> GetOrdersFromUser(int userId) {
             List<Order> ordersFromUser = new List<Order>();

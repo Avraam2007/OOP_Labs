@@ -38,6 +38,8 @@ namespace OOP_Main {
             _supplierData.Save();
         }
 
+        public void SaveBackup() => BackupService.CreateZipBackup("DataStorage", "Backups");
+
         public void AddUser(User user) => _userData.AddUser(user);
 
         public void AddUser(string name, string password, bool isAdmin = false) => _userData.AddUser(name, password, isAdmin);
@@ -68,6 +70,7 @@ namespace OOP_Main {
                     supplier.Catalog.RemoveAll(product => product.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
                 }
 
+                _productData.Save();
                 _supplierData.Save();
 
                 return true;
@@ -82,6 +85,7 @@ namespace OOP_Main {
                     supplier.Catalog.RemoveAll(product => product.Article.Equals(article, StringComparison.OrdinalIgnoreCase));
                 }
 
+                _productData.Save();
                 _supplierData.Save();
 
                 return true;
@@ -106,6 +110,8 @@ namespace OOP_Main {
         public void ChangeProductPriceByArticle(string article, double newPrice) => _productData.ChangeProductPriceByArticle(article, newPrice);
 
         public string GenerateNextProductArticle(Type productType) => _productData.GenerateNextProductArticle(productType);
+
+        public bool IsArticleExists(string article) => _productData.IsArticleExists(article);
     }
 
 }

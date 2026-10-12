@@ -33,23 +33,23 @@ namespace OOP_Main {
                 return data;
             }
             catch (JsonReaderException ex) {
-                AnsiConsole.MarkupLine($"JSON syntax error: {ex.Message}");
+                UIHelper.DefaultErrorOutput($"JSON syntax error: {ex.Message}");
                 return new T();
             }
             catch (JsonSerializationException ex) {
-                AnsiConsole.MarkupLine($"JSON structure/polymorphism error: {ex.Message}");
+                UIHelper.DefaultErrorOutput($"JSON structure/polymorphism error: {ex.Message}");
                 return new T();
             }
             catch (UnauthorizedAccessException ex) {
-                AnsiConsole.MarkupLine($"[red bold]Access Denied:[/] Cannot read '{filePath}'. {ex.Message}");
+                UIHelper.DefaultErrorOutput($"Access Denied: Cannot read '{filePath}'. {ex.Message}");
                 return new T();
             }
             catch (IOException ex) {
-                AnsiConsole.MarkupLine($"[red bold]I/O Error:[/] File '{filePath}' might be locked by another process. {ex.Message}");
+                UIHelper.DefaultErrorOutput($"I/O Error: File '{filePath}' might be locked by another process. {ex.Message}");
                 return new T();
             }
             catch (Exception ex) {
-                AnsiConsole.MarkupLine($"[red bold]Unexpected Error loading '{filePath}':[/] {ex.Message}");
+                UIHelper.DefaultErrorOutput($"Unexpected Error loading '{filePath}': {ex.Message}");
                 return new T();
             }
         }
@@ -65,13 +65,13 @@ namespace OOP_Main {
                 File.WriteAllText(filePath, json);
             }
             catch (UnauthorizedAccessException ex) {
-                AnsiConsole.MarkupLine($"[red bold]Access Denied:[/] Cannot write '{filePath}'. {ex.Message}");
+                UIHelper.DefaultErrorOutput($"Access Denied: Cannot write '{filePath}'. {ex.Message}");
             }
             catch (IOException ex) {
-                AnsiConsole.MarkupLine($"[red bold]I/O Error:[/] File '{filePath}' might be locked by another process. {ex.Message}");
+                UIHelper.DefaultErrorOutput($"I/O Error: File '{filePath}' might be locked by another process. {ex.Message}");
             }
             catch (Exception ex) {
-                AnsiConsole.MarkupLine($"Error saving file {filePath}: {ex.Message}");
+                UIHelper.DefaultErrorOutput($"Error saving file {filePath}: {ex.Message}");
             }
         }
     }

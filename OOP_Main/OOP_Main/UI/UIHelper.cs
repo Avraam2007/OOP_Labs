@@ -18,9 +18,11 @@ namespace OOP_Main {
             DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
             return attributes.Length > 0 ? attributes[0].Description : value.ToString();
         }
-        protected static void StatusSpinner(string text, int loadingTimeInMs = 2400) {
+        protected static void StatusSpinner(string text, Action actionDuringLoading = null, int loadingTimeInMs = 2400) {
+            IOptional<Action> DoSmth = Optional.OfNullable(actionDuringLoading);
             AnsiConsole.Status()
                 .Start(text, ctx => {
+                    DoSmth.GetValueOrElse(() => { })();
                     Thread.Sleep(loadingTimeInMs);
                 });
         }
@@ -32,15 +34,15 @@ namespace OOP_Main {
             return value is string val ? (T)(object)Markup.Escape(val) : value;
         }
 
-        protected static void DefaultMarkupOutput(string text) {
+        public static void DefaultMarkupOutput(string text) {
             AnsiConsole.MarkupLine(text);
         }
 
-        protected static void DefaultErrorOutput(string message) {
+        public static void DefaultErrorOutput(string message) {
             DefaultMarkupOutput($"[red bold]{message}[/]");
         }
 
-        protected static void DefaultSuccessOutput(string message) {
+        public static void DefaultSuccessOutput(string message) {
             DefaultMarkupOutput($"[green bold]{message}[/]");
         }
 

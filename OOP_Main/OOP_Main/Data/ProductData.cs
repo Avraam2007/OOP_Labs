@@ -2,30 +2,60 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using static OOP_Main.Utilities.Exceptions;
 
 namespace OOP_Main {
     public class ProductData: BaseDataRepository<Product, string> {
         public List<Product> Products => Items;
+        private readonly HashSet<string> _registeredArticles = new HashSet<string>();
 
         public ProductData() : base("DataStorage/products.json") { }
 
-        public void AddProduct(Product product) => Add(product);
+        public override void Load() {
+            base.Load();
+
+            _registeredArticles.Clear();
+            foreach (var product in Products) {
+                var baseProduct = GetBaseProduct(product);
+                if (!string.IsNullOrEmpty(baseProduct.Article))
+                    _registeredArticles.Add(baseProduct.Article);
+            }
+        }
+
+        public void AddProduct(Product product) {
+            Add(product);
+            var baseProduct = GetBaseProduct(product);
+            _registeredArticles.Add(baseProduct.Article);
+        }
+
+        public bool IsArticleExists(string article) => _registeredArticles.Contains(article);
 
         public bool DeleteProductByName(string name) {
             var productToDelete = this.GetProductByName(name);
 
-            if (productToDelete.IsEmpty()) {
-                return false;
-            }
+            if (productToDelete.IsEmpty()) return false;
 
             Products.Remove(productToDelete.GetValueOrElseThrow());
+
+            var baseProduct = GetBaseProduct(productToDelete.Value);
+            _registeredArticles.Remove(baseProduct.Article);
             this.Save();
 
             return true;
         }
 
-        public bool DeleteProductByArticle(string article) => Remove(article);
+        public bool DeleteProductByArticle(string article) {
+            var productToDelete = this.Get(article);
+            var baseProduct = GetBaseProduct(productToDelete.Value);
+
+            bool isRemoved = Remove(article);
+            if (isRemoved) {
+                _registeredArticles.Remove(baseProduct.Article);
+                return true; 
+            } 
+            return false;
+        }
 
         protected override IOptional<Product> Get(string article) {
             var foundProduct = Products.Find((product) => product.Article == article);
@@ -69,6 +99,7 @@ namespace OOP_Main {
             else if (productType == typeof(Cloth)) prefix = "CL";
             else if (productType == typeof(Sofa)) prefix = "SF";
             else if (productType == typeof(Furniture)) prefix = "FN";
+            else if (productType == typeof(ProductBundle)) prefix = "BDL";
 
             int maxNumber = 0;
 
@@ -77,7 +108,7 @@ namespace OOP_Main {
             }
 
             foreach (var product in existingProducts.GetValueOrElseThrow()) {
-                if (product.Article != null && product.Article.StartsWith(prefix + "-")) {
+                if (!string.IsNullOrEmpty(product.Article) && product.Article.StartsWith(prefix + "-")) {
                     string numberPart = product.Article.Substring(prefix.Length + 1);
                     if (int.TryParse(numberPart, out int num) && num > maxNumber) {
                         maxNumber = num;
@@ -85,7 +116,15 @@ namespace OOP_Main {
                 }
             }
 
-            return $"{prefix}-{(maxNumber + 1):D4}";
+            int candidateNumber = maxNumber + 1;
+            string candidateArticle;
+
+            do {
+                candidateArticle = $"{prefix}-{candidateNumber:D4}";
+                candidateNumber++;
+            } while (_registeredArticles.Contains(candidateArticle));
+
+            return candidateArticle;
         }
 
     }

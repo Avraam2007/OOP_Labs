@@ -1,9 +1,14 @@
 ﻿using NOptional;
+using OOP_Main.UI;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace OOP_Main {
+namespace OOP_Main.UI {
     public class Interface: UIHelper {
         private readonly AuthScreen _authScreen;
         private readonly ProductScreen _productScreen;
@@ -54,16 +59,19 @@ namespace OOP_Main {
 
         public void BootUpScreen() {
             // Styled text with markup
-            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.20[/]");
+            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.21[/]");
 
             // Status spinner for work
-            StatusSpinner("Loading...");
-            AppData.LoadAllData();
+            StatusSpinner("Loading...", OnStart);
+        }
+
+        private void OnStart() {
+            DataManager.UploadFilesFrom(AppData);
+            AppData.CurrentUser = Optional.OfNullable(AppData.GetUserById(0).GetValueOrElse(new User(0, "Guest", "123")));
         }
 
         public void Start() {
             BootUpScreen();
-            AppData.CurrentUser = Optional.OfNullable(AppData.GetUserById(0).GetValueOrElse(new User(0, "Guest", "123")));
             bool isRunning = true;
             while (isRunning) {
                 isRunning = MainScreen();
@@ -81,14 +89,16 @@ namespace OOP_Main {
 
             switch (exitChoice) {
                 case "Yes":
-                    StatusSpinner("Shutting down...");
-                    AppData.SaveAllData();
+                    StatusSpinner("Shutting down...", OnEnd);
                     Environment.Exit(0);
                     return false;
                 default:
                     return true;
             }
+        }
 
+        private void OnEnd() {
+            DataManager.SaveFilesFrom(AppData);
         }
 
         private string CheckAccessToCreateOrder() {

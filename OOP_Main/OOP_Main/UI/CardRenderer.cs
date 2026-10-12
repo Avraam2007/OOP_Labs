@@ -16,6 +16,9 @@ namespace OOP_Main {
                 case ProductDecorator decorator:
                     return GetProductDecoratorCard(decorator);
 
+                case ProductBundle bundle:
+                    return GetProductBundleCard(bundle);
+
                 case Product product:
                     return GetProductCard(product);
 
@@ -85,6 +88,7 @@ namespace OOP_Main {
             switch (product) {
                 case ProductDecorator decorator:
                     return GetProductCard(decorator.TargetProduct.GetValueOrElseThrow());
+
                 case ElectronicProduct ep:
                     card["power"] = new Text($"Power: {ep.Power} W\n");
                     card["voltage"] = new Text($"Max Voltage: {ep.MaxVoltage} V\n");
@@ -106,6 +110,39 @@ namespace OOP_Main {
                     card["weight"] = new Text($"Weight: {furniture.Weight} kg\n");
                     card["material"] = new Text($"Material: {furniture.Material}\n");
                     break;
+            }
+
+            return card;
+        }
+
+        private static Dictionary<string, IRenderable> GetProductBundleCard(ProductBundle bundle) {
+            string categoryTitle = Tools.GetTypeName(bundle).AddSpacesBetweenCapitalizedWords().ToUpper();
+            var card = new Dictionary<string, IRenderable> {
+                ["header"] = new Text($"{categoryTitle} \"{bundle.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
+                ["article"] = new Text($"Article: {bundle.Article}\n"),
+                ["price"] = new Text($"Price: {bundle.Price}$\n"),
+                ["discount"] = new Text($"Dicsount: -{bundle.BundleDiscountPercent}%\n")
+            };
+
+            if (Tools.ValidateArray(bundle.Items)) {
+                card["empty_products"] = new Text("  (No products in this bundle)\n", new Style(foreground: Color.Red));
+                return card;
+            }
+
+            for (int i = 0; i < bundle.Items.Count; i++) {
+                var product = bundle.Items[i];
+
+                var productSpecs = GetProductCard(product);
+
+                card[$"prod_{i}_name"] = new Text($"\n  {i + 1}. [{product.Article}] {product.Name}\n", new Style(foreground: Color.Green, decoration: Decoration.Bold));
+
+                foreach (var spec in productSpecs) {
+                    if (spec.Key == "header") continue;
+
+                    string uniqueKey = $"prod_{i}_{spec.Key}";
+
+                    card[uniqueKey] = spec.Value;
+                }
             }
 
             return card;

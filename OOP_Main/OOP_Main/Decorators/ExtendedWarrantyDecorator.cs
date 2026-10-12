@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOP_Main {
     public class ExtendedWarrantyDecorator : ProductDecorator {
@@ -20,7 +15,7 @@ namespace OOP_Main {
             _years = years;
         }
 
-        protected override string GetDecoratedArticle(string baseArticle) => $"EXTWAR-{baseArticle}";
+        protected override string GetDecoratedArticle(string baseArticle) => $"EXTWAR{Years}-{baseArticle}";
 
         public override double Price => this.GetProductPrice() + (this.GetProductPrice() * 0.10 * _years);
         public override string Name => $"{this.GetName()} (+{_years} yr Warranty)";

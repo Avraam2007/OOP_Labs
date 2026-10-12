@@ -8,7 +8,7 @@ namespace OOP_Main.States {
     public abstract class OrderState {
         protected Order _order;
 
-        public void SetUser(Order order) {
+        public void SetOrder(Order order) {
             this._order = order;
         }
         public abstract string GetDescription();

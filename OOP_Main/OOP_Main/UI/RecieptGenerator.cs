@@ -24,7 +24,7 @@ namespace OOP_Main.UI {
             sb.AppendLine(string.Format("{0,-15} | {1,-18} | {2,8}", "ARTICLE", "NAME", "PRICE"));
             sb.AppendLine("-------------------------------------------------");
 
-            if (Tools.ValidateArray(order.Products)) {
+            if (!Tools.ValidateArray(order.Products)) {
                 foreach (var product in order.Products) {
                     string itemArticle = product.Article.Length > 15 ? product.Article.Substring(0, 12) + "..." : product.Article;
                     string itemName = product.Name.Length > 18 ? product.Name.Substring(0, 15) + "..." : product.Name;
@@ -52,7 +52,7 @@ namespace OOP_Main.UI {
             try {
                 TextStorage.SaveToFile(receiptText, outputFilePath);
 
-                AnsiConsole.MarkupLine($"[blue]Reciept was saved in file:[/] [yellow]{outputFilePath}[/]");
+                UIHelper.DefaultMarkupOutput($"[blue]Reciept was saved in file:[/] [yellow]{outputFilePath}[/]");
             }
             catch (Exception ex) {
                 throw new ECommerceException($"Error with saving reciept in file '{outputFilePath}'", ex);

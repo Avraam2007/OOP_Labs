@@ -21,7 +21,14 @@ namespace OOP_Main
             AddUser(newUser);
         }
 
-        public bool DeleteUserById(int id) => Remove(id);
+        public bool DeleteUserById(int id) {
+            bool isDeleted = Remove(id);
+            if (isDeleted) {
+                this.Save();
+                return true;
+            }
+            else { return false; }
+        }
 
         public bool DeleteUserByUsername(string username) {
             IOptional<User> userToDelete = this.GetUserByUsername(username);

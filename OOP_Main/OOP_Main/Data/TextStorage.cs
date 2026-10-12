@@ -2,56 +2,57 @@
 using Spectre.Console;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace OOP_Main {
     public static class TextStorage {
-        public static string LoadFromFile(string filePath) {
+        public static async Task<string> LoadFromFileAsync(string filePath) {
             try {
                 if (!File.Exists(filePath)) {
                     return string.Empty;
                 }
 
-                string text = File.ReadAllText(filePath);
-                if (string.IsNullOrWhiteSpace(text)) {
-                    return string.Empty;
+                string text;
 
+                using (StreamReader reader = new StreamReader(filePath)) {
+                    text = await reader.ReadToEndAsync();
                 }
 
                 return text;
             }
             catch (UnauthorizedAccessException ex) {
-                AnsiConsole.MarkupLine($"[red bold]Access Denied:[/] Cannot read '{filePath}'. {ex.Message}");
+                UIHelper.DefaultErrorOutput($"Access Denied: Cannot read '{filePath}'. {ex.Message}");
                 return string.Empty;
             }
             catch (IOException ex) {
-                AnsiConsole.MarkupLine($"[red bold]I/O Error:[/] File '{filePath}' might be locked by another process. {ex.Message}");
+                UIHelper.DefaultErrorOutput($"I/O Error: File '{filePath}' might be locked by another process. {ex.Message}");
                 return string.Empty;
             }
             catch (Exception ex) {
-                AnsiConsole.MarkupLine($"[red bold]Unexpected Error loading '{filePath}':[/] {ex.Message}");
+                UIHelper.DefaultErrorOutput($"Unexpected Error loading '{filePath}': {ex.Message}");
                 return string.Empty;
             }
         }
         
-        public static void SaveToFile(string text, string outputFilePath) {
+        public static void SaveToFile(string text, string filePath) {
             try {
-                string directory = Path.GetDirectoryName(outputFilePath);
+                string directory = Path.GetDirectoryName(filePath);
                 if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory)) {
                     Directory.CreateDirectory(directory);
                 }
 
-                using (StreamWriter writer = new StreamWriter(outputFilePath, append: false)) {
-                    writer.WriteLine(text);
+                using (StreamWriter writer = new StreamWriter(filePath, append: false)) {
+                    writer.WriteLineAsync(text);
                 }
             }
             catch (UnauthorizedAccessException ex) {
-                AnsiConsole.MarkupLine($"[red bold]Access Denied:[/] Cannot write '{outputFilePath}'. {ex.Message}");
+                UIHelper.DefaultErrorOutput($"Access Denied: Cannot write '{filePath}'. {ex.Message}");
             }
             catch (IOException ex) {
-                AnsiConsole.MarkupLine($"[red bold]I/O Error:[/] File '{outputFilePath}' might be locked by another process. {ex.Message}");
+                UIHelper.DefaultErrorOutput($"I/O Error: File '{filePath}' might be locked by another process. {ex.Message}");
             }
             catch (Exception ex) {
-                AnsiConsole.MarkupLine($"Error saving file {outputFilePath}: {ex.Message}");
+                UIHelper.DefaultErrorOutput($"Error saving file {filePath}: {ex.Message}");
             }
         }
     }

@@ -26,7 +26,7 @@ namespace OOP_Main {
             DiscountPercent = discountPercent;
         }
 
-        protected override string GetDecoratedArticle(string baseArticle) => $"DISC-{baseArticle}";
+        protected override string GetDecoratedArticle(string baseArticle) => $"DISC{DiscountPercent}-{baseArticle}";
 
         public override double Price => TargetProduct.HasValue()
             ? this.GetProductPrice() * (1.0 - (DiscountPercent / 100.0)) : base.Price;

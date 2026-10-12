@@ -28,13 +28,13 @@ namespace OOP_Main.Utilities {
          * Пояснення патерну:
          * ^                      - початок рядка
          * (DISC-|EXTWAR-)*       - 0 або більше префіксів декораторів
-         * (EL|CL|SF|FN|PR)       - обов'язковий префікс категорії товару (Electronics, Cloth, Sofa, Furniture, Product)
+         * (EL|CL|SF|FN|PR|BDL)       - обов'язковий префікс категорії товару (Electronics, Cloth, Sofa, Furniture, Product)
          * -                      - роздільний дефіс
          * \d{4}                  - рівно 4 цифри порядкового номера (наприклад, 0001)
          * $                      - кінець рядка
          */
         private static readonly Regex ArticleRegex = new Regex(
-            @"^(DISC-|EXTWAR-)*(EL|CL|SF|FN|PR)-\d{4}$",
+            @"^(?:(?:DISC|EXTWAR|DEC)\d+(?:\.\d+)?-)*(EL|CL|SF|FN|PR|BDL)-\d{4}$",
             RegexOptions.Compiled
         );
 

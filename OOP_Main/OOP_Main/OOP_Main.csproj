@@ -58,6 +58,7 @@
       <HintPath>..\packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.6.3\lib\net462\System.Memory.dll</HintPath>
     </Reference>
@@ -82,10 +83,13 @@
   <ItemGroup>
     <Compile Include="Builders\Director.cs" />
     <Compile Include="Builders\OrderBuilder.cs" />
+    <Compile Include="Bundles\ProductBundle.cs" />
+    <Compile Include="Data\BackupService.cs" />
     <Compile Include="Data\BaseData.cs" />
     <Compile Include="Data\TextStorage.cs" />
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Builders\IBuilder.cs" />
+    <Compile Include="Factories\BundleFactory.cs" />
     <Compile Include="Screens\AuthScreen.cs" />
     <Compile Include="Screens\BaseScreen.cs" />
     <Compile Include="States\OrderStates\PendingState.cs" />
@@ -103,6 +107,7 @@
     <Compile Include="Decorators\DiscountDecorator.cs" />
     <Compile Include="Entities\ElectronicProduct.cs" />
     <Compile Include="Factories\ElectronicProductFactory.cs" />
+    <Compile Include="UI\DataManager.cs" />
     <Compile Include="UI\RecieptGenerator.cs" />
     <Compile Include="Utilities\Enum.cs" />
     <Compile Include="Decorators\ExtendedWarrantyDecorator.cs" />

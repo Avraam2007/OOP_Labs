@@ -19,7 +19,7 @@ namespace OOP_Main {
             FilePath = filePath;
         }
 
-        public void Load() {
+        public virtual void Load() {
             Items = JsonStorage.LoadFromFile<List<T>>(FilePath) ?? new List<T>();
         }
 
@@ -36,7 +36,6 @@ namespace OOP_Main {
             IOptional<T> itemToDelete = this.Get(id);
             if (itemToDelete.HasValue()) {
                 Items.Remove(itemToDelete.GetValueOrElseThrow());
-                this.Save();
                 return true;
             }
             return false;
