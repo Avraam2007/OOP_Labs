@@ -199,55 +199,11 @@ namespace OOP_Main {
             return BackToMenuPrompt();
         }
 
-        public string Delete() {
-            ClearConsole();
-            ShowHeader("Delete product");
-
-            if (Tools.ValidateArray(_appData.Products)) {
-                DefaultErrorOutput("There are no products to delete.");
-                return BackToMenuPrompt();
-            }
-
-            var choices = new List<string>();
-            foreach (var p in _appData.Products) {
-                choices.Add(p.ToString());
-            }
-            choices.Add("Cancel");
-
-            var selectedChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Select a product to delete:")
-                    .PageSize(10)
-                    .AddChoices(choices));
-
-            if (selectedChoice == "Cancel") return BackToMenuPrompt();
-
-            string article = selectedChoice.Split(')')[0].TrimStart('(');
-            var foundProduct = _appData.GetProductByArticle(article);
-
-            if (foundProduct.HasValue()) {
-                var productToDelete = foundProduct.Value;
-                bool confirm = DefaultConfirm(
-                    $"Are you sure you want to delete [red]\"{productToDelete.Name}\"[/] ({productToDelete.Article})?",
-                    defaultValue: false
-                );
-
-                if (confirm) {
-                    bool isDeleted = _appData.DeleteProductByArticle(productToDelete.Article);
-                    if (isDeleted) {
-                        DefaultSuccessOutput("Product successfully deleted!");
-                    }
-                    else {
-                        DefaultErrorOutput("Failed to delete product.");
-                    }
-                }
-                else {
-                    DefaultMarkupOutput("[yellow]Deleting cancelled.[/]");
-                }
-            }
-
-            return BackToMenuPrompt();
-        }
+        public string Delete() => DeleteObjectScreen<Product, string>(
+            _appData.Products,
+            _appData.DeleteProductByArticle,
+            product => $"[red]\"{product.Name}\"[/] ({product.Article})"
+        );
 
         public string Edit() {
             ClearConsole();

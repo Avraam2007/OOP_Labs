@@ -11,61 +11,11 @@ namespace OOP_Main {
 
         public string Show() => ShowListScreen("Users", _appData.Users);
 
-        public string Delete() {
-            ClearConsole();
-            ShowHeader("Delete user");
-
-            var regularUsers = new List<User>();
-
-            _appData.Users.ForEach(user => { if (!(CheckIfUserIsAdmin(user) || user.IsGuest())) regularUsers.Add(user); });
-
-
-            if (Tools.ValidateArray(regularUsers)) {
-                DefaultErrorOutput("There are no users to delete.");
-                return BackToMenuPrompt();
-            }
-
-            var userChoicesMap = new Dictionary<string, User>();
-            foreach (var user in regularUsers) {
-                userChoicesMap.Add(user.ToString(), user);
-            }
-
-            var choices = userChoicesMap.Keys.ToList();
-
-            choices.Add("Cancel");
-
-            var selectedChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Select an user to delete:")
-                    .PageSize(10)
-                    .AddChoices(choices));
-
-            if (selectedChoice == "Cancel") return BackToMenuPrompt();
-
-            User userToDelete = userChoicesMap[selectedChoice];
-
-            if (userToDelete != null) {
-                bool confirm = DefaultConfirm(
-                    $"Are you sure you want to delete [red]\"{userToDelete.Username}\"[/] ({userToDelete.Id})?",
-                    defaultValue: false
-                );
-
-                if (confirm) {
-                    bool isDeleted = _appData.DeleteUserById(userToDelete.Id);
-                    if (isDeleted) {
-                        DefaultSuccessOutput("User successfully deleted!");
-                    }
-                    else {
-                        DefaultErrorOutput("Failed to delete user.");
-                    }
-                }
-                else {
-                    DefaultMarkupOutput("[yellow]Deleting cancelled.[/]");
-                }
-            }
-
-            return BackToMenuPrompt();
-        }
+        public string Delete() => DeleteObjectScreen<User, int>(
+            _appData.Users, 
+            _appData.DeleteUserById,
+            user => $"[red]\"{user.Username}\"[/] ({user.Id})"
+        );
 
         public string CheckAccount() {
             ClearConsole();

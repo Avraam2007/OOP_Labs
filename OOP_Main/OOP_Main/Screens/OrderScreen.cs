@@ -137,58 +137,10 @@ namespace OOP_Main {
             return BackToMenuPrompt();
         }
 
-
-        public string Delete() {
-            ClearConsole();
-            ShowHeader("Delete order");
-
-            if (Tools.ValidateArray(_appData.Orders)) {
-                DefaultErrorOutput("There are no orders to delete.");
-                return BackToMenuPrompt();
-            }
-
-            var orderChoicesMap = new Dictionary<string, Order>();
-            foreach (var order in _appData.Orders) {
-                orderChoicesMap.Add(order.ToString(), order);
-            }
-
-            var choices = orderChoicesMap.Keys.ToList();
-
-            choices.Add("Cancel");
-
-            var selectedChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Select a order to delete:")
-                    .PageSize(10)
-                    .AddCancelResult("Cancel")
-                    .WrapAround()
-                    .AddChoices(choices));
-
-            if (selectedChoice == "Cancel") return BackToMenuPrompt();
-            IOptional<Order> orderToDelete = Optional.OfNullable(orderChoicesMap[selectedChoice]);
-
-            if (orderToDelete.HasValue()) {
-                int orderId = orderToDelete.Value.OrderId;
-                bool confirm = DefaultConfirm(
-                    $"Are you sure you want to delete this order ({orderId})?",
-                    defaultValue: false
-                );
-
-                if (confirm) {
-                    bool isDeleted = _appData.DeleteOrder(orderId);
-                    if (isDeleted) {
-                        DefaultSuccessOutput("Order successfully deleted!");
-                    }
-                    else {
-                        DefaultErrorOutput("Failed to delete order.");
-                    }
-                }
-                else {
-                    DefaultMarkupOutput("[yellow]Deleting cancelled.[/]");
-                }
-            }
-
-            return BackToMenuPrompt();
-        }
+        public string Delete() => DeleteObjectScreen<Order, int>(
+            _appData.Orders,
+            _appData.DeleteOrder,
+            order => $"[red]\"({order.OrderId}) from {order.BuyerId}\"[/]"
+        );
     }
 }

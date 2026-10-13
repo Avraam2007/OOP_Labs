@@ -109,6 +109,77 @@ namespace OOP_Main {
             return AnsiConsole.Confirm(text, defaultValue);
         }
 
+        public string DeleteObjectScreen<T, TId>(List<T> items, Func<TId, bool> deleteAction, Func<T, string> nameSelector) 
+            where T : class, IIdentifiable<TId>
+            where TId : IEquatable<TId> {
+            string typeName = typeof(T).Name.ToLowerInvariant();
+            ClearConsole();
+            ShowHeader($"Delete {typeName}");
+
+            List<T> finalList = new List<T>(items);
+
+            if(items is List<User> users) {
+                var filteredUsers = users.Where(user => !(CheckIfUserIsAdmin(user) || user.IsGuest())).ToList();
+                finalList = filteredUsers as List<T> ?? new List<T>();
+            }
+
+            if (Tools.ValidateArray(finalList)) {
+                DefaultErrorOutput($"There are no {typeName}s to delete.");
+                return BackToMenuPrompt();
+            }
+
+            var itemChoicesMap = new Dictionary<string, T>();
+            foreach (var item in finalList) {
+                string key = Markup.Escape(item.ToString());
+                if (!itemChoicesMap.ContainsKey(key)) {
+                    itemChoicesMap.Add(key, item);
+                }
+            }
+
+            var choices = itemChoicesMap.Keys.ToList();
+
+            choices.Add("Cancel");
+
+            var selectedChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title($"Select the {typeName} to delete:")
+                    .PageSize(10)
+                    .WrapAround()
+                    .AddChoices(choices));
+
+            if (selectedChoice == "Cancel") return BackToMenuPrompt();
+
+            T itemToDelete = itemChoicesMap[selectedChoice];
+
+            if (itemToDelete == null) {
+                DefaultErrorOutput($"This {typeName} is not found.");
+                return BackToMenuPrompt();
+            }
+
+            string displayName = nameSelector(itemToDelete);
+
+            bool confirm = DefaultConfirm(
+                $"Are you sure you want to delete {displayName}?",
+                defaultValue: false
+            );
+
+            if (confirm) {
+                bool isDeleted = deleteAction(itemToDelete.Id);
+
+                if (isDeleted) {
+                    DefaultSuccessOutput($"{typeof(T).Name} successfully deleted!");
+                }
+                else {
+                    DefaultErrorOutput($"Failed to delete {typeName}.");
+                }
+            }
+            else {
+                DefaultMarkupOutput("[yellow]Deleting cancelled.[/]");
+            }
+
+            return BackToMenuPrompt();
+        }
+
         protected string ShowListScreen<T>(string header, IEnumerable<T> items, string extraErrorMessage = "") where T : class {
             ClearConsole();
             ShowHeader(header);

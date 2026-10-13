@@ -86,6 +86,9 @@
     <Compile Include="Bundles\ProductBundle.cs" />
     <Compile Include="Data\BackupService.cs" />
     <Compile Include="Data\BaseData.cs" />
+    <Compile Include="Data\BinaryEntityStorage.cs" />
+    <Compile Include="Data\FileService.cs" />
+    <Compile Include="Data\TextEntityStorage.cs" />
     <Compile Include="Data\TextStorage.cs" />
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Builders\IBuilder.cs" />

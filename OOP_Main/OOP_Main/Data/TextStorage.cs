@@ -37,9 +37,7 @@ namespace OOP_Main {
         public static void SaveToFile(string text, string filePath) {
             try {
                 string directory = Path.GetDirectoryName(filePath);
-                if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory)) {
-                    Directory.CreateDirectory(directory);
-                }
+                FileService.EnsureDirectoryExists(directory);
 
                 using (StreamWriter writer = new StreamWriter(filePath, append: false)) {
                     writer.WriteLineAsync(text);

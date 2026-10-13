@@ -26,55 +26,10 @@ namespace OOP_Main {
             return BackToMenuPrompt();
         }
 
-        public string Delete() {
-            ClearConsole();
-            ShowHeader("Delete supplier");
-
-            if (Tools.ValidateArray(_appData.Suppliers)) {
-                DefaultErrorOutput("There are no suppliers to delete.");
-                return BackToMenuPrompt();
-            }
-
-            var supplierChoicesMap = new Dictionary<string, Supplier>();
-            foreach (var supplier in _appData.Suppliers) {
-                supplierChoicesMap.Add(supplier.ToString(), supplier);
-            }
-
-            var choices = supplierChoicesMap.Keys.ToList();
-
-            choices.Add("Cancel");
-
-            var selectedChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Select a supplier to delete:")
-                    .PageSize(10)
-                    .AddChoices(choices));
-
-            if (selectedChoice == "Cancel") return BackToMenuPrompt();
-
-            Supplier supplierToDelete = supplierChoicesMap[selectedChoice];
-
-            if (supplierToDelete != null) {
-                bool confirm = DefaultConfirm(
-                    $"Are you sure you want to delete [red]\"{supplierToDelete.Name}\"[/] ({supplierToDelete.SupplierId})?",
-                    defaultValue: false
-                );
-
-                if (confirm) {
-                    bool isDeleted = _appData.DeleteSupplierByName(supplierToDelete.Name);
-                    if (isDeleted) {
-                        DefaultSuccessOutput("Supplier successfully deleted!");
-                    }
-                    else {
-                        DefaultErrorOutput("Failed to delete supplier.");
-                    }
-                }
-                else {
-                    DefaultMarkupOutput("[yellow]Deleting cancelled.[/]");
-                }
-            }
-
-            return BackToMenuPrompt();
-        }
+        public string Delete() => DeleteObjectScreen<Supplier, int>(
+            _appData.Suppliers,
+            _appData.DeleteSupplierById,
+            supplier => $"[red]\"{supplier.Name}\"[/] ({supplier.SupplierId})"
+        );
     }
 }

@@ -62,6 +62,8 @@ namespace OOP_Main {
 
         public bool DeleteSupplierByName(string name) => _supplierData.DeleteSupplierByName(name);
 
+        public bool DeleteSupplierById(int id) => _supplierData.DeleteSupplierById(id);
+
         public bool DeleteProductByName(string name) {
             bool isDeleted = _productData.DeleteProductByName(name);
 
@@ -106,6 +108,8 @@ namespace OOP_Main {
         public IOptional<User> GetUserByUsername(string username) => _userData.GetUserByUsername(username);
 
         public IOptional<Supplier> GetSupplierByName(string name) => _supplierData.GetSupplierByName(name);
+
+        public IOptional<Supplier> GetSupplierById(int id) => _supplierData.GetSupplierById(id);
 
         public void ChangeProductPriceByArticle(string article, double newPrice) => _productData.ChangeProductPriceByArticle(article, newPrice);
 

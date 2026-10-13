@@ -8,13 +8,9 @@ namespace OOP_Main {
     public class BackupService {
         public static string CreateZipBackup(string sourceDirectory, string backupTargetFolder) {
             try {
-                if (!(string.IsNullOrEmpty(sourceDirectory) || Directory.Exists(sourceDirectory))) {
-                    Directory.CreateDirectory(sourceDirectory);
-                }
+                FileService.EnsureDirectoryExists(sourceDirectory);
 
-                if (!(string.IsNullOrEmpty(backupTargetFolder) || Directory.Exists(backupTargetFolder))) {
-                    Directory.CreateDirectory(backupTargetFolder);
-                }
+                FileService.EnsureDirectoryExists(backupTargetFolder);
 
                 string timeStamp = DateTime.Now.ToString("ddMMyyyy_HHmmss");
                 string zipFileName = Path.Combine(backupTargetFolder, $"backup_{timeStamp}.zip");
@@ -22,6 +18,9 @@ namespace OOP_Main {
                 if (File.Exists(zipFileName)) File.Delete(zipFileName);
 
                 ZipFile.CreateFromDirectory(sourceDirectory, zipFileName);
+
+                FileService.DeleteOldFiles(backupTargetFolder, "*.zip", maxFilesToKeep: 5);
+
                 return zipFileName;
             }
             catch (Exception ex) {

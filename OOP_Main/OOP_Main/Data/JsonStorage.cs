@@ -57,9 +57,7 @@ namespace OOP_Main {
         public static void SaveToFile<T>(string filePath, T data) {
             try {
                 string directory = Path.GetDirectoryName(filePath);
-                if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory)) {
-                    Directory.CreateDirectory(directory);
-                }
+                FileService.EnsureDirectoryExists(directory);
 
                 string json = JsonConvert.SerializeObject(data, Settings);
                 File.WriteAllText(filePath, json);
