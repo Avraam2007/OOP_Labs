@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using OOP_Main;
 using OOP_Main.UI;
+using OOP_Main.Utilities;
 
 namespace OOP_Main {
     internal class Program {
@@ -10,9 +11,11 @@ namespace OOP_Main {
             try {
                 Data appData = new Data();
                 Interface consoleInterface = new Interface(appData);
+                Logger.Log("The program work is started", Logger.LogLevels.Info);
                 consoleInterface.Start();
             }
             catch (Exception ex) {
+                Logger.Log($"Fatal error: {ex}", Logger.LogLevels.Error);
                 AnsiConsole.WriteException(ex, ExceptionFormats.ShortenEverything);
                 Console.ReadKey();
             }

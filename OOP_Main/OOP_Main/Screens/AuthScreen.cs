@@ -1,8 +1,7 @@
 ﻿using NOptional;
-using Spectre.Console;
 using System;
 
-namespace OOP_Main {
+namespace OOP_Main.Screens {
     public class AuthScreen: BaseScreen, ICreateScreen {
         public AuthScreen(Data appData): base(appData) { }
 

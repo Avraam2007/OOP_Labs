@@ -1,5 +1,6 @@
 ﻿using OOP_Main.Utilities;
 using System;
+using System.Collections.Generic;
 
 namespace OOP_Main {
     public abstract class Product: IIdentifiable<string>, IComparable<Product> {

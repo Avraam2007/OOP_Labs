@@ -44,7 +44,7 @@ namespace OOP_Main{
                 if (Tools.ValidateArray(Items)) return 0;
                 double total = Items.Sum(p => p.Price);
                 double discountedPrice = total * (1.0 - (BundleDiscountPercent / 100.0));
-                return Tools.RoundPrice(discountedPrice);
+                return discountedPrice.RoundPrice();
             }
             set => base.Price = value;
         }

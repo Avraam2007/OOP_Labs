@@ -1,35 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="OOP_Main.Cart">
-    <Position X="27.5" Y="17.75" Width="1.5" />
+    <Position X="38.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>Entities\Cart.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Cloth">
-    <Position X="21" Y="21.25" Width="2" />
+    <Position X="4" Y="22.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AEAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Entities\Cloth.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.ElectronicProduct">
-    <Position X="23.75" Y="21.25" Width="2" />
+    <Position X="6.75" Y="22.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAgAAAAIACAEAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Entities\ElectronicProduct.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Furniture">
-    <Position X="18.25" Y="21.25" Width="2" />
+    <Position X="1.25" Y="22.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AEAAAAAABAAAAAQAQEAAAEBACCAAAAAgAAAAAABAAAA=</HashCode>
       <FileName>Entities\Furniture.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Order" BaseTypeListCollapsed="true">
-    <Position X="2.75" Y="0.5" Width="2" />
+    <Position X="19.5" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>EAAABAAEQAIAAgKEgAAASEAAAQCIQYABAAACAJBAABQ=</HashCode>
       <FileName>Entities\Order.cs</FileName>
@@ -41,7 +41,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Product">
-    <Position X="24.25" Y="16.25" Width="2.25" />
+    <Position X="8.75" Y="17.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAABAABAAQAAAAQEgACAAAQAGAAkAJAAAAAAAAAgAAA=</HashCode>
       <FileName>Entities\Product.cs</FileName>
@@ -49,45 +49,37 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Program">
-    <Position X="19.75" Y="16.25" Width="1.5" />
+    <Position X="23" Y="9.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Sofa">
-    <Position X="18.5" Y="26" Width="1.5" />
+    <Position X="1.5" Y="27" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQ=</HashCode>
       <FileName>Entities\Sofa.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Supplier" BaseTypeListCollapsed="true">
-    <Position X="32.5" Y="11.75" Width="2.5" />
+    <Position X="33" Y="20.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>giAAAAAAAAAEAAAEgAAAAAQBAQAARIEAAAAAAJAgBAA=</HashCode>
       <FileName>Entities\Supplier.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="OOP_Main.AuthScreen">
-    <Position X="10.75" Y="13" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Screens\AuthScreen.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="OOP_Main.OrderScreen">
-    <Position X="15.75" Y="13" Width="1.75" />
+  <Class Name="OOP_Main.Screens.OrderScreen">
+    <Position X="11.5" Y="14" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Screens\OrderScreen.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="OOP_Main.ProductScreen">
-    <Position X="8.25" Y="13" Width="1.75" />
+  <Class Name="OOP_Main.Screens.ProductScreen">
+    <Position X="4" Y="14" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAEECEACAAAAAAAAAAA=</HashCode>
       <FileName>Screens\ProductScreen.cs</FileName>
@@ -95,7 +87,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.UIHelper">
-    <Position X="15.25" Y="4" Width="2.75" />
+    <Position X="12.25" Y="5.25" Width="2.75" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -111,8 +103,8 @@
       <FileName>UI\UIHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OOP_Main.UserScreen">
-    <Position X="5.75" Y="13" Width="1.75" />
+  <Class Name="OOP_Main.Screens.UserScreen">
+    <Position X="1.5" Y="14" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEBAAAAAAQAAAAAAA=</HashCode>
       <FileName>Screens\UserScreen.cs</FileName>
@@ -120,71 +112,80 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.JsonStorage">
-    <Position X="12.75" Y="16.25" Width="1.75" />
+    <Position X="35.25" Y="4" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAEAA=</HashCode>
+      <HashCode>AAAAAAAoAAAAAQAAAAAAAAAAAAAAAAAAgAAAAAAAEAQ=</HashCode>
       <FileName>Data\JsonStorage.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OOP_Main.SupplierScreen">
-    <Position X="13.25" Y="13" Width="1.75" />
+  <Class Name="OOP_Main.Screens.SupplierScreen">
+    <Position X="9" Y="14" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Screens\SupplierScreen.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="OOP_Main.BaseScreen">
-    <Position X="10.75" Y="10" Width="1.5" />
+  <Class Name="OOP_Main.Screens.BaseScreen">
+    <Position X="6.75" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Screens\BaseScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.OrderData">
-    <Position X="8.25" Y="20" Width="2.25" />
+    <Position X="23" Y="22" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAgAAAAAABAAIAAAAAAAAAEAAAAAEAAAAAAAAA=</HashCode>
+      <HashCode>AAEAAAAgAAAAAABAAIAAAAAAAAAEAAAAAUAAAAAAAAA=</HashCode>
       <FileName>Data\OrderData.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Orders" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OOP_Main.ProductData">
-    <Position X="11.25" Y="20" Width="2.25" />
+    <Position X="26" Y="22" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAiAAAgBAAAAAQAAIAAICAAgAAEAIAAAAAAQ=</HashCode>
       <FileName>Data\ProductData.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Products" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OOP_Main.SupplierData">
-    <Position X="14.25" Y="20" Width="2.5" />
+    <Position X="29" Y="22" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAIFAAAAAAAAAAABAAAAAAAAAAAAQAAA=</HashCode>
       <FileName>Data\SupplierData.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Suppliers" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OOP_Main.ProductFactory">
-    <Position X="20.5" Y="10" Width="1.5" />
+    <Position X="17.75" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\ProductFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.ElectronicProductFactory">
-    <Position X="18" Y="12" Width="2" />
+    <Position X="14" Y="13.5" Width="2" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\ElectronicProductFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.FurnitureFactory">
-    <Position X="25" Y="12" Width="1.5" />
+    <Position X="21.25" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\FurnitureFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.BundleFactory">
-    <Position X="20.5" Y="12.25" Width="1.5" />
+    <Position X="16.75" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\BundleFactory.cs</FileName>
@@ -192,42 +193,49 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.OrderStatusExtensions">
-    <Position X="7.75" Y="1.25" Width="2.25" />
+    <Position X="16.5" Y="5.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAIAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utilities\OrderStatus.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.DiscountDecorator">
-    <Position X="29.5" Y="25.25" Width="2.75" />
+    <Position X="12.5" Y="27" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAAQAAAAAAAAAAAIAIAIAAAA=</HashCode>
       <FileName>Decorators\DiscountDecorator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.ExtendedWarrantyDecorator">
-    <Position X="26.5" Y="25.25" Width="2.25" />
+    <Position X="9.5" Y="27" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAAYAAAAAIAAAAAAAAAIAAAA=</HashCode>
       <FileName>Decorators\ExtendedWarrantyDecorator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.ProductDecorator">
-    <Position X="28" Y="21.25" Width="2.75" />
+    <Position X="11" Y="22.5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAEAAAgAAAAAQAGAAAAIAAAAAAAAIABAA=</HashCode>
       <FileName>Decorators\ProductDecorator.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_targetProduct" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="OOP_Main.Builders.Director">
-    <Position X="0.5" Y="7.75" Width="2" />
+    <Position X="26.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAAAAAAAAgAEIAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>Builders\Director.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_builder" />
+      <Property Name="Builder" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="OOP_Main.Builders.OrderBuilder" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="2" Width="1.5" />
+    <Position X="22.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQACAAgABAAgAAAQAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Builders\OrderBuilder.cs</FileName>
@@ -238,74 +246,96 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Entities.Account">
-    <Position X="23" Y="2.25" Width="1.5" />
+    <Position X="17.5" Y="27" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAQ=</HashCode>
       <FileName>Entities\Account.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.States.OrderState">
-    <Position X="6" Y="4.25" Width="1.5" />
+    <Position X="1.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAACQAAAAgAAIAAAAQAAAACAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>States\OrderState.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_order" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="OOP_Main.States.UserState">
-    <Position X="7.5" Y="24.25" Width="1.5" />
+    <Position X="17.25" Y="15" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAIAIAAAAABCAAQAAA=</HashCode>
       <FileName>States\UserState.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.States.AdminState">
-    <Position X="10" Y="27.25" Width="1.75" />
+    <Position X="19.75" Y="18.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAACAAQAAA=</HashCode>
       <FileName>States\UserStates\AdminState.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.States.GuestState">
-    <Position X="5" Y="27.25" Width="1.75" />
+    <Position X="14.75" Y="18.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAACAAQAAA=</HashCode>
       <FileName>States\UserStates\GuestState.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.States.LoggedInState">
-    <Position X="7.5" Y="27.25" Width="1.75" />
+    <Position X="17.25" Y="18.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAACAAQAAA=</HashCode>
       <FileName>States\UserStates\LoggedInState.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.States.OrderStates.PendingState">
-    <Position X="4.75" Y="7.5" Width="1.5" />
+    <Position X="0.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAQAAAAgAAIAAAAQAAAACAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>States\OrderStates\PendingState.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.States.OrderStates.ShippingState">
-    <Position X="7" Y="7.5" Width="1.5" />
+    <Position X="2.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAQAAAAgAAIAAAAQAAAACAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>States\OrderStates\ShippingState.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.UserData">
-    <Position X="5.25" Y="20" Width="2.25" />
+    <Position X="20" Y="22" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAACAIAAAAAABAQAACAAAAABAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>Data\UserData.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Users" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OOP_Main.Data">
-    <Position X="13.25" Y="24.5" Width="2.5" />
-    <AssociationLine Name="_supplierData" Type="OOP_Main.SupplierData">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.038" Y="0.617" />
-      </MemberNameLabel>
+    <Position X="28" Y="13.5" Width="2.5" />
+    <AssociationLine Name="Orders" Type="OOP_Main.Order" ManuallyRouted="true">
+      <Path>
+        <Point X="28.375" Y="13.5" />
+        <Point X="28.375" Y="5.292" />
+        <Point X="29.204" Y="5.292" />
+        <Point X="29.204" Y="0.969" />
+        <Point X="21.5" Y="0.969" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Products" Type="OOP_Main.Product" FixedFromPoint="true">
+      <Path>
+        <Point X="28" Y="17.75" />
+        <Point X="23.302" Y="17.75" Type="JumpStart" />
+        <Point X="23.135" Y="17.75" Type="JumpEnd" />
+        <Point X="22.583" Y="17.75" Type="JumpStart" />
+        <Point X="22.417" Y="17.75" Type="JumpEnd" />
+        <Point X="18.083" Y="17.75" Type="JumpStart" />
+        <Point X="17.917" Y="17.75" Type="JumpEnd" />
+        <Point X="11" Y="17.75" />
+      </Path>
     </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAEAAKIoAKAAAoEAYpASQAAIARJGAAggAEAoAAAQAAQ=</HashCode>
@@ -316,9 +346,15 @@
       <Field Name="_orderData" />
       <Field Name="_supplierData" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Orders" />
+      <Property Name="Products" />
+      <Property Name="Suppliers" />
+      <Property Name="Users" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OOP_Main.Utilities.Exceptions">
-    <Position X="0.5" Y="13.75" Width="3.25" />
+    <Position X="32.25" Y="10.75" Width="3.25" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -350,7 +386,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.BaseDataRepository&lt;T, TId&gt;">
-    <Position X="10" Y="16.25" Width="2" />
+    <Position X="24.75" Y="18.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAIAgIAAAAAACABAAAAABAAAAAAAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Data\BaseData.cs</FileName>
@@ -358,169 +394,272 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.User">
-    <Position X="20" Y="1.25" Width="2" />
+    <Position X="20.25" Y="25.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAEAAAAIAQAAEkQRACAEACAAAAIACAAAQAgAAAEA=</HashCode>
+      <HashCode>AAACAEAAAAIAQAQEkQRACAEACAAAAIACAAAQAgAAAEA=</HashCode>
       <FileName>Entities\User.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="_account" />
+      <Property Name="Role" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Utilities.Tools">
-    <Position X="13.25" Y="1" Width="3" />
+    <Position X="36.25" Y="18" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAEAAAABBAAAAAAAAAACAAAAAAAAAAAAAABABBAAAAA=</HashCode>
       <FileName>Utilities\Tools.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OOP_Main.Utilities.ValidationService">
-    <Position X="17" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>gAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAABABBAAAEA=</HashCode>
-      <FileName>Utilities\ValidationTools.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="OOP_Main.UI.RecieptGenerator">
-    <Position X="14" Y="10.5" Width="1.75" />
+    <Position X="32.5" Y="4" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
       <FileName>UI\RecieptGenerator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.TextStorage">
-    <Position X="17.5" Y="16.25" Width="1.75" />
+    <Position X="38" Y="4" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAoAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAEAQ=</HashCode>
       <FileName>Data\TextStorage.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.ProductBundle">
-    <Position X="33.25" Y="21.5" Width="2.5" />
+    <Position X="16" Y="22.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAACAAEAAAIQBAACAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Bundles\ProductBundle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.BackupService">
-    <Position X="15" Y="16.25" Width="2" />
+    <Position X="32.5" Y="6.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAYAAAAAAAAAAAAA=</HashCode>
       <FileName>Data\BackupService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.ClothFactory">
-    <Position X="22.75" Y="12" Width="1.5" />
+    <Position X="19" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\ClothFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.UI.Interface">
-    <Position X="27.5" Y="10.25" Width="2.25" />
+    <Position X="23.5" Y="11.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>IAAAAAQAACAAAgQAEAAYAAAQAgAAABAAQBAgCACBBAA=</HashCode>
       <FileName>UI\Interface.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AppData" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="OOP_Main.BinaryEntityStorage">
-    <Position X="19.75" Y="18.25" Width="1.75" />
+    <Position X="31.5" Y="1.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Data\BinaryEntityStorage.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.TextEntityStorage">
-    <Position X="18.25" Y="14" Width="2" />
+    <Position X="30" Y="4" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAAAAAAAAhAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
       <FileName>Data\TextEntityStorage.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="OOP_Main.Handlers.EmptyOrderValidationHandler">
+    <Position X="17" Y="7.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Handlers\OrderHandlers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.Handlers.UserAccountStatusHandler">
+    <Position X="20" Y="7.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Handlers\OrderHandlers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.Handlers.StockAvailabilityHandler">
+    <Position X="28.75" Y="7.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Handlers\OrderHandlers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.Handlers.InsufficientFundsHandler">
+    <Position X="23" Y="7.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Handlers\OrderHandlers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.Handlers.OrderAmountLimitHandler">
+    <Position X="25.75" Y="7.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Handlers\OrderHandlers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.Handlers.BaseOrderValidationHandler">
+    <Position X="23" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAIAAAAAAAAgAAA=</HashCode>
+      <FileName>Handlers\OrderValidationHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Main.States.UserRoleExtensions">
+    <Position X="23.5" Y="27.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>States\UserState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.Utilities.Logger">
+    <Position X="37.75" Y="10.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="OOP_Main.Utilities.Logger.LogLevels">
+        <TypeIdentifier>
+          <NewMemberFileName>Utilities\Logger.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAgACAAAAAAAAAAAIIAAAAEAAAgAAAAAAAAAAAABAAg=</HashCode>
+      <FileName>Utilities\Logger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.Comparers.ProductPriceComparer">
+    <Position X="31.25" Y="26.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Comparers\ProductComparers.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Main.Comparers.ProductNameComparer">
+    <Position X="31.25" Y="28.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Comparers\ProductComparers.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Main.Comparers.UsernameComparer">
+    <Position X="33.75" Y="26.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Comparers\UserComparers.cs</FileName>
+      <NewMemberFileName>Comparers\ProductComparers.cs</NewMemberFileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Struct Name="OOP_Main.CardRenderer">
-    <Position X="20.5" Y="7" Width="1.5" />
+    <Position X="12.75" Y="2.25" Width="2" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAIpAAAAAAAAQA=</HashCode>
       <FileName>UI\CardRenderer.cs</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="OOP_Main.UI.DataManager">
-    <Position X="21" Y="14" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>ACAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
-      <FileName>UI\DataManager.cs</FileName>
-    </TypeIdentifier>
-  </Struct>
   <Struct Name="OOP_Main.FileService">
-    <Position X="17.5" Y="18.25" Width="1.75" />
+    <Position X="36.25" Y="7.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAI=</HashCode>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAACAAAAAAAAAAAAAAAABAI=</HashCode>
       <FileName>Data\FileService.cs</FileName>
     </TypeIdentifier>
   </Struct>
   <Interface Name="OOP_Main.IScreen">
-    <Position X="10.75" Y="7" Width="1.5" />
+    <Position X="5.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IScreen.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="OOP_Main.IBridgeJSON">
-    <Position X="7.25" Y="16.25" Width="1.5" />
+    <Position X="35.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IBridgeJSON.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="OOP_Main.Builders.IBuilder">
-    <Position X="0.5" Y="5" Width="1.5" />
+    <Position X="24.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAgABAAgAAAQAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Builders\IBuilder.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="OOP_Main.IIdentifiable&lt;TId&gt;">
-    <Position X="0.5" Y="11.5" Width="1.75" />
+    <Position X="29" Y="12" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Data\BaseData.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="OOP_Main.IShowScreen">
-    <Position X="8.5" Y="4.5" Width="1.5" />
+    <Position X="4.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IScreen.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="OOP_Main.ICreateScreen">
-    <Position X="13" Y="4.5" Width="1.5" />
+    <Position X="9.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IScreen.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="OOP_Main.IDeleteScreen">
-    <Position X="10.75" Y="4.5" Width="1.5" />
+    <Position X="7.25" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IScreen.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Interface Name="OOP_Main.Handlers.IOrderValidationHandler">
+    <Position X="25.5" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Handlers\OrderValidationHandler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Enum Name="OOP_Main.MenuOption">
-    <Position X="25.75" Y="5" Width="1.5" />
+    <Position X="26.25" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACAAQDABECEAAQAgAAAAAABAAAECAAIgQAQA=</HashCode>
       <FileName>Utilities\Enum.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="OOP_Main.OrderStatus">
-    <Position X="5.5" Y="1.25" Width="1.5" />
+    <Position X="16.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAgAAgAAAAAAAAAAAIAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>Utilities\OrderStatus.cs</FileName>
     </TypeIdentifier>
   </Enum>
+  <Enum Name="OOP_Main.States.UserRole">
+    <Position X="23.5" Y="26" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>States\UserState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="OOP_Main.OnError">
+    <Position X="38" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\JsonStorage.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

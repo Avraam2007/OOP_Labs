@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using static OOP_Main.Utilities.Exceptions;
 
-namespace OOP_Main {
+namespace OOP_Main.Screens {
     public class ProductScreen: BaseScreen, IScreen {
         public ProductScreen(Data appData): base(appData) { }
 
@@ -45,15 +45,11 @@ namespace OOP_Main {
 
             const string exitOption = "Exit";
 
-            List<string> productNames = new List<string> {
-                exitOption
-            };
+            var productNames = _appData.Products.Select(p => p.Name).ToList();
+
+            productNames.Add(exitOption);
 
             bool isChosenExit = false;
-
-            foreach (var product in _appData.Products) {
-                productNames.Add(product.Name);
-            }
 
             while (!isChosenExit) {
                 var prompt = new SelectionPrompt<string>()
@@ -139,10 +135,8 @@ namespace OOP_Main {
 
             bool warrantyChoice = DefaultConfirm("Would you like to add the [green]warranty?[/]:");
 
-            List<string> suppliers = new List<string>();
-            foreach (var supplier in _appData.Suppliers) {
-                suppliers.Add(supplier.Name);
-            }
+            var suppliers = _appData.Suppliers.Select(s => s.Name).ToList();
+
             var supplierPrompt = new SelectionPrompt<string>()
                 .Title("Select product [green]supplier[/]")
                 .PageSize(15)

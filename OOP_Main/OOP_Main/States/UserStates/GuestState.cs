@@ -9,6 +9,6 @@ namespace OOP_Main.States {
         public override bool CanBuyProducts() => false;
         public override bool CanManageUsers() => false;
         public override bool CanEditCatalog() => false;
-        public override string GetRoleName() => "Guest";
+        public override UserRole GetRoleName() => UserRole.Guest;
     }
 }

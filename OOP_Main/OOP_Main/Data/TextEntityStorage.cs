@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOP_Main.States;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,8 +33,9 @@ namespace OOP_Main {
                     var parts = line.Split(';');
                     if (parts.Length >= 5 &&
                         int.TryParse(parts[0], out int id) &&
-                        double.TryParse(parts[4], out double sum)) {
-                        result.Add(new User(id, parts[1], parts[2], parts[3], sum));
+                        double.TryParse(parts[4], out double sum) &&
+                        Enum.TryParse(parts[3], out UserRole role)) {
+                        result.Add(new User(id, parts[1], parts[2], role, sum));
                     }
                 }
             }

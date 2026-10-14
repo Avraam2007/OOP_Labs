@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OOP_Main {
+namespace OOP_Main.Screens {
     public class SupplierScreen: BaseScreen, IScreen {
         public SupplierScreen(Data appData): base(appData) { }
 

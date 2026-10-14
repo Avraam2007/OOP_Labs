@@ -1,16 +1,26 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
-using Newtonsoft.Json;
-using Spectre.Console;
+using System.Threading;
 
 namespace OOP_Main {
-    public static class JsonStorage {
+    public delegate void OnError(string message);
+    public class JsonStorage {
         private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings {
             Formatting = Formatting.Indented,
             TypeNameHandling = TypeNameHandling.Auto,
             NullValueHandling = NullValueHandling.Ignore,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
         };
+        private static event OnError Taken;
+
+        public static void RegisterHandler(OnError del) {
+            Taken = del;
+        }
+
+        private static void HandleError(string message) {
+            Taken?.Invoke(message);
+        }
 
         public static T LoadFromFile<T>(string filePath) where T : new() {
             try {
@@ -33,23 +43,24 @@ namespace OOP_Main {
                 return data;
             }
             catch (JsonReaderException ex) {
-                UIHelper.DefaultErrorOutput($"JSON syntax error: {ex.Message}");
+                HandleError($"JSON syntax error: {ex.Message}");
                 return new T();
             }
             catch (JsonSerializationException ex) {
-                UIHelper.DefaultErrorOutput($"JSON structure/polymorphism error: {ex.Message}");
+                HandleError($"JSON structure/polymorphism error: {ex.Message}");
                 return new T();
             }
             catch (UnauthorizedAccessException ex) {
-                UIHelper.DefaultErrorOutput($"Access Denied: Cannot read '{filePath}'. {ex.Message}");
+                HandleError($"Access Denied: Cannot read '{filePath}'. {ex.Message}");
                 return new T();
             }
             catch (IOException ex) {
-                UIHelper.DefaultErrorOutput($"I/O Error: File '{filePath}' might be locked by another process. {ex.Message}");
+                HandleError($"I/O Error: File '{filePath}' might be locked by another process. {ex.Message}");
                 return new T();
             }
             catch (Exception ex) {
-                UIHelper.DefaultErrorOutput($"Unexpected Error loading '{filePath}': {ex.Message}");
+                HandleError($"Unexpected Error loading '{filePath}': {ex.Message}");
+                Thread.Sleep(5000);
                 return new T();
             }
         }
@@ -63,13 +74,13 @@ namespace OOP_Main {
                 File.WriteAllText(filePath, json);
             }
             catch (UnauthorizedAccessException ex) {
-                UIHelper.DefaultErrorOutput($"Access Denied: Cannot write '{filePath}'. {ex.Message}");
+                HandleError($"Access Denied: Cannot write '{filePath}'. {ex.Message}");
             }
             catch (IOException ex) {
-                UIHelper.DefaultErrorOutput($"I/O Error: File '{filePath}' might be locked by another process. {ex.Message}");
+                HandleError($"I/O Error: File '{filePath}' might be locked by another process. {ex.Message}");
             }
             catch (Exception ex) {
-                UIHelper.DefaultErrorOutput($"Error saving file {filePath}: {ex.Message}");
+                HandleError($"Error saving file {filePath}: {ex.Message}");
             }
         }
     }

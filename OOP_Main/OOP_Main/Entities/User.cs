@@ -4,7 +4,7 @@ using OOP_Main.States;
 using System;
 
 namespace OOP_Main {
-    public class User: IIdentifiable<int> {
+    public class User: IIdentifiable<int>, IComparable<User> {
         private readonly int _id;
         private string username;
         private string password;
@@ -22,12 +22,12 @@ namespace OOP_Main {
             }
         }
         public int Id { get { return _id; } }
-        public string Role {
+        public UserRole Role {
             private set {
-                if (value == "Guest") {
+                if (value == UserRole.Guest) {
                     _roleState = new GuestState();
                 }
-                else if (value == "Administrator") {
+                else if (value == UserRole.Administrator) {
                     _roleState = new AdminState();
                 }
                 else {
@@ -74,14 +74,14 @@ namespace OOP_Main {
         }
 
         [JsonConstructor]
-        public User(int id, string username, string password, string Role, double startSum = 0) {
+        public User(int id, string username, string password, UserRole Role, double startSum = 0) {
             this.Username = username;
             this.Password = password;
             this._id = id;
-            if (id == 0 || Role == "Guest") {
+            if (id == 0 || Role == UserRole.Guest) {
                 _roleState = new GuestState();
             }
-            else if (Role == "Administrator") {
+            else if (Role == UserRole.Administrator) {
                 _roleState = new AdminState();
             }
             else {
@@ -97,14 +97,19 @@ namespace OOP_Main {
         public override int GetHashCode() => Id.GetHashCode();
         public override string ToString() => $"|User #{Id}| {Username} ({this.Role})";
 
+        public int CompareTo(User other) {
+            if (other == null) return 1;
+            return string.Compare(this.Username, other.Username, StringComparison.OrdinalIgnoreCase);
+        }
+
         public void TakeMoney(double amount) => _account.Take(amount);
 
         public void TopUpAccount(double amount) => _account.Add(amount);
 
         public bool CanBuy() => _roleState.CanBuyProducts();
 
-        public bool IsGuest() => this.Role == "Guest";
+        public bool IsGuest() => this.Role == UserRole.Guest;
 
-        public bool IsAdmin() => this.Role == "Administrator";
+        public bool IsAdmin() => this.Role == UserRole.Administrator;
     }
 }

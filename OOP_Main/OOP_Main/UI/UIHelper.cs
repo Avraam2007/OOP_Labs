@@ -58,10 +58,7 @@ namespace OOP_Main {
         };
 
         protected static void InternalFlashCard(Dictionary<string, IRenderable> dataForCard) {
-            var contentElements = new List<IRenderable>();
-            foreach (var element in dataForCard) {
-                contentElements.Add(element.Value);
-            }
+            var contentElements = dataForCard.Values.ToList();
             var content = new Rows(contentElements);
             var panel = new Panel(content)
             .BorderColor(Color.Blue)
@@ -128,13 +125,9 @@ namespace OOP_Main {
                 return BackToMenuPrompt();
             }
 
-            var itemChoicesMap = new Dictionary<string, T>();
-            foreach (var item in finalList) {
-                string key = Markup.Escape(item.ToString());
-                if (!itemChoicesMap.ContainsKey(key)) {
-                    itemChoicesMap.Add(key, item);
-                }
-            }
+            var itemChoicesMap = finalList
+                .GroupBy(item => Markup.Escape(item.ToString()))
+                .ToDictionary(g => g.Key, g => g.First());
 
             var choices = itemChoicesMap.Keys.ToList();
 

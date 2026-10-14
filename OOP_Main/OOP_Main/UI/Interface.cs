@@ -1,12 +1,9 @@
 ﻿using NOptional;
-using OOP_Main.UI;
+using OOP_Main.Screens;
+using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace OOP_Main.UI {
     public class Interface: UIHelper {
@@ -59,7 +56,7 @@ namespace OOP_Main.UI {
 
         public void BootUpScreen() {
             // Styled text with markup
-            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.21[/]");
+            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.22[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...", OnStart);
@@ -72,6 +69,7 @@ namespace OOP_Main.UI {
 
         public void Start() {
             BootUpScreen();
+            Logger.Log("The program has been successfully opened", Logger.LogLevels.Info);
             bool isRunning = true;
             while (isRunning) {
                 isRunning = MainScreen();
@@ -99,10 +97,12 @@ namespace OOP_Main.UI {
 
         private void OnEnd() {
             DataManager.SaveFilesFrom(AppData);
+            Logger.Log($"The program has been successfully closed", Logger.LogLevels.Info);
         }
 
         private string CheckAccessToCreateOrder() {
             if (!AppData.CurrentUser.Value.CanBuy()) {
+                Logger.Log($"The access is forbidden", Logger.LogLevels.Warn, AppData.CurrentUser.Value.Username);
                 DefaultErrorOutput("The access is forbidden");
                 return BackToMenuPrompt(
                     GetEnumDescription(MenuOption.SignUp)
@@ -116,6 +116,7 @@ namespace OOP_Main.UI {
                 return GoToPage();
             }
             else {
+                Logger.Log($"The access is forbidden", Logger.LogLevels.Warn, AppData.CurrentUser.Value.Username);
                 DefaultErrorOutput("The access is forbidden. Only for admin");
                 return BackToMenuPrompt();
             }

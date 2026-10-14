@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace OOP_Main.Utilities {
-    internal static class ValidationService {
+    internal readonly struct ValidationService {
         /* 
          * ПАТЕРН 1: Валідація Email
          * Пояснення патерну:

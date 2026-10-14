@@ -19,6 +19,12 @@ namespace OOP_Main {
             return fileInfo.Length;
         }
 
+        public static int GetFileSizeInLines(string filePath) {
+            if (!File.Exists(filePath)) return 0;
+            var fileLines = File.ReadAllLines(filePath);
+            return fileLines.Length;
+        }
+
         public static int DeleteOldFiles(string folderPath, string searchPattern, int maxFilesToKeep) {
             if (!Directory.Exists(folderPath)) return 0;
 

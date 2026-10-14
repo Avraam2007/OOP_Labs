@@ -7,6 +7,8 @@ namespace OOP_Main {
     public class OrderData: BaseDataRepository<Order, int> {
         public List<Order> Orders => Items;
 
+        public Queue<Order> ShippingOrdersQueue { get; set; } = new Queue<Order>();
+
         public OrderData() : base("DataStorage/orders.json") { }
 
         public void AddOrder(Order order) => Add(order);
@@ -19,7 +21,6 @@ namespace OOP_Main {
             director.Builder = builder;
             director.BuildOrderWithProducts(newOrderId, buyerId, catalog);
             Order newOrder = builder.GetOrder();
-            //Order newOrder = new Order(newOrderId, buyerId, catalog);
 
             AddOrder(newOrder);
         }

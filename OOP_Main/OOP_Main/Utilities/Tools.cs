@@ -13,9 +13,10 @@ namespace OOP_Main.Utilities {
             return obj.GetType().Name;
         }
 
-        public static Func<double, double> RoundPrice = price => {
-            return Math.Round(price, 2, MidpointRounding.AwayFromZero);
-        };
+        public static double RoundPrice(this double price, int digitsAfterPeriod = 2) {
+            return Math.Round(price, digitsAfterPeriod, MidpointRounding.AwayFromZero);
+        }
+
 
         public static string AddSpacesBetweenCapitalizedWords(this string text) {
             if (string.IsNullOrEmpty(text)) return text;

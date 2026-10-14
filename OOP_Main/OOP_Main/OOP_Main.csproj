@@ -57,6 +57,7 @@
     <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -84,6 +85,8 @@
     <Compile Include="Builders\Director.cs" />
     <Compile Include="Builders\OrderBuilder.cs" />
     <Compile Include="Bundles\ProductBundle.cs" />
+    <Compile Include="Comparers\ProductComparers.cs" />
+    <Compile Include="Comparers\UserComparers.cs" />
     <Compile Include="Data\BackupService.cs" />
     <Compile Include="Data\BaseData.cs" />
     <Compile Include="Data\BinaryEntityStorage.cs" />
@@ -93,6 +96,8 @@
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Builders\IBuilder.cs" />
     <Compile Include="Factories\BundleFactory.cs" />
+    <Compile Include="Handlers\OrderHandlers.cs" />
+    <Compile Include="Handlers\OrderValidationHandler.cs" />
     <Compile Include="Screens\AuthScreen.cs" />
     <Compile Include="Screens\BaseScreen.cs" />
     <Compile Include="States\OrderStates\PendingState.cs" />
@@ -124,6 +129,7 @@
     <Compile Include="Data\OrderData.cs" />
     <Compile Include="Screens\OrderScreen.cs" />
     <Compile Include="Utilities\Exceptions.cs" />
+    <Compile Include="Utilities\Logger.cs" />
     <Compile Include="Utilities\OrderStatus.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Data\ProductData.cs" />

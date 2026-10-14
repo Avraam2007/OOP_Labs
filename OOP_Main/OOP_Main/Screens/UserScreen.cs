@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace OOP_Main {
+namespace OOP_Main.Screens {
     public class UserScreen: BaseScreen, IShowScreen, IDeleteScreen {
         public UserScreen(Data appData): base(appData) { }
 

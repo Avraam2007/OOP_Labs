@@ -1,4 +1,5 @@
-﻿using OOP_Main.Utilities;
+﻿using OOP_Main.States;
+using OOP_Main.Utilities;
 using Spectre.Console;
 using Spectre.Console.Rendering;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace OOP_Main {
             return new Dictionary<string, IRenderable> {
                 ["header"] = new Text($"{user.Username}\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["id"] = new Text($"ID: {user.Id}\n"),
-                ["role"] = new Text($"Role: {user.Role}\n"),
+                ["role"] = new Text($"Role: {UserRoleExtensions.GetDescription(user.Role)}\n"),
                 ["account"] = new Text($"Total balance: {user.Account.Sum}$\n")
             };
         }

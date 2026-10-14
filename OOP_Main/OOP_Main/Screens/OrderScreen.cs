@@ -1,4 +1,4 @@
-﻿using NOptional;
+﻿using OOP_Main.Handlers;
 using OOP_Main.UI;
 using OOP_Main.Utilities;
 using Spectre.Console;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static OOP_Main.Utilities.Exceptions;
 
-namespace OOP_Main {
+namespace OOP_Main.Screens {
     public class OrderScreen: BaseScreen, IScreen {
         public OrderScreen(Data appData): base(appData) { }
 
@@ -40,98 +40,100 @@ namespace OOP_Main {
 
             List<Product> catalog = new List<Product>();
 
-            List<string> productNames = new List<string> {
-                exitOption
-            };
+            var availableProducts = new List<Product>(_appData.Products);
+
+            var productNames = _appData.Products.Select(p => $"{p.Name} - {p.Price}$").ToList();
+
+            productNames.Add(exitOption);
 
             bool isChosenExit = false;
 
-            foreach (var product in _appData.Products) {
-                productNames.Add(product.Name);
-            }
-
             while (!isChosenExit) {
-                var prompt = new SelectionPrompt<string>()
+                var prompt = new SelectionPrompt<Product>()
                     .Title("Select [green]product[/] to order")
                     .PageSize(15)
-                    .AddChoices(productNames);
+                    .UseConverter(p => p == null ? exitOption : $"{p.Name} - {p.Price}$")
+                    .AddChoices(availableProducts)
+                    .AddChoices((Product)null);
                 var productChoice = AnsiConsole.Prompt(prompt);
 
-                if (productChoice == exitOption) {
+                if (productChoice == null) {
+                    DefaultErrorOutput($"Sorry, we didn't found this product. Try again");
                     isChosenExit = true;
                     continue;
                 }
 
-                IOptional<Product> foundProduct = _appData.GetProductByName(productChoice);
-                if (foundProduct.HasValue()) {
-                    Product chosenProduct = foundProduct.Value;
-                    int amount = DefaultTextPrompt<int>("Enter [green]amount[/] of this product");
+                int amount = DefaultTextPrompt<int>("Enter [green]amount[/] of this product");
                     
-                    if (amount <= 0) {
-                        DefaultErrorOutput($"Amount should be more than 0. Try again");
-                        continue;
-                    }
+                if (amount <= 0) {
+                    DefaultErrorOutput($"Amount should be more than 0. Try again");
+                    continue;
+                }
 
-                    for (int i = 0; i < amount; i++) {
-                        catalog.Add(chosenProduct);
-                    }
+                for (int i = 0; i < amount; i++) {
+                    catalog.Add(productChoice);
                 }
-                else {
-                    DefaultErrorOutput($"Sorry, we didn't found this product. Try again");
-                }
-                productNames.Remove(productChoice);
+
+                availableProducts.Remove(productChoice);
                 ClearConsole();
                 ShowHeader("Creating order");
             }
 
-            if (catalog.Count > 0) {
-                int userId = _appData.CurrentUser.Value.Id;
-                _appData.AddOrder(userId, catalog);
-                int newOrderID = _appData.GetOrdersFromUser(userId).LastOrDefault().OrderId;
+            if (catalog.Count == 0) return BackToMenuPrompt();
 
-                Order newOrder = _appData.GetOrderById(newOrderID).Value;
+            int userId = _appData.CurrentUser.Value.Id;  
+            int newOrderID = _appData.GetOrdersFromUser(userId).LastOrDefault().OrderId;
 
-                double totalPrice = newOrder.GetTotalPrice();
+            Order newOrder = _appData.GetOrderById(newOrderID).Value;
 
-                bool acceptOrder = DefaultConfirm($"The order costs {totalPrice}$. Would you like to pay for it?");
+            var validationPipeline = new EmptyOrderValidationHandler();
+            validationPipeline
+                .SetNext(new UserAccountStatusHandler())
+                .SetNext(new StockAvailabilityHandler())
+                .SetNext(new InsufficientFundsHandler())
+                .SetNext(new OrderAmountLimitHandler(maxOrderLimit: 5000.0));
 
-                if (!acceptOrder) {
-                    _appData.DeleteOrder(newOrderID);
-                    return BackToMenuPrompt();
-                }
-
-                try {
-                    _appData.CurrentUser.Value.TakeMoney(totalPrice);
-                    DefaultSuccessOutput($"New transaction: -{totalPrice} $");
-                    newOrder.Status = OrderStatus.Paid;
-                    string orderReciept = RecieptGenerator.BuildOrderReceipt(newOrder, _appData.CurrentUser.Value);
-                    DefaultMarkupOutput($"[bold green rapidblink]YOUR NEW ORDER[/]");
-                    var panel = new Panel(orderReciept)
-                        .BorderColor(Color.Blue)
-                        .DoubleBorder()
-                        .Padding(4, 2);
-
-                    AnsiConsole.Write(panel);
-
-                    string username = _appData.CurrentUser.MapValue(user => user.Username).GetValueOrElse(newOrder.BuyerId.ToString());
-                    string savePath = $"DataStorage/reciept_order_{newOrderID}_from_{username}.txt";
-
-                    RecieptGenerator.SaveReciept(orderReciept, savePath);
-                }
-                catch (InsufficientFundsException ex) {
-                    DefaultErrorOutput(ex.Message);
-                    _appData.DeleteOrder(newOrderID);
-                }
-                catch (ArgumentException ex) {
-                    DefaultErrorOutput(ex.Message);
-                    _appData.DeleteOrder(newOrderID);
-                }
-                catch (ECommerceException ex) {
-                    DefaultErrorOutput(ex.Message);
-                    _appData.DeleteOrder(newOrderID);
-                }
-
+            if (!validationPipeline.Handle(newOrder, _appData.CurrentUser.Value, out string validationError)) {
+                DefaultErrorOutput(validationError);
                 return BackToMenuPrompt();
+            }
+
+            double totalPrice = newOrder.GetTotalPrice();
+
+            bool acceptOrder = DefaultConfirm($"The order costs {totalPrice}$. Would you like to pay for it?");
+
+            if (!acceptOrder) return BackToMenuPrompt();
+
+            try {
+                _appData.CurrentUser.Value.TakeMoney(totalPrice);
+                _appData.AddOrder(userId, catalog);
+                DefaultSuccessOutput($"New transaction: -{totalPrice} $");
+                newOrder.Pay();
+                string orderReciept = RecieptGenerator.BuildOrderReceipt(newOrder, _appData.CurrentUser.Value);
+                DefaultMarkupOutput($"[bold green rapidblink]YOUR NEW ORDER[/]");
+                var panel = new Panel(orderReciept)
+                    .BorderColor(Color.Blue)
+                    .DoubleBorder()
+                    .Padding(4, 2);
+
+                AnsiConsole.Write(panel);
+
+                string username = _appData.CurrentUser.MapValue(user => user.Username).GetValueOrElse(newOrder.BuyerId.ToString());
+                string savePath = $"DataStorage/reciept_order_{newOrderID}_from_{username}.txt";
+
+                RecieptGenerator.SaveReciept(orderReciept, savePath);
+            }
+            catch (InsufficientFundsException ex) {
+                DefaultErrorOutput(ex.Message);
+                _appData.DeleteOrder(newOrderID);
+            }
+            catch (ArgumentException ex) {
+                DefaultErrorOutput(ex.Message);
+                _appData.DeleteOrder(newOrderID);
+            }
+            catch (ECommerceException ex) {
+                DefaultErrorOutput(ex.Message);
+                _appData.DeleteOrder(newOrderID);
             }
 
             return BackToMenuPrompt();
