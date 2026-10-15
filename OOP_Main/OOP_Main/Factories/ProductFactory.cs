@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OOP_Main.UI;
 
 namespace OOP_Main {
     public abstract class ProductFactory : UIHelper {

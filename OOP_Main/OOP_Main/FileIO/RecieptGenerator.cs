@@ -1,14 +1,9 @@
 ﻿using OOP_Main.Utilities;
-using Spectre.Console;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using static OOP_Main.Utilities.Exceptions;
 
-namespace OOP_Main.UI {
+namespace OOP_Main {
     public static class RecieptGenerator {
         public static string BuildOrderReceipt(Order order, User buyer) {
             var sb = new StringBuilder();
@@ -51,8 +46,6 @@ namespace OOP_Main.UI {
         public static void SaveReciept(string receiptText, string outputFilePath) {
             try {
                 TextStorage.SaveToFile(receiptText, outputFilePath);
-
-                UIHelper.DefaultMarkupOutput($"[blue]Reciept was saved in file:[/] [yellow]{outputFilePath}[/]");
             }
             catch (Exception ex) {
                 throw new ECommerceException($"Error with saving reciept in file '{outputFilePath}'", ex);

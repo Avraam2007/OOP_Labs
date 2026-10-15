@@ -9,9 +9,10 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 
-namespace OOP_Main {
+namespace OOP_Main.UI {
     public class UIHelper {
         public delegate string ConsolePromptHandler(string text); // Func<string, string>
+
         protected string GetEnumDescription(Enum value) {
             FieldInfo fi = value.GetType().GetField(value.ToString());
             if (fi == null) return value.ToString();
@@ -67,16 +68,24 @@ namespace OOP_Main {
             AnsiConsole.Write(panel);
         }
 
+        protected static Panel HeaderPanel(string text, Color panelColor) {
+            return new Panel(
+                new Markup($"[bold]{text}[/]", new Style(foreground: panelColor))
+            )
+            .BorderColor(panelColor);
+        }
+
+        protected static Rule RuleLine() {
+            return new Rule();
+        }
+
         protected static Action<string> ShowHeader = text => {
-            var logoPanel = new Panel(
-                new Markup($"[bold]{text}[/]", new Style(foreground: Color.Blue))
-                )
-                .BorderColor(Color.Blue)
-                .Padding(2, 2);
+            var logoPanel = HeaderPanel(text, Color.Blue).Padding(2, 2);
+
             var header = new Padder(logoPanel);
 
             AnsiConsole.Write(header);
-            AnsiConsole.Write(new Rule());
+            AnsiConsole.Write(RuleLine());
         };
 
         protected static bool CheckIfUserIsAdmin(IOptional<User> currentUser) {

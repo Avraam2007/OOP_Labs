@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOP_Main.FileIO;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -43,8 +44,7 @@ namespace OOP_Main.UI {
         }
 
         public static void UploadFilesFrom(Data data) {
-            JsonStorage.RegisterHandler(DefaultErrorOutput);
-            TextStorage.RegisterHandler(DefaultErrorOutput);
+            ErrorRegistry.RegisterHandler(DefaultErrorOutput);
             EnsureDataOrRestoreBackup();
             data.LoadAllData();
         }

@@ -12,6 +12,7 @@ namespace OOP_Main.UI {
         private readonly OrderScreen _orderScreen;
         private readonly UserScreen _userScreen;
         private readonly SupplierScreen _supplierScreen;
+        private AutoSaveService _autoSaveService;
         public Data AppData { get; set; }
 
         public Interface(Data AppData) {
@@ -65,6 +66,9 @@ namespace OOP_Main.UI {
         private void OnStart() {
             DataManager.UploadFilesFrom(AppData);
             AppData.CurrentUser = Optional.OfNullable(AppData.GetUserById(0).GetValueOrElse(new User(0, "Guest", "123")));
+
+            _autoSaveService = new AutoSaveService(AppData, intervalSeconds: 60);
+            _autoSaveService.Start();
         }
 
         public void Start() {
@@ -96,6 +100,8 @@ namespace OOP_Main.UI {
         }
 
         private void OnEnd() {
+            _autoSaveService?.Dispose();
+
             DataManager.SaveFilesFrom(AppData);
             Logger.Log($"The program has been successfully closed", Logger.LogLevels.Info);
         }
@@ -121,22 +127,20 @@ namespace OOP_Main.UI {
                 return BackToMenuPrompt();
             }
         }
+
         private MenuOption MainMenuList(List<MenuOption> menuList) {
-            var prompt = new SelectionPrompt<MenuOption>()
-                .Title("Choose option")
-                .WrapAround()
-                .PageSize(10)
-                .AddChoices(menuList);
-
-            prompt.UseConverter(option => GetEnumDescription(option));
-
-            return AnsiConsole.Prompt(prompt);
+            return LiveHeaderRunner.ShowMenuWithLiveClock(
+                "Welcome to [green]ECommerce[/]",
+                menuList,
+                AppData.CurrentUser.Value,
+                option => GetEnumDescription(option)
+            );
         }
 
         public bool MainScreen() {
-            ClearConsole();
+            //ClearConsole();
 
-            ShowHeader("Welcome to [green]ECommerce[/]");
+            //ShowHeader("Welcome to [green]ECommerce[/]");
 
             List<MenuOption> guestMenuList = new List<MenuOption>{
                         MenuOption.ShowProducts,
@@ -177,6 +181,7 @@ namespace OOP_Main.UI {
             };
 
             MenuOption choice;
+
 
             if (CheckIfUserIsAdmin(AppData.CurrentUser)) {
                 choice = MainMenuList(adminMenuList);

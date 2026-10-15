@@ -122,6 +122,7 @@ namespace OOP_Main.Screens {
                 string savePath = $"DataStorage/reciept_order_{newOrderID}_from_{username}.txt";
 
                 RecieptGenerator.SaveReciept(orderReciept, savePath);
+                DefaultMarkupOutput($"[blue]Reciept was saved in file:[/] [yellow]{savePath}[/]");
             }
             catch (InsufficientFundsException ex) {
                 DefaultErrorOutput(ex.Message);

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OOP_Main.FileIO;
 using Spectre.Console;
 using System;
 using System.IO;
@@ -6,15 +7,6 @@ using System.Threading.Tasks;
 
 namespace OOP_Main {
     public static class TextStorage {
-        private static event OnError Taken;
-
-        public static void RegisterHandler(OnError del) {
-            Taken = del;
-        }
-
-        private static void HandleError(string message) {
-            Taken?.Invoke(message);
-        }
         public static async Task<string> LoadFromFile(string filePath) {
             try {
                 if (!File.Exists(filePath)) {
@@ -30,15 +22,15 @@ namespace OOP_Main {
                 return text;
             }
             catch (UnauthorizedAccessException ex) {
-                HandleError($"Access Denied: Cannot read '{filePath}'. {ex.Message}");
+                ErrorRegistry.HandleError($"Access Denied: Cannot read '{filePath}'. {ex.Message}");
                 return string.Empty;
             }
             catch (IOException ex) {
-                HandleError($"I/O Error: File '{filePath}' might be locked by another process. {ex.Message}");
+                ErrorRegistry.HandleError($"I/O Error: File '{filePath}' might be locked by another process. {ex.Message}");
                 return string.Empty;
             }
             catch (Exception ex) {
-                HandleError($"Unexpected Error loading '{filePath}': {ex.Message}");
+                ErrorRegistry.HandleError($"Unexpected Error loading '{filePath}': {ex.Message}");
                 return string.Empty;
             }
         }
@@ -53,13 +45,13 @@ namespace OOP_Main {
                 }
             }
             catch (UnauthorizedAccessException ex) {
-                HandleError($"Access Denied: Cannot write '{filePath}'. {ex.Message}");
+                ErrorRegistry.HandleError($"Access Denied: Cannot write '{filePath}'. {ex.Message}");
             }
             catch (IOException ex) {
-                HandleError($"I/O Error: File '{filePath}' might be locked by another process. {ex.Message}");
+                ErrorRegistry.HandleError($"I/O Error: File '{filePath}' might be locked by another process. {ex.Message}");
             }
             catch (Exception ex) {
-                HandleError($"Error saving file {filePath}: {ex.Message}");
+                ErrorRegistry.HandleError($"Error saving file {filePath}: {ex.Message}");
             }
         }
     }
