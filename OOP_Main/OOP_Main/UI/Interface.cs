@@ -13,6 +13,7 @@ namespace OOP_Main.UI {
         private readonly UserScreen _userScreen;
         private readonly SupplierScreen _supplierScreen;
         private AutoSaveService _autoSaveService;
+        private OrderProcessingQueue _orderQueue;
         public Data AppData { get; set; }
 
         public Interface(Data AppData) {
@@ -57,7 +58,7 @@ namespace OOP_Main.UI {
 
         public void BootUpScreen() {
             // Styled text with markup
-            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.22[/]");
+            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.23[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...", OnStart);
@@ -69,6 +70,8 @@ namespace OOP_Main.UI {
 
             _autoSaveService = new AutoSaveService(AppData, intervalSeconds: 60);
             _autoSaveService.Start();
+
+            _orderQueue = new OrderProcessingQueue();
         }
 
         public void Start() {
@@ -101,6 +104,7 @@ namespace OOP_Main.UI {
 
         private void OnEnd() {
             _autoSaveService?.Dispose();
+            _orderQueue?.Dispose();
 
             DataManager.SaveFilesFrom(AppData);
             Logger.Log($"The program has been successfully closed", Logger.LogLevels.Info);
@@ -129,7 +133,7 @@ namespace OOP_Main.UI {
         }
 
         private MenuOption MainMenuList(List<MenuOption> menuList) {
-            return LiveHeaderRunner.ShowMenuWithLiveClock(
+            return UI.MainScreen.ShowMenuWithLiveClock(
                 "Welcome to [green]ECommerce[/]",
                 menuList,
                 AppData.CurrentUser.Value,
@@ -138,11 +142,8 @@ namespace OOP_Main.UI {
         }
 
         public bool MainScreen() {
-            //ClearConsole();
-
-            //ShowHeader("Welcome to [green]ECommerce[/]");
-
             List<MenuOption> guestMenuList = new List<MenuOption>{
+                        MenuOption.SearchProducts,
                         MenuOption.ShowProducts,
                         MenuOption.ShowSuppliers,
                         MenuOption.SignUp,
@@ -152,6 +153,7 @@ namespace OOP_Main.UI {
 
             var menuList = new List<MenuOption>{
                         MenuOption.MyAccount,
+                        MenuOption.SearchProducts,
                         MenuOption.ShowOrders,
                         MenuOption.ShowProducts,
                         MenuOption.ShowSuppliers,
@@ -167,6 +169,7 @@ namespace OOP_Main.UI {
                         MenuOption.ShowOrders,
                         MenuOption.ShowProducts,
                         MenuOption.ShowSuppliers,
+                        MenuOption.SearchProducts,
                         MenuOption.CreateOrder,
                         MenuOption.AddProduct,
                         MenuOption.AddSupplier,
@@ -210,6 +213,9 @@ namespace OOP_Main.UI {
                     case MenuOption.ShowSuppliers:
                         _supplierScreen.Show();
                         break;
+                    case MenuOption.SearchProducts:
+                        _productScreen.Search();
+                    break;
                     case MenuOption.CreateOrder:
                         CheckAccessToCreateOrder();
                         break;

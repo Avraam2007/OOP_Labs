@@ -43,7 +43,7 @@
   <Class Name="OOP_Main.Product">
     <Position X="8.75" Y="17.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAABAABAAQAAAAQEgACAAAQAGAAkAJAAAAAAAAAgAAA=</HashCode>
+      <HashCode>AAABAABAAQAAAAQEgACAAAQAGAAkAJAAAAAAAAAgCAA=</HashCode>
       <FileName>Entities\Product.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -81,7 +81,7 @@
   <Class Name="OOP_Main.Screens.ProductScreen">
     <Position X="4" Y="14" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAEECEACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAEECEACAAAAAAAgAAA=</HashCode>
       <FileName>Screens\ProductScreen.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -119,7 +119,7 @@
   <Class Name="OOP_Main.OrderData">
     <Position X="23" Y="22" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAgAAAAAABAAIAAAAAAAAAEAAAAAUAAAAAAAAA=</HashCode>
+      <HashCode>AgEAAAAgAAAAAABAAIAAAAAAAAAEAAAAAEAAAAAAAAA=</HashCode>
       <FileName>Data\OrderData.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -301,14 +301,12 @@
     <Position X="28" Y="13.5" Width="2.5" />
     <AssociationLine Name="Products" Type="OOP_Main.Product" FixedFromPoint="true">
       <Path>
-        <Point X="28" Y="17.75" />
-        <Point X="23.302" Y="17.75" Type="JumpStart" />
-        <Point X="23.135" Y="17.75" Type="JumpEnd" />
-        <Point X="22.583" Y="17.75" Type="JumpStart" />
-        <Point X="22.417" Y="17.75" Type="JumpEnd" />
-        <Point X="18.083" Y="17.75" Type="JumpStart" />
-        <Point X="17.917" Y="17.75" Type="JumpEnd" />
-        <Point X="11" Y="17.75" />
+        <Point X="28" Y="17.87" />
+        <Point X="23.302" Y="17.87" Type="JumpStart" />
+        <Point X="23.135" Y="17.87" Type="JumpEnd" />
+        <Point X="22.583" Y="17.87" Type="JumpStart" />
+        <Point X="22.417" Y="17.87" Type="JumpEnd" />
+        <Point X="11" Y="17.87" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="Orders" Type="OOP_Main.Order" ManuallyRouted="true">
@@ -321,7 +319,7 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAEAAKIoAKAAAoEAYpASQAAIARJGAAggAEAoAAAQAAQ=</HashCode>
+      <HashCode>AgEAAKIoAKAAAoEAYpASQAAIARJGAAggAEAoAAAQAAQ=</HashCode>
       <FileName>Data\Data.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -426,7 +424,7 @@
   <Class Name="OOP_Main.UI.Interface">
     <Position X="23.5" Y="11.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>IAAAAAQAACAAAgQAEAAYEAAQAgAAABAAQBAgCACBBAA=</HashCode>
+      <HashCode>IAAAAAQAACAAAgQAEAgYEAAQAgAAABAAQBAgCACBBAA=</HashCode>
       <FileName>UI\Interface.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -514,28 +512,29 @@
       <FileName>Utilities\Logger.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OOP_Main.Comparers.ProductPriceComparer">
+  <Class Name="OOP_Main.Comparers.OrderPriceComparer">
     <Position X="31.25" Y="26.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
-      <FileName>Comparers\ProductComparers.cs</FileName>
+      <FileName>Comparers\OrderComparers.cs</FileName>
+      <NewMemberFileName>Comparers\ProductComparers.cs</NewMemberFileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="OOP_Main.Comparers.ProductNameComparer">
+  <Class Name="OOP_Main.Comparers.SupplierIDComparer">
     <Position X="31.25" Y="28.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
-      <FileName>Comparers\ProductComparers.cs</FileName>
+      <FileName>Comparers\SupplierComparers.cs</FileName>
+      <NewMemberFileName>Comparers\ProductComparers.cs</NewMemberFileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="OOP_Main.Comparers.UsernameComparer">
+  <Class Name="OOP_Main.Comparers.OrderIDComparer">
     <Position X="33.75" Y="26.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
-      <FileName>Comparers\UserComparers.cs</FileName>
-      <NewMemberFileName>Comparers\ProductComparers.cs</NewMemberFileName>
+      <FileName>Comparers\OrderComparers.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -552,7 +551,7 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgEICCAAAAAgACAAAAEIIAGAIEAIBABBA=</HashCode>
+      <HashCode>AAAAAAAAAAAgEICDAAAAAgACAAAAEIIAGAIEAIBABBA=</HashCode>
       <FileName>UI\UIHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -563,11 +562,11 @@
       <FileName>FileIO\RecieptGenerator.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OOP_Main.UI.LiveHeaderRunner">
+  <Class Name="OOP_Main.UI.MainScreen">
     <Position X="1.5" Y="11.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AgAAAAAAAAAAAAAAAAAAQQAAAAAAAAAAAAAAAAAAgAA=</HashCode>
-      <FileName>UI\LiveHeaderRunner.cs</FileName>
+      <FileName>UI\MainScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.FileIO.ErrorRegistry">
@@ -617,6 +616,21 @@
       <FileName>Utilities\AutoSaveService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Main.Utilities.OrderProcessingQueue">
+    <Position X="38.5" Y="20.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAACEAAAAAAAgAAAAABAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\OrderProcessingService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Main.Utilities.ParallelSearchService">
+    <Position X="41.25" Y="20.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Utilities\ParalellSearchService.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Struct Name="OOP_Main.CardRenderer">
     <Position X="12.75" Y="2.25" Width="2" />
@@ -701,7 +715,7 @@
   <Enum Name="OOP_Main.MenuOption">
     <Position X="26.25" Y="10" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAACAAQDABECEAAQAgAAAAAABAAAECAAIgQAQA=</HashCode>
+      <HashCode>AAAAAAAACAAQDABECEIAQAgAAAAAABAAAECAAIgQAQA=</HashCode>
       <FileName>Utilities\Enum.cs</FileName>
     </TypeIdentifier>
   </Enum>

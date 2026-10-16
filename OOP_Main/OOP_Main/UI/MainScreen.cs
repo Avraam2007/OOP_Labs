@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace OOP_Main.UI {
-    public class LiveHeaderRunner: UIHelper {
+    public class MainScreen: UIHelper {
 
         private static int GetHeaderHeight(int panelRows, int rules) {
             if (panelRows < 0 || rules < 0) return 0;

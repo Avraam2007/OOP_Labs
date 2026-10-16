@@ -85,7 +85,9 @@
     <Compile Include="Builders\Director.cs" />
     <Compile Include="Builders\OrderBuilder.cs" />
     <Compile Include="Bundles\ProductBundle.cs" />
+    <Compile Include="Comparers\OrderComparers.cs" />
     <Compile Include="Comparers\ProductComparers.cs" />
+    <Compile Include="Comparers\SupplierComparers.cs" />
     <Compile Include="Comparers\UserComparers.cs" />
     <Compile Include="FileIO\BackupService.cs" />
     <Compile Include="Data\BaseData.cs" />
@@ -119,7 +121,7 @@
     <Compile Include="Entities\ElectronicProduct.cs" />
     <Compile Include="Factories\ElectronicProductFactory.cs" />
     <Compile Include="UI\DataManager.cs" />
-    <Compile Include="UI\LiveHeaderRunner.cs" />
+    <Compile Include="UI\MainScreen.cs" />
     <Compile Include="FileIO\RecieptGenerator.cs" />
     <Compile Include="Utilities\AutoSaveService.cs" />
     <Compile Include="Utilities\Enum.cs" />
@@ -135,11 +137,13 @@
     <Compile Include="Screens\OrderScreen.cs" />
     <Compile Include="Utilities\Exceptions.cs" />
     <Compile Include="Utilities\Logger.cs" />
+    <Compile Include="Utilities\OrderProcessingService.cs" />
     <Compile Include="Utilities\OrderStatus.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Data\ProductData.cs" />
     <Compile Include="Decorators\ProductDecorator.cs" />
     <Compile Include="Factories\ProductFactory.cs" />
+    <Compile Include="Utilities\ParalellSearchService.cs" />
     <Compile Include="Utilities\ProductHelpers.cs" />
     <Compile Include="Screens\ProductScreen.cs" />
     <Compile Include="Program.cs" />

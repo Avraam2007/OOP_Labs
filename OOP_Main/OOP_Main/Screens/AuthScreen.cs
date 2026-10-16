@@ -6,7 +6,6 @@ namespace OOP_Main.Screens {
         public AuthScreen(Data appData): base(appData) { }
 
         public string LoginScreen() {
-            ClearConsole();
             ShowHeader("Log in");
 
             string username = DefaultTextPrompt<string>("What's your [green]username[/]?");
@@ -29,7 +28,6 @@ namespace OOP_Main.Screens {
         }
 
         public string Create() {
-            ClearConsole();
             ShowHeader("Sign up");
 
             string username = DefaultTextPrompt<string>("Enter your [green]username[/]:");

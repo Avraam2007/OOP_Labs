@@ -28,6 +28,12 @@ namespace OOP_Main.UI {
                 });
         }
 
+        protected static T PromptWithDefaultValue<T>(string text, T defaultValue) {
+            T value = AnsiConsole.Ask(text, defaultValue);
+
+            return value is string val ? (T)(object)Markup.Escape(val) : value;
+        }
+
         protected static T DefaultTextPrompt<T>(string text) {
             var prompt = new TextPrompt<T>(text);
             T value = AnsiConsole.Prompt(prompt);
@@ -80,6 +86,7 @@ namespace OOP_Main.UI {
         }
 
         protected static Action<string> ShowHeader = text => {
+            ClearConsole();
             var logoPanel = HeaderPanel(text, Color.Blue).Padding(2, 2);
 
             var header = new Padder(logoPanel);
@@ -119,7 +126,7 @@ namespace OOP_Main.UI {
             where T : class, IIdentifiable<TId>
             where TId : IEquatable<TId> {
             string typeName = typeof(T).Name.ToLowerInvariant();
-            ClearConsole();
+
             ShowHeader($"Delete {typeName}");
 
             List<T> finalList = new List<T>(items);
@@ -183,7 +190,6 @@ namespace OOP_Main.UI {
         }
 
         protected string ShowListScreen<T>(string header, IEnumerable<T> items, string extraErrorMessage = "") where T : class {
-            ClearConsole();
             ShowHeader(header);
 
             if (Tools.ValidateArray(items)) {
@@ -197,7 +203,6 @@ namespace OOP_Main.UI {
                 int currentPage = 1;
 
                 while (true) {
-                    ClearConsole();
                     ShowHeader(header);
                     PageCheck(currentPage, totalPages);
 

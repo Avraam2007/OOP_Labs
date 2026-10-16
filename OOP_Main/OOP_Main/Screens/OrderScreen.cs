@@ -1,4 +1,5 @@
-﻿using OOP_Main.Handlers;
+﻿using OOP_Main.Comparers;
+using OOP_Main.Handlers;
 using OOP_Main.UI;
 using OOP_Main.Utilities;
 using Spectre.Console;
@@ -18,17 +19,33 @@ namespace OOP_Main.Screens {
                     GetEnumDescription(MenuOption.SignUp)
                 );
             }
-            return ShowListScreen(
-                header: "Orders",
-                items: CheckIfUserIsAdmin(_appData.CurrentUser) ?
-                _appData.Orders :
-                _appData.GetOrdersFromUser(_appData.CurrentUser.Value.Id),
-                extraErrorMessage: "You can create it."
+
+            ShowHeader("Orders");
+
+            var sortOption = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Choose sorting option:")
+                    .AddChoices("By ID (default)", "By total price (from the cheapest)")
             );
+
+            var orders = CheckIfUserIsAdmin(_appData.CurrentUser) ?
+                _appData.Orders :
+                _appData.GetOrdersFromUser(_appData.CurrentUser.Value.Id);
+
+            List<Order> ordersToSort = new List<Order>(orders);
+
+            switch (sortOption) {
+                case "By ID (default)":
+                    ordersToSort.Sort(new OrderIDComparer());
+                    break;
+                case "By total price (from the cheapest)":
+                    ordersToSort.Sort(new OrderPriceComparer());
+                    break;
+            }
+            return ShowListScreen("Orders", ordersToSort, extraErrorMessage: "You can create it.");
         }
 
         public string Create() {
-            ClearConsole();
             ShowHeader("Creating order");
 
             if (Tools.ValidateArray(_appData.Products)) {
@@ -75,16 +92,13 @@ namespace OOP_Main.Screens {
                 }
 
                 availableProducts.Remove(productChoice);
-                ClearConsole();
+
                 ShowHeader("Creating order");
             }
 
             if (catalog.Count == 0) return BackToMenuPrompt();
 
-            int userId = _appData.CurrentUser.Value.Id;  
-            int newOrderID = _appData.GetOrdersFromUser(userId).LastOrDefault().OrderId;
-
-            Order newOrder = _appData.GetOrderById(newOrderID).Value;
+            Order newOrder = new Order();
 
             var validationPipeline = new EmptyOrderValidationHandler();
             validationPipeline
@@ -104,11 +118,20 @@ namespace OOP_Main.Screens {
 
             if (!acceptOrder) return BackToMenuPrompt();
 
+            int userId = _appData.CurrentUser.Value.Id;
+            int newOrderID = _appData.GetOrdersFromUser(userId).LastOrDefault().OrderId;
+
             try {
                 _appData.CurrentUser.Value.TakeMoney(totalPrice);
+
                 _appData.AddOrder(userId, catalog);
                 DefaultSuccessOutput($"New transaction: -{totalPrice} $");
+
                 newOrder.Pay();
+
+
+                _appData.OrderQueue?.EnqueueOrder(newOrder);
+
                 string orderReciept = RecieptGenerator.BuildOrderReceipt(newOrder, _appData.CurrentUser.Value);
                 DefaultMarkupOutput($"[bold green rapidblink]YOUR NEW ORDER[/]");
                 var panel = new Panel(orderReciept)

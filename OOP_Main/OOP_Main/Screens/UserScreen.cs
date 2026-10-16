@@ -1,4 +1,5 @@
-﻿using OOP_Main.Utilities;
+﻿using OOP_Main.Comparers;
+using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,30 @@ namespace OOP_Main.Screens {
     public class UserScreen: BaseScreen, IShowScreen, IDeleteScreen {
         public UserScreen(Data appData): base(appData) { }
 
-        public string Show() => ShowListScreen("Users", _appData.Users);
+        public string Show() {
+            ShowHeader("Users");
+
+            var sortOption = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Choose sorting option:")
+                    .AddChoices("By ID (default)", "By status (A-Z)", "By name (A-Z)")
+            );
+
+            List<User> usersToSort = new List<User>(_appData.Users);
+
+            switch (sortOption) {
+                case "By ID (default)":
+                    usersToSort.Sort(new UserIDComparer());
+                    break;
+                case "By name (A-Z)":
+                    usersToSort.Sort(new UsernameComparer());
+                    break;
+                case "By status (A-Z)":
+                    usersToSort.Sort(new UserRoleComparer());
+                    break;
+            }
+            return ShowListScreen("Users", usersToSort);
+        }
 
         public string Delete() => DeleteObjectScreen<User, int>(
             _appData.Users, 
@@ -18,7 +42,6 @@ namespace OOP_Main.Screens {
         );
 
         public string CheckAccount() {
-            ClearConsole();
             ShowHeader("My account");
 
             InternalFlashCard(CardRenderer.GetCardInfo(_appData.CurrentUser.Value));
@@ -27,7 +50,6 @@ namespace OOP_Main.Screens {
         }
 
         public string TopUpBalance() {
-            ClearConsole();
             ShowHeader("Top up money balance");
 
             double amount = DefaultTextPrompt<double>("How much you want to [green]top up your money balance?[/] ");

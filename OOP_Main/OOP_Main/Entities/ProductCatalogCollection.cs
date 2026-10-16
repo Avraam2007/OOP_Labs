@@ -26,7 +26,6 @@ namespace OOP_Main.Entities {
         public IEnumerator<Product> GetEnumerator() => new ProductEnumerator(_items, _count);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        // Власний кастомний ітератор
         private class ProductEnumerator : IEnumerator<Product> {
             private readonly Product[] _array;
             private readonly int _size;

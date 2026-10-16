@@ -9,6 +9,8 @@ namespace OOP_Main {
         private double price;
         public int SupplierId { get; set; }
 
+        public virtual string Category => GetType().Name;
+
         string IIdentifiable<string>.Id => this.Article;
         public virtual string Article {
             get {

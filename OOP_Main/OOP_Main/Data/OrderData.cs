@@ -1,5 +1,6 @@
 ﻿using NOptional;
 using OOP_Main.Builders;
+using OOP_Main.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,7 +8,7 @@ namespace OOP_Main {
     public class OrderData: BaseDataRepository<Order, int> {
         public List<Order> Orders => Items;
 
-        public Queue<Order> ShippingOrdersQueue { get; set; } = new Queue<Order>();
+        public OrderProcessingQueue OrderQueue { get; set; }
 
         public OrderData() : base("DataStorage/orders.json") { }
 

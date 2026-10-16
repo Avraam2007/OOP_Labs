@@ -1,4 +1,5 @@
 ﻿using NOptional;
+using OOP_Main.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -13,6 +14,7 @@ namespace OOP_Main {
         public List<User> Users => _userData.Users;
         public List<Product> Products => _productData.Products;
         public List<Order> Orders => _orderData.Orders;
+        public OrderProcessingQueue OrderQueue => _orderData.OrderQueue;
         public List<Supplier> Suppliers => _supplierData.Suppliers;
 
         public IOptional<User> CurrentUser { get; set; }

@@ -1,17 +1,38 @@
-﻿using OOP_Main.Utilities;
+﻿using OOP_Main.Comparers;
 using Spectre.Console;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace OOP_Main.Screens {
     public class SupplierScreen: BaseScreen, IScreen {
         public SupplierScreen(Data appData): base(appData) { }
 
-        public string Show() => ShowListScreen("Suppliers", _appData.Suppliers);
+        public string Show() {
+            ShowHeader("Suppliers");
+
+            var sortOption = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Choose sorting option:")
+                    .AddChoices("By ID (default)", "By rating (from the best)", "By name (A-Z)")
+            );
+
+            List<Supplier> suppliersToSort = new List<Supplier>(_appData.Suppliers);
+
+            switch (sortOption) {
+                case "By ID (default)":
+                    suppliersToSort.Sort(new SupplierIDComparer());
+                    break;
+                case "By rating (from the best)":
+                    suppliersToSort.Sort(new SupplierRatingComparer());
+                    suppliersToSort.Reverse();
+                    break;
+                case "By name (A-Z)":
+                    suppliersToSort.Sort(new SupplierNameComparer());
+                    break;
+            }
+            return ShowListScreen("Suppliers", suppliersToSort);
+        }
 
         public string Create() {
-            ClearConsole();
             ShowHeader("Creating supplier");
 
             string name = DefaultTextPrompt<string>("Enter supplier [green]name[/]:");
