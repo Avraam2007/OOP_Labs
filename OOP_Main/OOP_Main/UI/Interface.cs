@@ -58,7 +58,7 @@ namespace OOP_Main.UI {
 
         public void BootUpScreen() {
             // Styled text with markup
-            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.23[/]");
+            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.24[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...", OnStart);
@@ -143,44 +143,45 @@ namespace OOP_Main.UI {
 
         public bool MainScreen() {
             List<MenuOption> guestMenuList = new List<MenuOption>{
-                        MenuOption.SearchProducts,
-                        MenuOption.ShowProducts,
-                        MenuOption.ShowSuppliers,
-                        MenuOption.SignUp,
-                        MenuOption.LogIn,
-                        MenuOption.Quit
+                MenuOption.SearchProducts,
+                MenuOption.ShowProducts,
+                MenuOption.ShowSuppliers,
+                MenuOption.SignUp,
+                MenuOption.LogIn,
+                MenuOption.Quit
             };
 
             var menuList = new List<MenuOption>{
-                        MenuOption.MyAccount,
-                        MenuOption.SearchProducts,
-                        MenuOption.ShowOrders,
-                        MenuOption.ShowProducts,
-                        MenuOption.ShowSuppliers,
-                        MenuOption.CreateOrder,
-                        MenuOption.SignUp,
-                        MenuOption.LogIn,
-                        MenuOption.Quit
+                MenuOption.MyAccount,
+                MenuOption.SearchProducts,
+                MenuOption.ShowOrders,
+                MenuOption.ShowProducts,
+                MenuOption.ShowSuppliers,
+                MenuOption.CreateOrder,
+                MenuOption.SignUp,
+                MenuOption.LogIn,
+                MenuOption.Quit
             };
 
             var adminMenuList = new List<MenuOption>{
-                        MenuOption.MyAccount,
-                        MenuOption.ShowUsers,
-                        MenuOption.ShowOrders,
-                        MenuOption.ShowProducts,
-                        MenuOption.ShowSuppliers,
-                        MenuOption.SearchProducts,
-                        MenuOption.CreateOrder,
-                        MenuOption.AddProduct,
-                        MenuOption.AddSupplier,
-                        MenuOption.ChangeProductPrice,
-                        MenuOption.DeleteOrder,
-                        MenuOption.DeleteProduct,
-                        MenuOption.DeleteUser,
-                        MenuOption.DeleteSupplier,
-                        MenuOption.SignUp,
-                        MenuOption.LogIn,
-                        MenuOption.Quit
+                MenuOption.MyAccount,
+                MenuOption.ShowUsers,
+                MenuOption.ShowOrders,
+                MenuOption.ShowProducts,
+                MenuOption.ShowSuppliers,
+                MenuOption.SearchProducts,
+                MenuOption.ShowProductsCategory,
+                MenuOption.CreateOrder,
+                MenuOption.AddProduct,
+                MenuOption.AddSupplier,
+                MenuOption.ChangeProductPrice,
+                MenuOption.DeleteOrder,
+                MenuOption.DeleteProduct,
+                MenuOption.DeleteUser,
+                MenuOption.DeleteSupplier,
+                MenuOption.SignUp,
+                MenuOption.LogIn,
+                MenuOption.Quit
             };
 
             MenuOption choice;
@@ -215,7 +216,10 @@ namespace OOP_Main.UI {
                         break;
                     case MenuOption.SearchProducts:
                         _productScreen.Search();
-                    break;
+                        break;
+                    case MenuOption.ShowProductsCategory:
+                        _productScreen.FilterByCategory();
+                        break;
                     case MenuOption.CreateOrder:
                         CheckAccessToCreateOrder();
                         break;

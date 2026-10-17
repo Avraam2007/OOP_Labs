@@ -158,6 +158,7 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Data\UserData.cs" />
     <Compile Include="Screens\UserScreen.cs" />
+    <Compile Include="Utilities\UserService.cs" />
     <Compile Include="Utilities\ValidationTools.cs" />
   </ItemGroup>
   <ItemGroup>

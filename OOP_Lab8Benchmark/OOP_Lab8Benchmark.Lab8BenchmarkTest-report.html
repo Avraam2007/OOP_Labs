@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>OOP_Lab8Benchmark.Lab8BenchmarkTest-20261017-195925</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 11 (10.0.26200.9711/25H2/2025Update/HudsonValley2)
+12th Gen Intel Core i5-12450HX 2.40GHz, 1 CPU, 12 logical and 8 physical cores
+.NET SDK 10.0.103
+  [Host]     : .NET 9.0.20 (9.0.20, 9.0.2026.41315), X64 RyuJIT x86-64-v3 [AttachedDebugger]
+  Job-CNUJVU : .NET 9.0.20 (9.0.20, 9.0.2026.41315), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>InvocationCount=1  UnrollFactor=1  
+</code></pre>
+
+<table>
+<thead><tr><th>Method              </th><th>N</th><th>Mean </th><th>Error</th><th>StdDev</th><th>Median</th><th>Rank</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>TestRemoveListCenter</td><td>1</td><td>77.22 ns</td><td>16.24 ns</td><td>42.21 ns</td><td>100.0 ns</td><td>1</td><td>-</td>
+</tr><tr><td>TestInsertListCenter</td><td>1</td><td>787.88 ns</td><td>96.23 ns</td><td>282.22 ns</td><td>800.0 ns</td><td>5</td><td>32 B</td>
+</tr><tr><td>TestInsertLinkedListCenter</td><td>1</td><td>497.00 ns</td><td>81.30 ns</td><td>239.72 ns</td><td>500.0 ns</td><td>4</td><td>48 B</td>
+</tr><tr><td>TestRemoveLinkedListCenter</td><td>1</td><td>85.86 ns</td><td>23.87 ns</td><td>70.00 ns</td><td>100.0 ns</td><td>1</td><td>-</td>
+</tr><tr><td>TestRemoveListCenter</td><td>10</td><td>508.59 ns</td><td>75.78 ns</td><td>222.24 ns</td><td>550.0 ns</td><td>4</td><td>-</td>
+</tr><tr><td>TestInsertListCenter</td><td>10</td><td>903.00 ns</td><td>109.87 ns</td><td>323.95 ns</td><td>950.0 ns</td><td>5</td><td>104 B</td>
+</tr><tr><td>TestInsertLinkedListCenter</td><td>10</td><td>562.00 ns</td><td>80.92 ns</td><td>238.59 ns</td><td>600.0 ns</td><td>4</td><td>48 B</td>
+</tr><tr><td>TestRemoveLinkedListCenter</td><td>10</td><td>113.00 ns</td><td>23.94 ns</td><td>70.57 ns</td><td>100.0 ns</td><td>1</td><td>-</td>
+</tr><tr><td>TestRemoveListCenter</td><td>100</td><td>400.00 ns</td><td>63.77 ns</td><td>188.03 ns</td><td>400.0 ns</td><td>3</td><td>-</td>
+</tr><tr><td>TestInsertListCenter</td><td>100</td><td>914.00 ns</td><td>117.59 ns</td><td>346.71 ns</td><td>900.0 ns</td><td>5</td><td>824 B</td>
+</tr><tr><td>TestInsertLinkedListCenter</td><td>100</td><td>531.31 ns</td><td>81.02 ns</td><td>237.61 ns</td><td>500.0 ns</td><td>4</td><td>48 B</td>
+</tr><tr><td>TestRemoveLinkedListCenter</td><td>100</td><td>152.00 ns</td><td>23.36 ns</td><td>68.87 ns</td><td>200.0 ns</td><td>1</td><td>-</td>
+</tr><tr><td>TestRemoveListCenter</td><td>1000</td><td>643.43 ns</td><td>82.83 ns</td><td>242.93 ns</td><td>600.0 ns</td><td>5</td><td>-</td>
+</tr><tr><td>TestInsertListCenter</td><td>1000</td><td>607.29 ns</td><td>95.45 ns</td><td>275.39 ns</td><td>500.0 ns</td><td>4</td><td>8024 B</td>
+</tr><tr><td>TestInsertLinkedListCenter</td><td>1000</td><td>335.71 ns</td><td>46.82 ns</td><td>131.29 ns</td><td>250.0 ns</td><td>3</td><td>48 B</td>
+</tr><tr><td>TestRemoveLinkedListCenter</td><td>1000</td><td>207.07 ns</td><td>29.33 ns</td><td>86.01 ns</td><td>200.0 ns</td><td>2</td><td>-</td>
+</tr><tr><td>TestRemoveListCenter</td><td>10000</td><td>5,349.46 ns</td><td>110.70 ns</td><td>314.03 ns</td><td>5,200.0 ns</td><td>7</td><td>-</td>
+</tr><tr><td>TestInsertListCenter</td><td>10000</td><td>3,986.87 ns</td><td>290.78 ns</td><td>852.80 ns</td><td>3,600.0 ns</td><td>6</td><td>80024 B</td>
+</tr><tr><td>TestInsertLinkedListCenter</td><td>10000</td><td>666.67 ns</td><td>68.82 ns</td><td>195.23 ns</td><td>600.0 ns</td><td>5</td><td>48 B</td>
+</tr><tr><td>TestRemoveLinkedListCenter</td><td>10000</td><td>211.46 ns</td><td>26.07 ns</td><td>75.21 ns</td><td>200.0 ns</td><td>2</td><td>-</td>
+</tr></tbody></table>
+</body>
+</html>

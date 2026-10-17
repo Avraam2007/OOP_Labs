@@ -1,9 +1,11 @@
-﻿using System;
+﻿using NOptional;
+using OOP_Main.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using NOptional;
 namespace OOP_Main 
     {
     public class UserData: BaseDataRepository<User, int> {
@@ -16,7 +18,8 @@ namespace OOP_Main
         public void AddUser(string name, string password, bool isAdmin = false) {
             int newUserId = Users.Count > 1 ? Users.Max(u => u.Id) : 0;
             newUserId++;
-            User newUser = new User(newUserId, name, password, 0, isAdmin);
+
+            User newUser = new User(newUserId, name, UserService.HashPassword(password), 0, isAdmin);
 
             AddUser(newUser);
         }

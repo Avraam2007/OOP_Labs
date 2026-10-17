@@ -1,10 +1,10 @@
 ﻿using NOptional;
 using OOP_Main.Comparers;
+using OOP_Main.Structures;
 using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using static OOP_Main.Utilities.Exceptions;
 
@@ -254,44 +254,68 @@ namespace OOP_Main.Screens {
 
         public string Search() {
             ShowHeader("Search product");
-
-            string query = DefaultTextPrompt<string>("Enter search text (name or category):");
+            var searchChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Choose search option:")
+                    .AddChoices(
+                        "Fast filter",
+                        "Thorough search"
+                    )
+            );
 
             double maxPrice = PromptWithDefaultValue("Enter the maximum price (in dollars):", 10000.0);
 
             double minPrice = PromptWithDefaultValue("Enter the minimum price (in dollars):", 0);
 
-            List<Product> foundProducts = ParallelSearchService.FastSearch(_appData.Products, query, maxPrice, minPrice);
+            List<Product> foundProducts;
+
+            if (searchChoice == "Fast filter") {
+                foundProducts = ProductHelpers.FindProductsInPriceRange(_appData.Products, minPrice, maxPrice);
+            }
+            else {
+                string query = DefaultTextPrompt<string>("Enter search text (name or category):");
+                foundProducts = ParallelSearchService.FastSearch(_appData.Products, query, maxPrice, minPrice);
+            }
 
             ShowHeader("Search product");
             if (Tools.ValidateArray(foundProducts)) {
                 DefaultErrorOutput("No products found for your search.");
             }
             else {
-                DefaultMarkupOutput($"[green]Found products: {foundProducts.Count}[/]");
-                var table = new Table().Border(TableBorder.Rounded).BorderColor(Color.Blue);
-                table.AddColumn("Article");
-                table.AddColumn("Name");
-                table.AddColumn("Category");
-                table.AddColumn("Price ($)");
-
-                foreach (var prod in foundProducts) {
-                    table.AddRow(
-                        prod.Article,
-                        prod.Name,
-                        prod.Category ?? "N/A",
-                        prod.Price.ToString("F2")
-                    );
-                }
-
-                table.Columns[0].Header = new Text("Article", new Style(foreground: Color.Yellow));
-                table.Columns[1].Header = new Text("Name", new Style(foreground: Color.Yellow));
-                table.Columns[2].Header = new Text("Category", new Style(foreground: Color.Yellow));
-                table.Columns[3].Header = new Text("Price ($)", new Style(foreground: Color.Yellow));
-
-                AnsiConsole.Write(table);
+                RenderProductsTable(foundProducts);
             }
 
+            return BackToMenuPrompt();
+        }
+
+        public string FilterByCategory() {
+            ShowHeader("Filter by catergory");
+
+            CategoryBST categoryTree = new CategoryBST();
+            foreach (var product in _appData.Products) {
+                if (!string.IsNullOrEmpty(product.Category)) {
+                    categoryTree.Insert(product.Category);
+                }
+            }
+
+            List<string> categoriesList = new List<string>();
+            categoryTree.InOrderTraversal(categoryName => categoriesList.Add(categoryName));
+
+            if (categoriesList.Count == 0) {
+                DefaultErrorOutput("Categories not found.");
+                return BackToMenuPrompt();
+            }
+
+            var selectedCategory = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Choose category:")
+                    .AddChoices(categoriesList)
+            );
+
+            List<Product> filtered = _appData.Products
+                .FindAll(p => string.Equals(p.Category, selectedCategory, StringComparison.OrdinalIgnoreCase));
+
+            RenderProductsTable(filtered);
             return BackToMenuPrompt();
         }
     }

@@ -189,6 +189,31 @@ namespace OOP_Main.UI {
             return BackToMenuPrompt();
         }
 
+        protected void RenderProductsTable(IEnumerable<Product> products) {
+            DefaultMarkupOutput($"[green]Found products: {products.Count()}[/]");
+            var table = new Table().Border(TableBorder.Rounded).BorderColor(Color.Blue);
+            table.AddColumn("Article");
+            table.AddColumn("Name");
+            table.AddColumn("Category");
+            table.AddColumn("Price ($)");
+
+            foreach (var prod in products) {
+                table.AddRow(
+                    prod.Article,
+                    prod.Name,
+                    prod.Category ?? "N/A",
+                    prod.Price.ToString("F2")
+                );
+            }
+
+            table.Columns[0].Header = new Text("Article", new Style(foreground: Color.Yellow));
+            table.Columns[1].Header = new Text("Name", new Style(foreground: Color.Yellow));
+            table.Columns[2].Header = new Text("Category", new Style(foreground: Color.Yellow));
+            table.Columns[3].Header = new Text("Price ($)", new Style(foreground: Color.Yellow));
+
+            AnsiConsole.Write(table);
+        }
+
         protected string ShowListScreen<T>(string header, IEnumerable<T> items, string extraErrorMessage = "") where T : class {
             ShowHeader(header);
 

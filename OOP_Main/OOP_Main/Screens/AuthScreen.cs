@@ -1,4 +1,5 @@
 ﻿using NOptional;
+using OOP_Main.Utilities;
 using System;
 
 namespace OOP_Main.Screens {
@@ -14,7 +15,7 @@ namespace OOP_Main.Screens {
 
             IOptional<User> foundUser = _appData.GetUserByUsername(username);
 
-            if (foundUser.IsEmpty() || foundUser.Value.Password != password || foundUser.Value.IsGuest()) {
+            if (foundUser.IsEmpty() || !UserService.CheckPassword(password, foundUser.Value) || foundUser.Value.IsGuest()) {
                 DefaultErrorOutput($"Invalid username or password. Try again");
 
             }

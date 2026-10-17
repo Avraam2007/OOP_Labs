@@ -81,7 +81,7 @@
   <Class Name="OOP_Main.Screens.ProductScreen">
     <Position X="4" Y="14" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAEECEACAAAAAAAgAAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAEECEACAAAAgAAgAAA=</HashCode>
       <FileName>Screens\ProductScreen.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -539,7 +539,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.UI.UIHelper">
-    <Position X="12.25" Y="4.75" Width="2.75" />
+    <Position X="12.25" Y="3.25" Width="2.75" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -551,7 +551,7 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgEICDAAAAAgACAAAAEIIAGAIEAIBABBA=</HashCode>
+      <HashCode>AAAAAAAAAAAgEICDAAAAAgACAAAAEIIAGAIEAIBARBA=</HashCode>
       <FileName>UI\UIHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -633,7 +633,7 @@
     </TypeIdentifier>
   </Class>
   <Struct Name="OOP_Main.CardRenderer">
-    <Position X="12.75" Y="2.25" Width="2" />
+    <Position X="7.75" Y="2.25" Width="2" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAIpAAAAAAAAQA=</HashCode>
       <FileName>UI\CardRenderer.cs</FileName>
@@ -654,6 +654,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAABAAAgAAAAAAAAAACAAAAAAAAAAAAAAAABAI=</HashCode>
       <FileName>FileIO\FileService.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="OOP_Main.Utilities.UserService">
+    <Position X="36" Y="26.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Utilities\UserService.cs</FileName>
     </TypeIdentifier>
   </Struct>
   <Interface Name="OOP_Main.IScreen">
@@ -715,7 +722,7 @@
   <Enum Name="OOP_Main.MenuOption">
     <Position X="26.25" Y="10" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAACAAQDABECEIAQAgAAAAAABAAAECAAIgQAQA=</HashCode>
+      <HashCode>AAAAAAAACAAQDAhECEIAQAgAAAAAABAAAECAAIgQAQA=</HashCode>
       <FileName>Utilities\Enum.cs</FileName>
     </TypeIdentifier>
   </Enum>
