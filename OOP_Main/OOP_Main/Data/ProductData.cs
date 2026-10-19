@@ -1,4 +1,6 @@
 ﻿using NOptional;
+using OOP_Main.Structures;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -126,6 +128,5 @@ namespace OOP_Main {
 
             return candidateArticle;
         }
-
     }
 }

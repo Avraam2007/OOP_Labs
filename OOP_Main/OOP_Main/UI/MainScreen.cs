@@ -3,7 +3,6 @@ using OOP_Main.Utilities;
 using Spectre.Console;
 using Spectre.Console.Rendering;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -11,10 +10,12 @@ using System.Threading;
 namespace OOP_Main.UI {
     public class MainScreen: UIHelper {
 
-        private static int GetHeaderHeight(int panelRows, int rules) {
+        private static int GetHeaderHeight(int panelRows, int verticalPaddingHeight, int rules) {
             if (panelRows < 0 || rules < 0) return 0;
 
-            int panelHeight = 7;
+            const int panelContnetHeight = 5;
+
+            int panelHeight = panelContnetHeight + (2 * verticalPaddingHeight);
             int ruleHeight = 3;
 
             return panelRows * panelHeight + rules * ruleHeight;
@@ -36,7 +37,7 @@ namespace OOP_Main.UI {
         }
         public static T ShowMenuWithLiveClock<T>(
             string headerTitle, 
-            List<T> options, 
+            T[] options, 
             User user,
             Func<T, string> displayConverter = null, 
             int pageSize = 10
@@ -105,7 +106,11 @@ namespace OOP_Main.UI {
                                 new Padder(new Columns(logoPanel, clockPanel, userPanel)),
                                 RuleLine()
                             );
-                            headerHeight = GetHeaderHeight(1, 1); // 7 рядків панелі + 2 рядок Rule
+                            headerHeight = GetHeaderHeight(
+                                panelRows: 1,
+                                rules: 1,
+                                verticalPaddingHeight: verticalPadding
+                            );
                         }
                         else if (windowWidth >= twoColWidth) {
                             // Стан 2: 2 рядки (Logo + Clock зверху, User знизу)
@@ -114,7 +119,11 @@ namespace OOP_Main.UI {
                                 new Padder(userPanel),
                                 RuleLine()
                             );
-                            headerHeight = GetHeaderHeight(2, 1); // (7 + 7) рядків панелей + 2 рядок Rule
+                            headerHeight = GetHeaderHeight(
+                                panelRows: 2,
+                                rules: 1,
+                                verticalPaddingHeight: verticalPadding
+                            );
                         }
                         else {
                             // Стан 3: 3 рядки (Усі панелі вертикально для вузького екрана)
@@ -124,7 +133,11 @@ namespace OOP_Main.UI {
                                 new Padder(userPanel),
                                 RuleLine()
                             );
-                            headerHeight = GetHeaderHeight(3, 1); // (7 * 3) рядків панелей + 2 рядок Rule
+                            headerHeight = GetHeaderHeight(
+                                panelRows: 3,
+                                rules: 1,
+                                verticalPaddingHeight: verticalPadding
+                            );
                         }
 
                         // Динамічно змінюємо висоту хедера в зависимости від поточного стан
@@ -142,7 +155,7 @@ namespace OOP_Main.UI {
                             menuTable.AddRow("[grey] /\\ (more items above)[/]");
                         }
 
-                        int endIndex = Math.Min(topIndex + pageSize, options.Count);
+                        int endIndex = Math.Min(topIndex + pageSize, options.Length);
                         for (int i = topIndex; i < endIndex; i++) {
                             string displayText = displayConverter(options[i]);
                             if (i == selectedIndex) {
@@ -153,11 +166,11 @@ namespace OOP_Main.UI {
                             }
                         }
 
-                        if (endIndex < options.Count) {
+                        if (endIndex < options.Length) {
                             menuTable.AddRow("[grey] \\/ (more items below)[/]");
                         }
 
-                        string headerText = $"Choose option ({selectedIndex + 1}/{options.Count})";
+                        string headerText = $"Choose option ({selectedIndex + 1}/{options.Length})";
                         var mainMenu = new Panel(menuTable).Header(headerText).BorderColor(Color.Grey);
 
                         layout["Body"].Update(mainMenu);
@@ -167,10 +180,10 @@ namespace OOP_Main.UI {
                         if (Console.KeyAvailable) {
                             var key = Console.ReadKey(true).Key;
                             if (key == ConsoleKey.UpArrow) {
-                                selectedIndex = (selectedIndex == 0) ? options.Count - 1 : selectedIndex - 1;
+                                selectedIndex = (selectedIndex == 0) ? options.Length - 1 : selectedIndex - 1;
                             }
                             else if (key == ConsoleKey.DownArrow) {
-                                selectedIndex = (selectedIndex == options.Count - 1) ? 0 : selectedIndex + 1;
+                                selectedIndex = (selectedIndex == options.Length - 1) ? 0 : selectedIndex + 1;
                             }
                             else if (key == ConsoleKey.Enter) {
                                 selectedResult = options[selectedIndex];

@@ -5,9 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using static OOP_Main.Utilities.Exceptions;
 
 namespace OOP_Main.Screens {
-    public class UserScreen: BaseScreen, IShowScreen, IDeleteScreen {
+    public class UserScreen: BaseScreen, IShowScreen, IDeleteScreen, IEditScreen {
         public UserScreen(Data appData): base(appData) { }
 
         public string Show() {
@@ -64,6 +65,24 @@ namespace OOP_Main.Screens {
             }
 
             return CheckAccount();
+        }
+
+        public string Edit() {
+            ShowHeader("Edit user");
+
+            var userChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<User>()
+                    .Title("Select user to edit:")
+                    .UseConverter(u => u.ToString())
+                    .AddChoices(_appData.Users));
+
+            string[] fieldNames = userChoice.GetType().GetProperties().Select(f => f.Name).ToArray();
+            var fieldChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Select field to edit:")
+                    .AddChoices(fieldNames));
+
+            return BackToMenuPrompt();
         }
     }
 }

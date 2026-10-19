@@ -13,6 +13,11 @@ namespace OOP_Main.Builders {
             set { _builder = value; }
         }
 
+        public void BuildValidationOrder(List<Product> products) {
+            this._builder.AddCatalog(products);
+            this._builder.AddDate(DateTime.Now);
+        }
+
         public void BuildEmptyOrder(int orderId, int buyerId) {
             this._builder.SetOrderId(orderId);
             this._builder.SetCustomer(buyerId);

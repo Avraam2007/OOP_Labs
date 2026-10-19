@@ -71,15 +71,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Screens.OrderScreen">
-    <Position X="11.5" Y="14" Width="1.75" />
+    <Position X="11.5" Y="14.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAEACAAAAAAAAAAA=</HashCode>
       <FileName>Screens\OrderScreen.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Screens.ProductScreen">
-    <Position X="4" Y="14" Width="1.75" />
+    <Position X="4" Y="14.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAEECEACAAAAgAAgAAA=</HashCode>
       <FileName>Screens\ProductScreen.cs</FileName>
@@ -87,9 +87,9 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Screens.UserScreen">
-    <Position X="1.5" Y="14" Width="1.75" />
+    <Position X="1.5" Y="14.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEBAAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEBAACAAAQAAAAAAA=</HashCode>
       <FileName>Screens\UserScreen.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -102,17 +102,17 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Screens.SupplierScreen">
-    <Position X="9" Y="14" Width="1.75" />
+    <Position X="9" Y="14.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAEACAAAAAAAAAAA=</HashCode>
       <FileName>Screens\SupplierScreen.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Screens.BaseScreen">
-    <Position X="6.75" Y="11.5" Width="1.5" />
+    <Position X="6.75" Y="11.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAIAICAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Screens\BaseScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -209,7 +209,7 @@
   <Class Name="OOP_Main.Builders.Director">
     <Position X="26.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAABAAAAAAAAAAAAAAAAAgAEIAAAAAAAAAAAAAACAA=</HashCode>
+      <HashCode>AAAABAAAAAAAAAAAAAAACAgAEIAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>Builders\Director.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -306,6 +306,12 @@
         <Point X="23.135" Y="17.87" Type="JumpEnd" />
         <Point X="22.583" Y="17.87" Type="JumpStart" />
         <Point X="22.417" Y="17.87" Type="JumpEnd" />
+        <Point X="20.708" Y="17.87" Type="JumpStart" />
+        <Point X="20.542" Y="17.87" Type="JumpEnd" />
+        <Point X="18.208" Y="17.87" Type="JumpStart" />
+        <Point X="18.042" Y="17.87" Type="JumpEnd" />
+        <Point X="15.708" Y="17.87" Type="JumpStart" />
+        <Point X="15.542" Y="17.87" Type="JumpEnd" />
         <Point X="11" Y="17.87" />
       </Path>
     </AssociationLine>
@@ -551,7 +557,7 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgEICDAAAAAgACAAAAEIIAGAIEAIBARBA=</HashCode>
+      <HashCode>AAAAAAAAAAAgEAADAAAAAgACAAAAEIIAGAAEAIBARBA=</HashCode>
       <FileName>UI\UIHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -664,7 +670,7 @@
     </TypeIdentifier>
   </Struct>
   <Interface Name="OOP_Main.IScreen">
-    <Position X="5.5" Y="7" Width="1.5" />
+    <Position X="7.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IScreen.cs</FileName>
@@ -692,23 +698,23 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="OOP_Main.IShowScreen">
-    <Position X="4.5" Y="5.25" Width="1.5" />
+    <Position X="5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IScreen.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="OOP_Main.ICreateScreen">
-    <Position X="9.75" Y="5.25" Width="1.5" />
+    <Position X="10.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IScreen.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="OOP_Main.IDeleteScreen">
-    <Position X="7.25" Y="5.25" Width="1.5" />
+  <Interface Name="OOP_Main.IEditScreen">
+    <Position X="7.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IScreen.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -719,10 +725,17 @@
       <FileName>Handlers\OrderValidationHandler.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Interface Name="OOP_Main.IDeleteScreen">
+    <Position X="7.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IScreen.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Enum Name="OOP_Main.MenuOption">
     <Position X="26.25" Y="10" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAACAAQDAhECEIAQAgAAAAAABAAAECAAIgQAQA=</HashCode>
+      <HashCode>AACAAAAACAAQDAhECEIAQAgAAAAAAJAAQECAAIgQAQA=</HashCode>
       <FileName>Utilities\Enum.cs</FileName>
     </TypeIdentifier>
   </Enum>

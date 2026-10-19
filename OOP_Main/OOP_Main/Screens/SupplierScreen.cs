@@ -1,6 +1,7 @@
 ﻿using OOP_Main.Comparers;
 using Spectre.Console;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OOP_Main.Screens {
     public class SupplierScreen: BaseScreen, IScreen {
@@ -52,5 +53,23 @@ namespace OOP_Main.Screens {
             _appData.DeleteSupplierById,
             supplier => $"[red]\"{supplier.Name}\"[/] ({supplier.SupplierId})"
         );
+
+        public string Edit() {
+            ShowHeader("Edit supplier");
+
+            var supplierChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<Supplier>()
+                    .Title("Select supplier to edit:")
+                    .UseConverter(s => s.ToString())
+                    .AddChoices(_appData.Suppliers));
+
+            string[] fieldNames = supplierChoice.GetType().GetProperties().Select(f => f.Name).ToArray();
+            var fieldChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Select field to edit:")
+                    .AddChoices(fieldNames));
+
+            return BackToMenuPrompt();
+        }
     }
 }

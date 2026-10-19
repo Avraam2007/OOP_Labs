@@ -28,7 +28,7 @@ namespace OOP_Main {
             this.OrderId = orderId;
             this.BuyerId = buyerId;
             Products = products;
-            this._state = new PendingState();
+            this.SetState(new PendingState());
             this.Date = date;
         }
 
@@ -36,7 +36,7 @@ namespace OOP_Main {
             this.OrderId = orderId;
             this.BuyerId = buyerId;
             Products = new List<Product>();
-            this._state = new PendingState();
+            this.SetState(new PendingState());
         }
 
         public Order(int orderId, int buyerId, List<Product> products, OrderStatus status) {
@@ -46,10 +46,14 @@ namespace OOP_Main {
             this.Status = status;
         }
 
-        public Order() { }
+        public Order() {
+            this.Products = new List<Product>();
+            this.SetState(new PendingState());
+        }
 
         public void SetState(OrderState state) {
             this._state = state;
+            this._state.SetOrder(this);
         }
 
         public void Pay() => _state.Pay();

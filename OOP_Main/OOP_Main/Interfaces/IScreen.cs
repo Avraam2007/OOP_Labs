@@ -14,5 +14,8 @@ namespace OOP_Main {
     internal interface IDeleteScreen {
         string Delete();
     }
-    internal interface IScreen : IShowScreen, ICreateScreen, IDeleteScreen { }
+    internal interface IEditScreen {
+        string Edit();
+    }
+    internal interface IScreen : IShowScreen, ICreateScreen, IDeleteScreen, IEditScreen { }
 }

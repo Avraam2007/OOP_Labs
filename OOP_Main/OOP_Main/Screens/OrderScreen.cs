@@ -1,4 +1,6 @@
-﻿using OOP_Main.Comparers;
+﻿using OOP_Main.Builders;
+using OOP_Main.Comparers;
+using OOP_Main.Entities;
 using OOP_Main.Handlers;
 using OOP_Main.UI;
 using OOP_Main.Utilities;
@@ -55,7 +57,7 @@ namespace OOP_Main.Screens {
 
             const string exitOption = "Exit";
 
-            List<Product> catalog = new List<Product>();
+            ProductCatalogCollection catalog = new ProductCatalogCollection();
 
             var availableProducts = new List<Product>(_appData.Products);
 
@@ -66,12 +68,37 @@ namespace OOP_Main.Screens {
             bool isChosenExit = false;
 
             while (!isChosenExit) {
+                List<string> categoriesList;
+
+                try {
+                    categoriesList = availableProducts.GetCategoriesList().ToList();
+                }
+                catch (NullReferenceException ex) {
+                    DefaultErrorOutput(ex.Message);
+                    return BackToMenuPrompt();
+                }
+
+                var selectedCategory = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("Choose [green]product category[/]:")
+                        .AddChoices(categoriesList)
+                        .UseConverter(c => c == null ? exitOption : c.AddSpacesBetweenCapitalizedWords())
+                        .AddChoices((string)null)
+                );
+
+                if (selectedCategory == null) {
+                    isChosenExit = true;
+                    continue;
+                }
+
+                var filteredProducts = availableProducts.FilterByCategory(selectedCategory);
+
                 var prompt = new SelectionPrompt<Product>()
                     .Title("Select [green]product[/] to order")
                     .PageSize(15)
                     .UseConverter(p => p == null ? exitOption : $"{p.Name} - {p.Price}$")
-                    .AddChoices(availableProducts)
-                    .AddChoices((Product)null);
+                    .AddChoices(filteredProducts);
+
                 var productChoice = AnsiConsole.Prompt(prompt);
 
                 if (productChoice == null) {
@@ -98,7 +125,14 @@ namespace OOP_Main.Screens {
 
             if (catalog.Count == 0) return BackToMenuPrompt();
 
-            Order newOrder = new Order();
+            int userId = _appData.CurrentUser.Value.Id;
+            int newOrderID = _appData.GetOrdersFromUser(userId).LastOrDefault().OrderId;
+
+            var director = new Director();
+            var builder = new OrderBuilder();
+            director.Builder = builder;
+            director.BuildValidationOrder(catalog.ToList());
+            Order tempOrder = builder.GetOrder();
 
             var validationPipeline = new EmptyOrderValidationHandler();
             validationPipeline
@@ -107,25 +141,24 @@ namespace OOP_Main.Screens {
                 .SetNext(new InsufficientFundsHandler())
                 .SetNext(new OrderAmountLimitHandler(maxOrderLimit: 5000.0));
 
-            if (!validationPipeline.Handle(newOrder, _appData.CurrentUser.Value, out string validationError)) {
+            if (!validationPipeline.Handle(tempOrder, _appData.CurrentUser.Value, out string validationError)) {
                 DefaultErrorOutput(validationError);
                 return BackToMenuPrompt();
             }
 
-            double totalPrice = newOrder.GetTotalPrice();
+            double totalPrice = tempOrder.GetTotalPrice();
 
             bool acceptOrder = DefaultConfirm($"The order costs {totalPrice}$. Would you like to pay for it?");
 
             if (!acceptOrder) return BackToMenuPrompt();
 
-            int userId = _appData.CurrentUser.Value.Id;
-            int newOrderID = _appData.GetOrdersFromUser(userId).LastOrDefault().OrderId;
-
             try {
                 _appData.CurrentUser.Value.TakeMoney(totalPrice);
 
-                _appData.AddOrder(userId, catalog);
+                _appData.AddOrder(userId, catalog.ToList());
                 DefaultSuccessOutput($"New transaction: -{totalPrice} $");
+
+                Order newOrder = _appData.GetOrderById(newOrderID).GetValueOrElseThrow();
 
                 newOrder.Pay();
 
@@ -168,5 +201,23 @@ namespace OOP_Main.Screens {
             _appData.DeleteOrder,
             order => $"[red]\"({order.OrderId}) from {order.BuyerId}\"[/]"
         );
+
+        public string Edit() {
+            ShowHeader("Edit order");
+
+            var orderChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<Order>()
+                    .Title("Select order to edit:")
+                    .UseConverter(o => o.ToString())
+                    .AddChoices(_appData.Orders));
+
+            string[] fieldNames = orderChoice.GetType().GetProperties().Select(f => f.Name).ToArray();
+            var fieldChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Select field to edit:")
+                    .AddChoices(fieldNames));
+
+            return BackToMenuPrompt();
+        }
     }
 }

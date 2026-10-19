@@ -228,7 +228,7 @@ namespace OOP_Main.Screens {
                     .UseConverter(p => $"{p.Name} ({p.Price}$)")
                     .AddChoices(_appData.Products));
 
-            List<string> fieldNames = productChoice.GetType().GetProperties().Select(f => f.Name).ToList();
+            string[] fieldNames = productChoice.GetType().GetProperties().Select(f => f.Name).ToArray();
             var fieldChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("Select field to edit:")
@@ -270,7 +270,7 @@ namespace OOP_Main.Screens {
             List<Product> foundProducts;
 
             if (searchChoice == "Fast filter") {
-                foundProducts = ProductHelpers.FindProductsInPriceRange(_appData.Products, minPrice, maxPrice);
+                foundProducts = _appData.Products.FindProductsInPriceRange(minPrice, maxPrice);
             }
             else {
                 string query = DefaultTextPrompt<string>("Enter search text (name or category):");
@@ -291,18 +291,13 @@ namespace OOP_Main.Screens {
         public string FilterByCategory() {
             ShowHeader("Filter by catergory");
 
-            CategoryBST categoryTree = new CategoryBST();
-            foreach (var product in _appData.Products) {
-                if (!string.IsNullOrEmpty(product.Category)) {
-                    categoryTree.Insert(product.Category);
-                }
+            List<string> categoriesList;
+
+            try {
+                categoriesList = _appData.Products.GetCategoriesList().ToList();
             }
-
-            List<string> categoriesList = new List<string>();
-            categoryTree.InOrderTraversal(categoryName => categoriesList.Add(categoryName));
-
-            if (categoriesList.Count == 0) {
-                DefaultErrorOutput("Categories not found.");
+            catch (NullReferenceException ex) {
+                DefaultErrorOutput(ex.Message);
                 return BackToMenuPrompt();
             }
 
@@ -310,12 +305,12 @@ namespace OOP_Main.Screens {
                 new SelectionPrompt<string>()
                     .Title("Choose category:")
                     .AddChoices(categoriesList)
+                    .UseConverter(c => c.AddSpacesBetweenCapitalizedWords())
             );
 
-            List<Product> filtered = _appData.Products
-                .FindAll(p => string.Equals(p.Category, selectedCategory, StringComparison.OrdinalIgnoreCase));
+            var filteredProducts = _appData.Products.FilterByCategory(selectedCategory);
 
-            RenderProductsTable(filtered);
+            RenderProductsTable(filteredProducts);
             return BackToMenuPrompt();
         }
     }

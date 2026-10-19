@@ -58,7 +58,7 @@ namespace OOP_Main.UI {
 
         public void BootUpScreen() {
             // Styled text with markup
-            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.24[/]");
+            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.25[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...", OnStart);
@@ -132,7 +132,7 @@ namespace OOP_Main.UI {
             }
         }
 
-        private MenuOption MainMenuList(List<MenuOption> menuList) {
+        private MenuOption MainMenuList(MenuOption[] menuList) {
             return UI.MainScreen.ShowMenuWithLiveClock(
                 "Welcome to [green]ECommerce[/]",
                 menuList,
@@ -142,7 +142,7 @@ namespace OOP_Main.UI {
         }
 
         public bool MainScreen() {
-            List<MenuOption> guestMenuList = new List<MenuOption>{
+            var guestMenuList = new MenuOption[]{
                 MenuOption.SearchProducts,
                 MenuOption.ShowProducts,
                 MenuOption.ShowSuppliers,
@@ -151,7 +151,7 @@ namespace OOP_Main.UI {
                 MenuOption.Quit
             };
 
-            var menuList = new List<MenuOption>{
+            var menuList = new MenuOption[]{
                 MenuOption.MyAccount,
                 MenuOption.SearchProducts,
                 MenuOption.ShowOrders,
@@ -163,7 +163,7 @@ namespace OOP_Main.UI {
                 MenuOption.Quit
             };
 
-            var adminMenuList = new List<MenuOption>{
+            var adminMenuList = new MenuOption[]{
                 MenuOption.MyAccount,
                 MenuOption.ShowUsers,
                 MenuOption.ShowOrders,
@@ -175,6 +175,9 @@ namespace OOP_Main.UI {
                 MenuOption.AddProduct,
                 MenuOption.AddSupplier,
                 MenuOption.ChangeProductPrice,
+                MenuOption.ChangeOrderField,
+                MenuOption.ChangeSupplierField,
+                MenuOption.ChangeUserField,
                 MenuOption.DeleteOrder,
                 MenuOption.DeleteProduct,
                 MenuOption.DeleteUser,
@@ -231,6 +234,15 @@ namespace OOP_Main.UI {
                         break;
                     case MenuOption.ChangeProductPrice:
                         CheckAdminAccessToPage(_productScreen.Edit);
+                        break;
+                    case MenuOption.ChangeUserField:
+                        CheckAdminAccessToPage(_userScreen.Edit);
+                        break;
+                    case MenuOption.ChangeSupplierField:
+                        CheckAdminAccessToPage(_supplierScreen.Edit);
+                        break;
+                    case MenuOption.ChangeOrderField:
+                        CheckAdminAccessToPage(_orderScreen.Edit);
                         break;
                     case MenuOption.DeleteProduct:
                         CheckAdminAccessToPage(_productScreen.Delete);
