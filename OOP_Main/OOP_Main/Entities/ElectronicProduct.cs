@@ -1,4 +1,5 @@
-﻿using OOP_Main.Utilities;
+﻿using OOP_Main.Attributes;
+using OOP_Main.Utilities;
 using Spectre.Console;
 using System.Collections.Generic;
 
@@ -6,6 +7,8 @@ namespace OOP_Main {
     public class ElectronicProduct : Product {
         private int power;
         private int maxVoltage;
+
+        [Editable("Electronic power")]
         public int Power {
             get {
                 return power;
@@ -14,6 +17,8 @@ namespace OOP_Main {
                 power = value;
             }
         }
+
+        [Editable("Electronic max voltage")]
         public int MaxVoltage {
             get {
                 return maxVoltage;

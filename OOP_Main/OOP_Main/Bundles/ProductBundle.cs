@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OOP_Main.Attributes;
 using OOP_Main.Utilities;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace OOP_Main{
         private double _discountPercent;
         public List<Product> Items { get; set; } = new List<Product>();
 
+        [Editable("Bundle discount percent")]
         public double BundleDiscountPercent {
             get => _discountPercent;
             set {
@@ -55,7 +57,7 @@ namespace OOP_Main{
         }
 
         public override string ToString() {
-            return $"({Article}) {Name} [{Items.Count} items] - {Price}$";
+            return $"({Article}) {Name} |{Items.Count} items| - {Price}$";
         }
     }
 }

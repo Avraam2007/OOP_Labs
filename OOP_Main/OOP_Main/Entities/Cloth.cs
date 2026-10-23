@@ -1,9 +1,12 @@
-﻿using OOP_Main.Utilities;
+﻿using OOP_Main.Attributes;
+using OOP_Main.Utilities;
 using System;
 
 namespace OOP_Main {
     public class Cloth : Product {
         private string material;
+
+        [Editable("Cloth material")]
         public string Material {
             get {
                 return material;

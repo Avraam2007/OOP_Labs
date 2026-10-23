@@ -12,6 +12,37 @@ namespace OOP_Main.Screens {
             _appData = appData;
         }
 
+        public string EditObjectScreen<T>(List<T> items) 
+            where T : class {
+            string typeName = typeof(T).Name.ToLowerInvariant();
+            ShowHeader($"Edit {typeName}");
+
+            List<T> finalList = new List<T>(items);
+
+            if (items is List<User> users) {
+                var filteredUsers = users.Where(user => !(CheckIfUserIsAdmin(user) || user.IsGuest())).ToList();
+                finalList = filteredUsers as List<T> ?? new List<T>();
+            }
+
+            if (Tools.ValidateArray(finalList)) {
+                DefaultErrorOutput($"There are no {typeName}s found.");
+                return BackToMenuPrompt();
+            }
+
+            var entityChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<T>()
+                    .Title($"Select {typeName} to edit:")
+                    .UseConverter(x => x.ToString())
+                    .AddChoices(finalList)
+            );
+
+            EntityEditorEngine.EditEntity(entityChoice);
+
+            _appData.SaveAllData();
+
+            return BackToMenuPrompt();
+        }
+
         protected string DeleteObjectScreen<T, TId>(List<T> items, Func<TId, bool> deleteAction, Func<T, string> nameSelector)
             where T : class, IIdentifiable<TId>
             where TId : IEquatable<TId> {

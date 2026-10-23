@@ -1,4 +1,5 @@
-﻿using OOP_Main.Utilities;
+﻿using OOP_Main.Attributes;
+using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace OOP_Main {
         private double width;
         private double height;
         private double weight;
+
+        [Editable("Furniture weight")]
         public double Weight {
             get {
                 return weight;
@@ -21,6 +24,8 @@ namespace OOP_Main {
                 weight = Math.Round(value, 3, MidpointRounding.AwayFromZero);
             }
         }
+
+        [Editable("Furniture width")]
         public double Width {
             get {
                 return width;
@@ -32,6 +37,8 @@ namespace OOP_Main {
                 width = Math.Round(value, 3, MidpointRounding.AwayFromZero);
             }
         }
+
+        [Editable("Furniture length")]
         public double Length {
             get {
                 return length;
@@ -43,6 +50,8 @@ namespace OOP_Main {
                 length = Math.Round(value, 3, MidpointRounding.AwayFromZero);
             }
         }
+
+        [Editable("Furniture height")]
         public double Height {
             get {
                 return height;
@@ -54,6 +63,8 @@ namespace OOP_Main {
                 height = Math.Round(value, 3, MidpointRounding.AwayFromZero);
             }
         }
+
+        [Editable("Furniture material")]
         public string Material {
             get {
                 return material;

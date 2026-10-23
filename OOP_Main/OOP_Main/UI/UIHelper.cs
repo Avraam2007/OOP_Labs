@@ -4,8 +4,11 @@ using Spectre.Console.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 
 namespace OOP_Main.UI {
@@ -99,14 +102,26 @@ namespace OOP_Main.UI {
         }
         protected static bool CheckIfUserIsAdmin(User currentUser) => CheckIfUserIsAdmin(Optional.OfNullable(currentUser));
 
-        protected static string BackToMenuPrompt(string extraOption = "") {
+        protected static string BackToMenuPrompt(params string[] extraOptions) {
             List<string> options = new List<string> { "Back to menu" };
-            if (!string.IsNullOrWhiteSpace(extraOption)) {
-                options.Add(extraOption);
+            foreach (var option in extraOptions) {
+                if (!string.IsNullOrWhiteSpace(option)) {
+                    options.Add(option);
+                }
             }
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("\nPress ESC or Enter to back to menu");
+            for (int i = 1; i < options.Count; i++) {
+                sb.Append($", or choose [yellow]\"{options[i]}\"[/] option");
+            }
+            sb.Append(':');
+
+            string title = sb.ToString();
+
             var choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title($"\nPress ESC or Enter to back to menu{(extraOption != "" ? $" or choose \"{extraOption}\" option" : "")}")
+                    .Title(title)
                     .AddCancelResult("Back to menu")
                     .DefaultValue("Back to menu")
                     .AddChoices(options));
@@ -114,7 +129,7 @@ namespace OOP_Main.UI {
             return choice;
         }
 
-        protected bool DefaultConfirm(string text, bool defaultValue = true) {
+        protected static bool DefaultConfirm(string text, bool defaultValue = true) {
             return AnsiConsole.Confirm(text, defaultValue);
         }
 

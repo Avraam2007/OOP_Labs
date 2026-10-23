@@ -54,7 +54,7 @@ namespace OOP_Main {
 
         public void AddSupplier(Supplier supplier) => _supplierData.AddSupplier(supplier);
 
-        public void AddSupplier(string name, string contactEmail, double rating) => _supplierData.AddSupplier(name, contactEmail, rating);
+        public void AddSupplier(string name, string contactEmail, string phone, double rating) => _supplierData.AddSupplier(name, contactEmail, phone, rating);
 
         public bool DeleteUserById(int id) => _userData.DeleteUserById(id);
 

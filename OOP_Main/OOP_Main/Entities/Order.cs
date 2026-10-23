@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OOP_Main.Attributes;
 using OOP_Main.States;
 using OOP_Main.States.OrderStates;
 using OOP_Main.Utilities;
@@ -11,11 +12,13 @@ namespace OOP_Main {
         public int OrderId { get => orderId; set { orderId = value; } }
 
         int IIdentifiable<int>.Id => this.OrderId;
+
         public List<Product> Products { get; set; }
 
         public DateTime Date { get; set; }
         public int BuyerId { get;  set; }
 
+        [Editable("Order status")]
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
 
         private OrderState _state;

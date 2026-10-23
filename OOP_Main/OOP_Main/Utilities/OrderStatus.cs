@@ -1,8 +1,6 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOP_Main {
     public enum OrderStatus {
@@ -29,6 +27,14 @@ namespace OOP_Main {
                 default:
                     return "Unknown";
             }
+        }
+
+        public static string[] GetNamesArray() {
+            return Enum.GetNames(typeof(OrderStatus));
+        }
+
+        public static IEnumerable<OrderStatus> GetOrderStatuses() {
+            return (IEnumerable<OrderStatus>)Enum.GetValues(typeof(OrderStatus));
         }
 
         public static bool CanBeCancelled(OrderStatus status) {

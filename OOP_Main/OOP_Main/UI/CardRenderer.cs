@@ -184,6 +184,8 @@ namespace OOP_Main {
                 ["header"] = new Text($"SUPPLIER \"{supplier.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["rating"] = new Text($"Rating: {supplier.Rating}/5.0\n"),
                 ["id"] = new Text($"Supplier ID: {supplier.SupplierId}\n"),
+                ["email"] = new Text($"Contact email: {supplier.ContactEmail}\n"),
+                ["phone"] = new Text($"Phone number: {supplier.Phone}\n"),
                 ["reputation"] = new Text($"Reputation: {(supplier.Inspect() ? "Good" : "Bad")}\n"),
             };
 

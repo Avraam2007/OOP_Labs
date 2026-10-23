@@ -1,4 +1,5 @@
-﻿using OOP_Main.Utilities;
+﻿using OOP_Main.Attributes;
+using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,16 @@ namespace OOP_Main {
         private double rating;
         private readonly int supplierId;
         private string _contactEmail;
+        private string _phone;
 
         public int SupplierId { get => supplierId; }
 
         int IIdentifiable<int>.Id => this.SupplierId;
+
+        [Editable("Supplier name")]
         public string Name { get; set; }
+
+        [Editable("Supplier email")]
         public string ContactEmail { 
             get => this._contactEmail;
             set {
@@ -22,6 +28,19 @@ namespace OOP_Main {
                 this._contactEmail = value;
             } 
         }
+
+        [Editable("Supplier phone")]
+        public string Phone {
+            get => this._phone;
+            set {
+                if (!Tools.IsValidPhone(value)) {
+                    throw new ArgumentException("Phone number doesn't meet requirements", nameof(value));
+                }
+                this._phone = value;
+            }
+        }
+
+        [Editable("Supplier rating")]
         public double Rating {
             get {
                 return rating;
@@ -35,16 +54,16 @@ namespace OOP_Main {
                 rating = value;
             }
         }
+
         public List<Product> Catalog { get; private set; } = new List<Product>();
 
-        public Supplier(int supplierId, string name, string contactEmail, double rating) {
+        public Supplier(int supplierId, string name, string contactEmail, string phone, double rating) {
             Name = name;
             ContactEmail = contactEmail;
+            Phone = phone;
             Rating = rating;
             this.supplierId = supplierId;
         }
-
-        public Supplier() { }
 
         public void AddProductToCatalog(Product product) {
             if (product != null) {

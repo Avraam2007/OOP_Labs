@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OOP_Main.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace OOP_Main {
     public class DiscountDecorator : ProductDecorator {
         private double _discountPercent;
 
+        [Editable("Discount percent")]
         public double DiscountPercent {
             get => _discountPercent;
             set {

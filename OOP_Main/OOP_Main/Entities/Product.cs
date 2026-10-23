@@ -1,6 +1,6 @@
-﻿using OOP_Main.Utilities;
+﻿using OOP_Main.Attributes;
+using OOP_Main.Utilities;
 using System;
-using System.Collections.Generic;
 
 namespace OOP_Main {
     public abstract class Product: IIdentifiable<string>, IComparable<Product> {
@@ -19,14 +19,22 @@ namespace OOP_Main {
             set {
                 string polishedArticle = value.Trim();
                 if (string.IsNullOrWhiteSpace(polishedArticle)) {
-                    throw new ArgumentNullException("Article shouldn\'t be empty", nameof(polishedArticle));
+                    throw new ArgumentNullException(
+                        message: "Article shouldn\'t be empty", 
+                        paramName: nameof(polishedArticle)
+                    );
                 }
                 if (!Tools.IsValidArticle(polishedArticle)) {
-                    throw new ArgumentException("Article doesn't meet requirements", nameof(polishedArticle));
+                    throw new ArgumentException(
+                        message: "Article doesn't meet requirements", 
+                        paramName: nameof(polishedArticle)
+                    );
                 }
                 article = polishedArticle;
             }
         }
+
+        [Editable("Product name")]
         public virtual string Name {
             get {
                 return name;
@@ -34,18 +42,26 @@ namespace OOP_Main {
             set {
                 string polishedName = value.Trim();
                 if (string.IsNullOrWhiteSpace(polishedName)) {
-                    throw new ArgumentException("Name shouldn\'t be empty", nameof(polishedName));
+                    throw new ArgumentException(
+                        message: "Name shouldn\'t be empty", 
+                        paramName: nameof(polishedName)
+                    );
                 }
                 name = polishedName;
             }
         }
+
+        [Editable("Product price ($)")]
         public virtual double Price {
             get {
                 return price;
             }
             set {
                 if (value < 0) {
-                    throw new ArgumentOutOfRangeException("Price should be positive or equal to zero (free)", nameof(value));
+                    throw new ArgumentOutOfRangeException(
+                        message: "Price should be positive or equal to zero (free)", 
+                        paramName: nameof(value)
+                    );
                 }
                 price = Math.Round(value, 2, MidpointRounding.AwayFromZero);
             }

@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace OOP_Main.Utilities {
     public static class Logger {
+        private static readonly object _logLock = new object();
         private static readonly string _logDirectory = "Logs";
         private static readonly int _maxLinesPerFile = 100;
         private static int _currentLineCount = 0;
@@ -42,21 +43,23 @@ namespace OOP_Main.Utilities {
         private static string GetLogFilePath(int index) => Path.Combine(_logDirectory, $"app_log_{DateTime.Now:ddMMyyyy}_{index}.log");
 
         public static void Log(string message, LogLevels level = LogLevels.Info, string username = "System") {
-            if (_currentLineCount >= _maxLinesPerFile) {
-                _currentFileIndex++;
-                _currentFilePath = GetLogFilePath(_currentFileIndex);
-                _currentLineCount = 0;
+            lock (_logLock) {
+                if (_currentLineCount >= _maxLinesPerFile) {
+                    _currentFileIndex++;
+                    _currentFilePath = GetLogFilePath(_currentFileIndex);
+                    _currentLineCount = 0;
+                }
+
+                string logEntry = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} |{GetDescription(level)}| : ({username}) {message}";
+
+                TextStorage.SaveToFile(
+                    logEntry,
+                    _currentFilePath,
+                    appendLine: true
+                );
+
+                _currentLineCount++;
             }
-
-            string logEntry = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} |{GetDescription(level)}| : ({username}) {message}";
-
-            TextStorage.SaveToFile(
-                logEntry,
-                _currentFilePath,
-                appendLine: true
-            );
-
-            _currentLineCount++;
         }
     }
 }

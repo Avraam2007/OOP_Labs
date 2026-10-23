@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
+using OOP_Main.Attributes;
 
 namespace OOP_Main {
     public class ExtendedWarrantyDecorator : ProductDecorator {
         private int _years;
 
+        [Editable("Extra warranty years")]
         public int Years {
             get => _years;
             set => _years = value > 0 ? value : 1;

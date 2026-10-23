@@ -1,11 +1,9 @@
-﻿using OOP_Main.Comparers;
+﻿using NOptional;
+using OOP_Main.Comparers;
 using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using static OOP_Main.Utilities.Exceptions;
 
 namespace OOP_Main.Screens {
     public class UserScreen: BaseScreen, IShowScreen, IDeleteScreen, IEditScreen {
@@ -47,7 +45,7 @@ namespace OOP_Main.Screens {
 
             InternalFlashCard(CardRenderer.GetCardInfo(_appData.CurrentUser.Value));
 
-            return BackToMenuPrompt("Top up money balance");
+            return BackToMenuPrompt("Top up money balance", "Change password");
         }
 
         public string TopUpBalance() {
@@ -67,22 +65,41 @@ namespace OOP_Main.Screens {
             return CheckAccount();
         }
 
-        public string Edit() {
-            ShowHeader("Edit user");
+        public string ChangePassword() {
+            ShowHeader("Change password");
 
-            var userChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<User>()
-                    .Title("Select user to edit:")
-                    .UseConverter(u => u.ToString())
-                    .AddChoices(_appData.Users));
+            string oldPassword = PasswordPrompt("What's your [green]password[/]?");
 
-            string[] fieldNames = userChoice.GetType().GetProperties().Select(f => f.Name).ToArray();
-            var fieldChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Select field to edit:")
-                    .AddChoices(fieldNames));
+            IOptional<User> currentUser = _appData.CurrentUser;
 
-            return BackToMenuPrompt();
+            if (currentUser.IsEmpty() || !UserService.CheckPassword(oldPassword, currentUser.Value) || currentUser.Value.IsGuest()) {
+                DefaultErrorOutput($"Invalid password. Try again");
+                return BackToMenuPrompt();
+            }
+
+            string newPassword = PasswordPrompt("Create your [green]new password[/]:");
+
+            string confirmPassword = PasswordPrompt("Confirm your [green]new password[/]:");
+
+            if (confirmPassword == newPassword) {
+                try {
+                    _appData.CurrentUser.Value.UpdatePassword(UserService.HashPassword(newPassword));
+                    _appData.SaveAllData();
+
+                    DefaultSuccessOutput("Password was changed!");
+                }
+                catch (ArgumentException e) {
+                    DefaultErrorOutput(e.Message);
+                    return BackToMenuPrompt();
+                }
+                return BackToMenuPrompt();
+            }
+            else {
+                DefaultErrorOutput($"Incorrect password. Try again");
+                return BackToMenuPrompt();
+            }
         }
+
+        public string Edit() => this.EditObjectScreen(_appData.Users);
     }
 }

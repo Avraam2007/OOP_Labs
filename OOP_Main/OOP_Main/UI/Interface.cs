@@ -25,6 +25,11 @@ namespace OOP_Main.UI {
             _supplierScreen = new SupplierScreen(AppData);
         }
 
+        public void RunScreenFlow(Func<string> Func) {
+            string nextAction = Func();
+            HandleNavigation(nextAction);
+        }
+
         private void HandleNavigation(string nextAction) {
             switch (nextAction) {
                 case "Sign up":
@@ -35,6 +40,9 @@ namespace OOP_Main.UI {
                     break;
                 case "Top up money balance":
                     RunTopUpFlow();
+                    break;
+                case "Change password":
+                    RunChangePasswordFlow();
                     break;
                 default:
                     break;
@@ -56,9 +64,14 @@ namespace OOP_Main.UI {
             HandleNavigation(nextAction);
         }
 
+        public void RunChangePasswordFlow() {
+            string nextAction = _userScreen.ChangePassword();
+            HandleNavigation(nextAction);
+        }
+
         public void BootUpScreen() {
             // Styled text with markup
-            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.25[/]");
+            DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.26[/]");
 
             // Status spinner for work
             StatusSpinner("Loading...", OnStart);

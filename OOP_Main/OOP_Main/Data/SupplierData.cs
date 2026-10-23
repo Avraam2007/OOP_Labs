@@ -11,10 +11,10 @@ namespace OOP_Main {
 
         public void AddSupplier(Supplier supplier) => Add(supplier);
 
-        public void AddSupplier(string name, string contactEmail, double rating) {
+        public void AddSupplier(string name, string contactEmail, string phone, double rating) {
             int newSupplierId = Suppliers.Count > 0 ? Suppliers.Max(s => s.SupplierId) : 0;
             newSupplierId++;
-            Supplier newSupplier = new Supplier(newSupplierId, name, contactEmail, rating);
+            Supplier newSupplier = new Supplier(newSupplierId, name, contactEmail, phone, rating);
 
             AddSupplier(newSupplier);
         }

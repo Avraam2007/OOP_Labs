@@ -46,7 +46,6 @@
       <HashCode>AAABAABAAQAAAAQEgACAAAQAGAAkAJAAAAAAAAAgCAA=</HashCode>
       <FileName>Entities\Product.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Program">
     <Position X="23" Y="9.5" Width="1.5" />
@@ -89,7 +88,7 @@
   <Class Name="OOP_Main.Screens.UserScreen">
     <Position X="1.5" Y="14.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEBAACAAAQAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAEEBAACAAAQAAAAAAA=</HashCode>
       <FileName>Screens\UserScreen.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -112,7 +111,7 @@
   <Class Name="OOP_Main.Screens.BaseScreen">
     <Position X="6.75" Y="11.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAIAICAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAIAICAAAAAAAAAAAAAAAACAAIAAAAAAAA=</HashCode>
       <FileName>Screens\BaseScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -178,7 +177,7 @@
   <Class Name="OOP_Main.OrderStatusExtensions">
     <Position X="16.5" Y="5.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAIAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAEAAAAAAIAAQAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utilities\OrderStatus.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -383,7 +382,7 @@
   <Class Name="OOP_Main.User">
     <Position X="20.25" Y="25.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAEAAAAIAQAQEkQRACAEACAAAAIACAAAQAgAAAEA=</HashCode>
+      <HashCode>AAACAEAAAAIAQAQEkQRACAEACAAAAIACAAAQAgIAAEA=</HashCode>
       <FileName>Entities\User.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -430,7 +429,7 @@
   <Class Name="OOP_Main.UI.Interface">
     <Position X="23.5" Y="11.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>IAAAAAQAACAAAgQAEAgYEAAQAgAAABAAQBAgCACBBAA=</HashCode>
+      <HashCode>IAAAAAQAACAAggQAEAgYEAAQAgAAABAAQBAgCACBBAA=</HashCode>
       <FileName>UI\Interface.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -514,7 +513,7 @@
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAgACAAAAAAAAAAAIIAAAAEAAAgAAAAAAAAAAAABAAg=</HashCode>
+      <HashCode>AAgACAAAABAAAAAAIIAAAAEAAAgAAAAAAAAAAAABAAg=</HashCode>
       <FileName>Utilities\Logger.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -636,6 +635,20 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
       <FileName>Utilities\ParalellSearchService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.Attributes.EditableAttribute">
+    <Position X="41" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Attributes\Attributes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.UI.EntityEditorEngine">
+    <Position X="12.75" Y="12" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\EntityEditorEngine.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="OOP_Main.CardRenderer">

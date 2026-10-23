@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OOP_Main.Attributes;
 using OOP_Main.Entities;
 using OOP_Main.States;
 using System;
@@ -12,6 +13,7 @@ namespace OOP_Main {
 
         private UserState _roleState;
 
+        [Editable("User name")]
         public string Username {
             get { return username; }
             set {
@@ -22,6 +24,7 @@ namespace OOP_Main {
             }
         }
         public int Id { get { return _id; } }
+
         public UserRole Role {
             private set {
                 if (value == UserRole.Guest) {
@@ -38,6 +41,7 @@ namespace OOP_Main {
                 return _roleState.GetRoleName(); 
             } 
         }
+
         public string Password {
             get { return password; }
             private set {
@@ -48,6 +52,7 @@ namespace OOP_Main {
             }
         }
 
+        [Editable("Balance ($)")]
         public Account Account {
             get { return _account; }
             set {
@@ -88,6 +93,10 @@ namespace OOP_Main {
                 _roleState = new LoggedInState();
             }
             this._account = new Account(startSum);
+        }
+
+        public void UpdatePassword(string newHashedPassword) {
+            Password = newHashedPassword;
         }
 
         public override bool Equals(object obj) {

@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\Attributes.cs" />
     <Compile Include="Builders\Director.cs" />
     <Compile Include="Builders\OrderBuilder.cs" />
     <Compile Include="Bundles\ProductBundle.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="UI\MainScreen.cs" />
     <Compile Include="FileIO\RecieptGenerator.cs" />
     <Compile Include="Utilities\AutoSaveService.cs" />
+    <Compile Include="UI\EntityEditorEngine.cs" />
     <Compile Include="Utilities\Enum.cs" />
     <Compile Include="Decorators\ExtendedWarrantyDecorator.cs" />
     <Compile Include="Entities\Furniture.cs" />

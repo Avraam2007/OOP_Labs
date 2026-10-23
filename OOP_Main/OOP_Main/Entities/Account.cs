@@ -4,6 +4,7 @@ using static OOP_Main.Utilities.Exceptions;
 namespace OOP_Main.Entities {
     public class Account {
         private double sum;
+
         public double Sum {
             get => sum;
             set {

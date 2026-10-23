@@ -1,6 +1,7 @@
 ﻿using NOptional;
 using OOP_Main.Comparers;
 using OOP_Main.Structures;
+using OOP_Main.UI;
 using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
@@ -219,38 +220,7 @@ namespace OOP_Main.Screens {
             product => $"[red]\"{product.Name}\"[/] ({product.Article})"
         );
 
-        public string Edit() {
-            ShowHeader("Edit Product");
-
-            var productChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<Product>()
-                    .Title("Select product to edit:")
-                    .UseConverter(p => $"{p.Name} ({p.Price}$)")
-                    .AddChoices(_appData.Products));
-
-            string[] fieldNames = productChoice.GetType().GetProperties().Select(f => f.Name).ToArray();
-            var fieldChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Select field to edit:")
-                    .AddChoices(fieldNames));
-
-            if (fieldChoice == "Price") {
-                double newPrice = DefaultTextPrompt<double>($"Enter new price for {productChoice.Name}:");
-                try {
-                    productChoice.Price = newPrice;
-                    _appData.ChangeProductPriceByArticle(productChoice.Article, newPrice);
-                    DefaultSuccessOutput("Product updated successfully!");
-                }
-                catch (ArgumentException ex) {
-                    DefaultErrorOutput(ex.Message);
-                }
-                catch (EntityNotFoundException ex) {
-                    DefaultErrorOutput(ex.Message);
-                }
-            }
-
-            return BackToMenuPrompt();
-        }
+        public string Edit() => this.EditObjectScreen(_appData.Products);
 
         public string Search() {
             ShowHeader("Search product");

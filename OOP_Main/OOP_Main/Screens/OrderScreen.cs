@@ -202,22 +202,27 @@ namespace OOP_Main.Screens {
             order => $"[red]\"({order.OrderId}) from {order.BuyerId}\"[/]"
         );
 
-        public string Edit() {
-            ShowHeader("Edit order");
+        //public string Edit() {
+        //    ShowHeader("Edit order");
 
-            var orderChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<Order>()
-                    .Title("Select order to edit:")
-                    .UseConverter(o => o.ToString())
-                    .AddChoices(_appData.Orders));
+        //    if (Tools.ValidateArray(_appData.Orders)) {
+        //        DefaultErrorOutput("No orders found. Call the admin to fix this issue");
+        //        return BackToMenuPrompt();
+        //    }
 
-            string[] fieldNames = orderChoice.GetType().GetProperties().Select(f => f.Name).ToArray();
-            var fieldChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Select field to edit:")
-                    .AddChoices(fieldNames));
+        //    var orderChoice = AnsiConsole.Prompt(
+        //        new SelectionPrompt<Order>()
+        //            .Title("Select order to edit:")
+        //            .UseConverter(o => o.ToString())
+        //            .AddChoices(_appData.Orders));
 
-            return BackToMenuPrompt();
-        }
+        //    EntityEditorEngine.EditEntity(orderChoice);
+
+        //    _appData.SaveAllData();
+
+        //    return BackToMenuPrompt();
+        //}
+
+        public string Edit() => this.EditObjectScreen(_appData.Orders);
     }
 }

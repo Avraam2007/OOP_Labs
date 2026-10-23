@@ -1,7 +1,10 @@
-﻿namespace OOP_Main {
+﻿using OOP_Main.Attributes;
+
+namespace OOP_Main {
     public class Sofa : Furniture {
         private bool isAssemble;
 
+        [Editable("Sofa assembling")]
         public bool IsAssemble {
             get {
                 return isAssemble;
