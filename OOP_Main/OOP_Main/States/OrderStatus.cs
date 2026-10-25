@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
-namespace OOP_Main {
+namespace OOP_Main.States {
     public enum OrderStatus {
         Pending,
         Paid,

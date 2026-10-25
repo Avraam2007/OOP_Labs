@@ -1,6 +1,6 @@
-﻿using System;
+﻿using OOP_Main.FileIO;
+using System;
 using System.IO;
-using System.Runtime.CompilerServices;
 
 namespace OOP_Main.Utilities {
     public static class Logger {

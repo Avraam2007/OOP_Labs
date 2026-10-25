@@ -1,9 +1,12 @@
-﻿using OOP_Main.UI;
+﻿using OOP_Main.Entities;
+using OOP_Main.Repositories;
+using OOP_Main.UI;
 using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OOP_Main.Screens {
     public abstract class BaseScreen: UIHelper {
@@ -24,7 +27,7 @@ namespace OOP_Main.Screens {
                 finalList = filteredUsers as List<T> ?? new List<T>();
             }
 
-            if (Tools.ValidateArray(finalList)) {
+            if (!Tools.ValidateArray(finalList)) {
                 DefaultErrorOutput($"There are no {typeName}s found.");
                 return BackToMenuPrompt();
             }
@@ -38,7 +41,7 @@ namespace OOP_Main.Screens {
 
             EntityEditorEngine.EditEntity(entityChoice);
 
-            _appData.SaveAllData();
+            Task.Run(() => _appData.SaveAllData()).GetAwaiter().GetResult();
 
             return BackToMenuPrompt();
         }
@@ -57,7 +60,7 @@ namespace OOP_Main.Screens {
                 finalList = filteredUsers as List<T> ?? new List<T>();
             }
 
-            if (Tools.ValidateArray(finalList)) {
+            if (!Tools.ValidateArray(finalList)) {
                 DefaultErrorOutput($"There are no {typeName}s to delete.");
                 return BackToMenuPrompt();
             }
@@ -117,7 +120,7 @@ namespace OOP_Main.Screens {
         protected string ShowListScreen<T>(string header, IEnumerable<T> items, string extraErrorMessage = "") where T : class {
             ShowHeader(header);
 
-            if (Tools.ValidateArray(items)) {
+            if (!Tools.ValidateArray(items)) {
                 DefaultErrorOutput($"Sorry, we didn't find any {header.ToLower()} in the store. {extraErrorMessage}");
                 return BackToMenuPrompt();
             }

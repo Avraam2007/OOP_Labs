@@ -1,15 +1,13 @@
-﻿using OOP_Main.Attributes;
+﻿using Newtonsoft.Json;
+using OOP_Main.Attributes;
+using OOP_Main.Structures;
 using OOP_Main.Utilities;
-using Spectre.Console;
 using System;
-using System.Collections.Generic;
 
-namespace OOP_Main {
+namespace OOP_Main.Entities {
     public class Furniture : Product {
         private string material;
-        private double length;
-        private double width;
-        private double height;
+        private Dimensions _dimensions;
         private double weight;
 
         [Editable("Furniture weight")]
@@ -21,46 +19,37 @@ namespace OOP_Main {
                 if (value <= 0) {
                     throw new ArgumentOutOfRangeException("Weight should be posititve (we don't sell antimatter)");
                 }
-                weight = Math.Round(value, 3, MidpointRounding.AwayFromZero);
+                weight = value.RoundNumber(3);
             }
         }
 
         [Editable("Furniture width")]
         public double Width {
             get {
-                return width;
+                return _dimensions.Width;
             }
             protected set {
-                if (value <= 0) {
-                    throw new ArgumentOutOfRangeException("Width should be positive");
-                }
-                width = Math.Round(value, 3, MidpointRounding.AwayFromZero);
+                _dimensions = _dimensions.WithWidth(value);
             }
         }
 
         [Editable("Furniture length")]
         public double Length {
             get {
-                return length;
+                return _dimensions.Length;
             }
             protected set {
-                if (value <= 0) {
-                    throw new ArgumentOutOfRangeException("Length should be positive");
-                }
-                length = Math.Round(value, 3, MidpointRounding.AwayFromZero);
+                _dimensions = _dimensions.WithLength(value);
             }
         }
 
         [Editable("Furniture height")]
         public double Height {
             get {
-                return height;
+                return _dimensions.Height;
             }
             protected set {
-                if (value <= 0) {
-                    throw new ArgumentOutOfRangeException("Height should be positive");
-                }
-                height = Math.Round(value, 3, MidpointRounding.AwayFromZero);
+                _dimensions = _dimensions.WithHeight(value);
             }
         }
 
@@ -76,6 +65,13 @@ namespace OOP_Main {
                 material = value;
             }
         }
+
+        [JsonIgnore]
+        public Dimensions Dimensions {
+            get { return _dimensions; }
+            protected set { _dimensions = value; }
+        }
+
         public Furniture(
             string article,
             string name,
@@ -87,10 +83,9 @@ namespace OOP_Main {
             string material,
             int supplierId = 0
         ) : base(article, name, price, supplierId) {
+            this.Dimensions = new Dimensions(width, height, length);
+
             this.Weight = weight;
-            this.Width = width;
-            this.Length = length;
-            this.Height = height;
             this.Material = material;
         }
 

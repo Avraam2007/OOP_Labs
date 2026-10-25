@@ -1,10 +1,12 @@
 ﻿using NOptional;
+using OOP_Main.Entities;
+using OOP_Main.FileIO;
 using OOP_Main.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
+using System.Threading.Tasks;
 
-namespace OOP_Main {
+namespace OOP_Main.Repositories {
     public class Data {
         private readonly UserData _userData;
         private readonly ProductData _productData;
@@ -26,18 +28,22 @@ namespace OOP_Main {
             _supplierData = new SupplierData();
         }
 
-        public void LoadAllData() {
-            _userData.Load();
-            _productData.Load();
-            _orderData.Load(); 
-            _supplierData.Load();
+        public async Task LoadAllData() {
+            await Task.WhenAll(
+                _userData.LoadAsync(),
+                _productData.LoadAsync(),
+                _orderData.LoadAsync(),
+                _supplierData.LoadAsync()
+            );
         }
 
-        public void SaveAllData() {
-            _userData.Save();
-            _productData.Save();
-            _orderData.Save();
-            _supplierData.Save();
+        public async Task SaveAllData() {
+            await Task.WhenAll(
+                _userData.SaveAsync(),
+                _productData.SaveAsync(),
+                _orderData.SaveAsync(),
+                _supplierData.SaveAsync()
+            );
         }
 
         public void SaveBackup() => BackupService.CreateZipBackup("DataStorage", "Backups");
@@ -69,32 +75,30 @@ namespace OOP_Main {
         public bool DeleteProductByName(string name) {
             bool isDeleted = _productData.DeleteProductByName(name);
 
-            if (isDeleted) {
-                foreach (var supplier in _supplierData.Suppliers) {
-                    supplier.Catalog.RemoveAll(product => product.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-                }
+            if (!isDeleted) return false;
 
-                _productData.Save();
-                _supplierData.Save();
-
-                return true;
+            foreach (var supplier in _supplierData.Suppliers) {
+                supplier.Catalog.RemoveAll(product => product.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
             }
-            return false;
+
+            _productData.Save();
+            _supplierData.Save();
+
+            return true;
         }
         public bool DeleteProductByArticle(string article) {
             bool isDeleted = _productData.DeleteProductByArticle(article);
 
-            if (isDeleted) {
-                foreach (var supplier in _supplierData.Suppliers) {
-                    supplier.Catalog.RemoveAll(product => product.Article.Equals(article, StringComparison.OrdinalIgnoreCase));
-                }
+            if (!isDeleted) return false;
 
-                _productData.Save();
-                _supplierData.Save();
-
-                return true;
+            foreach (var supplier in _supplierData.Suppliers) {
+                supplier.Catalog.RemoveAll(product => product.Article.Equals(article, StringComparison.OrdinalIgnoreCase));
             }
-            return false;
+
+            _productData.Save();
+            _supplierData.Save();
+
+            return true;
         }
 
         public IOptional<User> GetUserById(int id) => _userData.GetUserById(id);

@@ -1,18 +1,31 @@
 ﻿using NOptional;
-using OOP_Main.Structures;
+using OOP_Main.Bundles;
+using OOP_Main.Decorators;
+using OOP_Main.Entities;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
+using System.Threading.Tasks;
 using static OOP_Main.Utilities.Exceptions;
 
-namespace OOP_Main {
+namespace OOP_Main.Repositories {
     public class ProductData: BaseDataRepository<Product, string> {
         public List<Product> Products => Items;
         private readonly HashSet<string> _registeredArticles = new HashSet<string>();
 
         public ProductData() : base("DataStorage/products.json") { }
+
+        public override async Task LoadAsync() {
+            await base.LoadAsync();
+
+            _registeredArticles.Clear();
+            foreach (var product in Products) {
+                var baseProduct = GetBaseProduct(product);
+                if (!string.IsNullOrEmpty(baseProduct.Article))
+                    _registeredArticles.Add(baseProduct.Article);
+            }
+        }
 
         public override void Load() {
             base.Load();
@@ -52,11 +65,11 @@ namespace OOP_Main {
             var baseProduct = GetBaseProduct(productToDelete.Value);
 
             bool isRemoved = Remove(article);
-            if (isRemoved) {
-                _registeredArticles.Remove(baseProduct.Article);
-                return true; 
-            } 
-            return false;
+
+            if (!isRemoved) return false;
+
+            _registeredArticles.Remove(baseProduct.Article);
+            return true; 
         }
 
         protected override IOptional<Product> Get(string article) {

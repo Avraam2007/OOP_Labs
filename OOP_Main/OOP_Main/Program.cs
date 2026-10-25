@@ -1,9 +1,8 @@
 ﻿using Spectre.Console;
 using System;
-using System.Collections.Generic;
-using OOP_Main;
 using OOP_Main.UI;
 using OOP_Main.Utilities;
+using OOP_Main.Repositories;
 
 namespace OOP_Main {
     internal class Program {

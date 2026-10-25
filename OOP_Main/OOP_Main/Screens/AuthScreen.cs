@@ -1,6 +1,8 @@
 ﻿using NOptional;
 using OOP_Main.Utilities;
 using System;
+using OOP_Main.Repositories;
+using OOP_Main.Entities;
 
 namespace OOP_Main.Screens {
     public class AuthScreen: BaseScreen, ICreateScreen {

@@ -1,6 +1,6 @@
 ﻿using OOP_Main.Attributes;
 
-namespace OOP_Main {
+namespace OOP_Main.Entities {
     public class Sofa : Furniture {
         private bool isAssemble;
 

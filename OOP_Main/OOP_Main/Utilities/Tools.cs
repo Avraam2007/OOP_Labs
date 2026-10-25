@@ -6,15 +6,19 @@ using System.Text.RegularExpressions;
 namespace OOP_Main.Utilities {
     public static class Tools {
         public static bool ValidateArray<T>(IEnumerable<T> arr) {
-            return (arr is null || !arr.Any());
+            return !(arr is null || !arr.Any());
         }
 
         public static string GetTypeName<T>(T obj) {
             return obj.GetType().Name;
         }
 
+        public static double RoundNumber(this double number, int digitsAfterPeriod = 2) {
+            return Math.Round(number, digitsAfterPeriod, MidpointRounding.AwayFromZero);
+        }
+
         public static double RoundPrice(this double price, int digitsAfterPeriod = 2) {
-            return Math.Round(price, digitsAfterPeriod, MidpointRounding.AwayFromZero);
+            return RoundNumber(price, digitsAfterPeriod);
         }
 
 

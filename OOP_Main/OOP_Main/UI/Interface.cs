@@ -1,9 +1,10 @@
 ﻿using NOptional;
+using OOP_Main.Entities;
+using OOP_Main.Repositories;
 using OOP_Main.Screens;
 using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
-using System.Collections.Generic;
 
 namespace OOP_Main.UI {
     public class Interface: UIHelper {

@@ -1,13 +1,10 @@
 ﻿using NOptional;
+using OOP_Main.Entities;
 using OOP_Main.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-namespace OOP_Main 
-    {
+
+namespace OOP_Main.Repositories {
     public class UserData: BaseDataRepository<User, int> {
         public List<User> Users => Items;
 

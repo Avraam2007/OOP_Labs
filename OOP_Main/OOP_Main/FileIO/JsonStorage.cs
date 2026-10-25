@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
-using OOP_Main.FileIO;
 using System;
 using System.IO;
 using System.Threading;
 
-namespace OOP_Main {
+namespace OOP_Main.FileIO {
     public class JsonStorage {
         private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings {
             Formatting = Formatting.Indented,

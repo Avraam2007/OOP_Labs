@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOP_Main.Utilities {
     public class Exceptions {
@@ -39,7 +35,7 @@ namespace OOP_Main.Utilities {
             public string PropertyName { get; }
 
             public InvalidDomainDataException(string propertyName, string message)
-                : base($"Помилка валідації для поля '{propertyName}': {message}") {
+                : base($"Validation error for the field '{propertyName}': {message}") {
                 PropertyName = propertyName;
             }
         }

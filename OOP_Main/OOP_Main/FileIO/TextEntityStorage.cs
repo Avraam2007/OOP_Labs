@@ -1,12 +1,12 @@
-﻿using OOP_Main.States;
+﻿using OOP_Main.Bundles;
+using OOP_Main.Entities;
+using OOP_Main.States;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace OOP_Main {
+namespace OOP_Main.FileIO {
     public static class TextEntityStorage {
         public static void SaveUsersToText(string filePath, List<User> users) {
             string directory = Path.GetDirectoryName(filePath);

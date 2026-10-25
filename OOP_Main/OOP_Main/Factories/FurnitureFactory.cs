@@ -1,4 +1,6 @@
-﻿namespace OOP_Main {
+﻿using OOP_Main.Entities;
+
+namespace OOP_Main.Factories {
     internal class FurnitureFactory: ProductFactory {
         public override Product CreateProduct(string article, string name, double price, int supplierId, string category) {
             double weight = DefaultTextPrompt<double>("Enter product [green]weight (in kg)[/]:");

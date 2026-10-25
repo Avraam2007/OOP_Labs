@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using OOP_Main.Utilities;
+using System.Collections.Concurrent;
 
 namespace OOP_Main {
     public class Cart {

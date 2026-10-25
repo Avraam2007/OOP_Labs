@@ -2,8 +2,9 @@
 using System;
 using System.Runtime.CompilerServices;
 using NOptional;
+using OOP_Main.Entities;
 
-namespace OOP_Main {
+namespace OOP_Main.Decorators {
     public abstract class ProductDecorator: Product {
         protected Product _targetProduct;
 

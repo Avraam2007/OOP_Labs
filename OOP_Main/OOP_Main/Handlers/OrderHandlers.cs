@@ -1,14 +1,10 @@
-﻿using OOP_Main.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OOP_Main.Entities;
+using OOP_Main.Utilities;
 
 namespace OOP_Main.Handlers {
     public class EmptyOrderValidationHandler : BaseOrderValidationHandler {
         public override bool Handle(Order order, User buyer, out string errorMessage) {
-            if (order == null || Tools.ValidateArray(order.Products)) {
+            if (order == null || !Tools.ValidateArray(order.Products)) {
                 errorMessage = "Замовлення не містить жодного товару.";
                 return false;
             }

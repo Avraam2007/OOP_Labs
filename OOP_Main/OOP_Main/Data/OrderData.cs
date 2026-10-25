@@ -1,10 +1,11 @@
 ﻿using NOptional;
 using OOP_Main.Builders;
+using OOP_Main.Entities;
 using OOP_Main.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OOP_Main {
+namespace OOP_Main.Repositories {
     public class OrderData: BaseDataRepository<Order, int> {
         public List<Order> Orders => Items;
 

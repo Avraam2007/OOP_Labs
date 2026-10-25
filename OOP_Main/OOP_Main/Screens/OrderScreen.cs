@@ -1,8 +1,9 @@
 ﻿using OOP_Main.Builders;
 using OOP_Main.Comparers;
 using OOP_Main.Entities;
+using OOP_Main.FileIO;
 using OOP_Main.Handlers;
-using OOP_Main.UI;
+using OOP_Main.Repositories;
 using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
@@ -50,7 +51,7 @@ namespace OOP_Main.Screens {
         public string Create() {
             ShowHeader("Creating order");
 
-            if (Tools.ValidateArray(_appData.Products)) {
+            if (!Tools.ValidateArray(_appData.Products)) {
                 DefaultErrorOutput("No products found. Call the admin to fix this issue.");
                 return BackToMenuPrompt();
             }

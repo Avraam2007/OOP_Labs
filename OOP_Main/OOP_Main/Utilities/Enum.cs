@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace OOP_Main {
+namespace OOP_Main.Utilities {
     public enum MenuOption {
         [Description("Back to menu")] BackToMenu,
         [Description("Show users")] ShowUsers,

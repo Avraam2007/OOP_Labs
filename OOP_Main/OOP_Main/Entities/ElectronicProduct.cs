@@ -1,9 +1,7 @@
 ﻿using OOP_Main.Attributes;
 using OOP_Main.Utilities;
-using Spectre.Console;
-using System.Collections.Generic;
 
-namespace OOP_Main {
+namespace OOP_Main.Entities {
     public class ElectronicProduct : Product {
         private int power;
         private int maxVoltage;

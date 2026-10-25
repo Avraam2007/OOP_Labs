@@ -1,13 +1,12 @@
 ﻿using NOptional;
+using OOP_Main.Entities;
 using Spectre.Console;
 using Spectre.Console.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 
@@ -48,7 +47,7 @@ namespace OOP_Main.UI {
         }
 
         public static void DefaultErrorOutput(string message) {
-            DefaultMarkupOutput($"[red bold]{message}[/]");
+            DefaultMarkupOutput($"[red bold]{Markup.Escape(message)}[/]");
         }
 
         public static void DefaultSuccessOutput(string message) {

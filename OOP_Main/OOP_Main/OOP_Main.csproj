@@ -103,6 +103,7 @@
     <Compile Include="Factories\BundleFactory.cs" />
     <Compile Include="Handlers\OrderHandlers.cs" />
     <Compile Include="Handlers\OrderValidationHandler.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Screens\AuthScreen.cs" />
     <Compile Include="Screens\BaseScreen.cs" />
     <Compile Include="States\OrderStates\PendingState.cs" />
@@ -113,6 +114,8 @@
     <Compile Include="States\OrderState.cs" />
     <Compile Include="States\UserState.cs" />
     <Compile Include="Structures\CategoryBST.cs" />
+    <Compile Include="Structures\Dimensiones.cs" />
+    <Compile Include="Structures\Discount.cs" />
     <Compile Include="UI\CardRenderer.cs" />
     <Compile Include="Entities\Cart.cs" />
     <Compile Include="Entities\Cloth.cs" />
@@ -140,7 +143,7 @@
     <Compile Include="Utilities\Exceptions.cs" />
     <Compile Include="Utilities\Logger.cs" />
     <Compile Include="Utilities\OrderProcessingService.cs" />
-    <Compile Include="Utilities\OrderStatus.cs" />
+    <Compile Include="States\OrderStatus.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Data\ProductData.cs" />
     <Compile Include="Decorators\ProductDecorator.cs" />

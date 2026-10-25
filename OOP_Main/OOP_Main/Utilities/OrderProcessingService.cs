@@ -1,8 +1,6 @@
-﻿using System;
+﻿using OOP_Main.States;
+using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,7 +26,6 @@ namespace OOP_Main.Utilities {
         private void ProcessQueue(CancellationToken ct) {
             foreach (var order in _orderQueue.GetConsumingEnumerable(ct)) {
                 try {
-                    //Thread.Sleep(300000);
                     Thread.Sleep(15000);
 
                     order.Status = OrderStatus.Shipped;

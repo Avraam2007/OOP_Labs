@@ -1,9 +1,9 @@
 ﻿using NOptional;
+using OOP_Main.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 
-namespace OOP_Main {
+namespace OOP_Main.Repositories {
     public class SupplierData: BaseDataRepository<Supplier, int> {
         public List<Supplier> Suppliers => Items;
 

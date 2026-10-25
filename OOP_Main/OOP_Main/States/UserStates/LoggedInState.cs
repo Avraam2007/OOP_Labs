@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OOP_Main.States {
+﻿namespace OOP_Main.States {
     public class LoggedInState: UserState {
         public override bool CanBuyProducts() => true;
         public override bool CanManageUsers() => false;

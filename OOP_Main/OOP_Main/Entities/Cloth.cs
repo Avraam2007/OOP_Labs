@@ -2,7 +2,7 @@
 using OOP_Main.Utilities;
 using System;
 
-namespace OOP_Main {
+namespace OOP_Main.Entities {
     public class Cloth : Product {
         private string material;
 

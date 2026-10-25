@@ -3,9 +3,9 @@
 Мета: Отримати практичні навички для розробки програм з використання класів та інтерфейсів у мові C#. 
 
 Корисні теоретичні екскурси: 
-https://www.geeksforgeeks.org/java/classes-objects-java/
-https://www.tutorialspoint.com/java/java_object_classes.htm
-https://docs.oracle.com/javase/tutorial/java/javaOO/index.html
+https://www.geeksforgeeks.org/c-sharp/class-and-object-in-c-sharp/
+https://www.tutorialspoint.com/csharp/csharp_classes.htm
+https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/classes
 
 Завдання: 
 За допомогою створення класів та деяких інтерфейсів реалізувати ієрархії класів з варіантів.

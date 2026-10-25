@@ -1,11 +1,8 @@
-﻿using Newtonsoft.Json;
-using OOP_Main.FileIO;
-using Spectre.Console;
-using System;
+﻿using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace OOP_Main {
+namespace OOP_Main.FileIO {
     public static class TextStorage {
         public static async Task<string> LoadFromFile(string filePath) {
             try {

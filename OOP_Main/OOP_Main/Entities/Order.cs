@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using OOP_Main.Attributes;
+using OOP_Main.Entities;
+using OOP_Main.Repositories;
 using OOP_Main.States;
 using OOP_Main.States.OrderStates;
 using OOP_Main.Utilities;
@@ -76,7 +78,7 @@ namespace OOP_Main {
         }
 
         public double GetTotalPrice() {
-            if (Tools.ValidateArray(Products)) return 0;
+            if (!Tools.ValidateArray(Products)) return 0;
             double totalPrice = 0;
             foreach (Product part in Products) {
                 totalPrice += part.Price;
@@ -85,7 +87,7 @@ namespace OOP_Main {
         }
 
         public double GetTotalShippingCost() {
-            if (Tools.ValidateArray(Products)) return 0;
+            if (!Tools.ValidateArray(Products)) return 0;
             double totalShipCost = 0;
             foreach (Product part in Products) {
                 totalShipCost += part.CalculateShippingCost();
@@ -94,14 +96,14 @@ namespace OOP_Main {
         }
 
         public double GetAveragePrice() {
-            if (Tools.ValidateArray(Products)) return 0;
+            if (!Tools.ValidateArray(Products)) return 0;
             double totalPrice = GetTotalPrice();
             double averagePrice = totalPrice / Products.Count;
             return Math.Round(averagePrice, 2, MidpointRounding.AwayFromZero);
         }
 
         public double GetMinPrice() {
-            if (Tools.ValidateArray(Products)) return 0;
+            if (!Tools.ValidateArray(Products)) return 0;
             double minPrice = Products[0].Price;
             for (int i = 1; i < Products.Count; i++) {
                 if (Products[i].Price < minPrice) {
@@ -112,7 +114,7 @@ namespace OOP_Main {
         }
 
         public double GetMaxPrice() {
-            if (Tools.ValidateArray(Products)) return 0;
+            if (!Tools.ValidateArray(Products)) return 0;
             double maxPrice = Products[0].Price;
             for (int i = 1; i < Products.Count; i++) {
                 if (Products[i].Price > maxPrice) {
@@ -123,7 +125,7 @@ namespace OOP_Main {
         }
 
         public double[] FindMinMaxPrices(List<Product>  products)  {
-            if (Tools.ValidateArray(products)) return new double[] { 0, 0 };
+            if (!Tools.ValidateArray(products)) return new double[] { 0, 0 };
 
             double min = products[0].Price;
             double max = products[0].Price;
@@ -138,7 +140,7 @@ namespace OOP_Main {
         }
 
         public List<T> Reverse<T>(List<T> arr) {
-            if (Tools.ValidateArray(arr)) return null;
+            if (!Tools.ValidateArray(arr)) return null;
             for (int i = 0; i < arr.Count / 2; i++) {
                 T tmp = arr[i];
                 arr[i] = arr[arr.Count - 1 - i];
@@ -148,7 +150,7 @@ namespace OOP_Main {
         }
 
         public List<T> RemoveDuplicates<T>(List<T> arr) {
-            if (Tools.ValidateArray(arr)) return null;
+            if (!Tools.ValidateArray(arr)) return null;
 
             List<T> ans = new List<T>();
 

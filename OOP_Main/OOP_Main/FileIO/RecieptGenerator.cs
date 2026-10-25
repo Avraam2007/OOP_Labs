@@ -1,9 +1,10 @@
-﻿using OOP_Main.Utilities;
+﻿using OOP_Main.Entities;
+using OOP_Main.Utilities;
 using System;
 using System.Text;
 using static OOP_Main.Utilities.Exceptions;
 
-namespace OOP_Main {
+namespace OOP_Main.FileIO {
     public static class RecieptGenerator {
         public static string BuildOrderReceipt(Order order, User buyer) {
             var sb = new StringBuilder();
@@ -19,7 +20,7 @@ namespace OOP_Main {
             sb.AppendLine(string.Format("{0,-15} | {1,-18} | {2,8}", "ARTICLE", "NAME", "PRICE"));
             sb.AppendLine("-------------------------------------------------");
 
-            if (!Tools.ValidateArray(order.Products)) {
+            if (Tools.ValidateArray(order.Products)) {
                 foreach (var product in order.Products) {
                     string itemArticle = product.Article.Length > 15 ? product.Article.Substring(0, 12) + "..." : product.Article;
                     string itemName = product.Name.Length > 18 ? product.Name.Substring(0, 15) + "..." : product.Name;

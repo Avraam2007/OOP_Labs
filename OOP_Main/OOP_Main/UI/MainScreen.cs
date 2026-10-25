@@ -1,4 +1,5 @@
-﻿using OOP_Main.States;
+﻿using OOP_Main.Entities;
+using OOP_Main.States;
 using OOP_Main.Utilities;
 using Spectre.Console;
 using Spectre.Console.Rendering;
@@ -13,9 +14,9 @@ namespace OOP_Main.UI {
         private static int GetHeaderHeight(int panelRows, int verticalPaddingHeight, int rules) {
             if (panelRows < 0 || rules < 0) return 0;
 
-            const int panelContnetHeight = 5;
+            const int panelContentHeight = 5;
 
-            int panelHeight = panelContnetHeight + (2 * verticalPaddingHeight);
+            int panelHeight = panelContentHeight + (2 * verticalPaddingHeight);
             int ruleHeight = 3;
 
             return panelRows * panelHeight + rules * ruleHeight;
@@ -35,6 +36,12 @@ namespace OOP_Main.UI {
             if (string.IsNullOrEmpty(markupText)) return 0;
             return Regex.Replace(markupText, @"\[[^\]]*\]", "").Length;
         }
+
+        private static int GetPanelWidth(int contentLength, int horizontalPadding, int frameWidth) {
+            if (contentLength < 0 || horizontalPadding < 0 || frameWidth < 0) return 0;
+            return contentLength + 2 * (horizontalPadding + frameWidth);
+        }
+
         public static T ShowMenuWithLiveClock<T>(
             string headerTitle, 
             T[] options, 
@@ -42,7 +49,7 @@ namespace OOP_Main.UI {
             Func<T, string> displayConverter = null, 
             int pageSize = 10
         ) {
-            if (Tools.ValidateArray(options)) {
+            if (!Tools.ValidateArray(options)) {
                 return default;
             }
 
@@ -67,8 +74,10 @@ namespace OOP_Main.UI {
                 .AutoClear(true)
                 .Start(ctx => {
                     while (!isSelected) {
-                        int horizontalPadding = 2;
-                        int verticalPadding = 1;
+                        const int horizontalPadding = 2;
+                        const int verticalPadding = 1;
+                        const int frameWidth = 1;
+                        const int gridGap = 2;
 
                         //4, 2
 
@@ -86,12 +95,12 @@ namespace OOP_Main.UI {
                             .Padding(horizontalPadding, verticalPadding);
 
                         // 3. Обчислюємо реальну ширину кожної панелі (довжина тексту + відступи + рамка)
-                        int logoWidth = GetRawTextLength(headerTitle) + 6;
-                        int clockWidth = clockText.Length + 6;
-                        int userWidth = userText.Length + 6;
+                        int logoWidth = GetPanelWidth(GetRawTextLength(headerTitle), horizontalPadding, frameWidth);
+                        int clockWidth = GetPanelWidth(clockText.Length, horizontalPadding, frameWidth);
+                        int userWidth = GetPanelWidth(userText.Length, horizontalPadding, frameWidth);
 
-                        int totalWidth = logoWidth + clockWidth + userWidth + 4; // +4 на міжколонкові інтервали
-                        int twoColWidth = Math.Max(logoWidth + clockWidth + 2, userWidth);
+                        int totalWidth = logoWidth + clockWidth + userWidth + 2 * gridGap; // +4 на міжколонкові інтервали
+                        int twoColWidth = Math.Max(logoWidth + clockWidth + gridGap, userWidth);
 
                         // 4. Отримуємо ширину поточного вікна консолі
                         int windowWidth = Console.WindowWidth > 0 ? Console.WindowWidth : AnsiConsole.Console.Profile.Width;

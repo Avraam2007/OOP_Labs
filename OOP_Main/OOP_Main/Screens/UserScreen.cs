@@ -1,9 +1,13 @@
 ﻿using NOptional;
 using OOP_Main.Comparers;
+using OOP_Main.Entities;
+using OOP_Main.Repositories;
+using OOP_Main.UI;
 using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OOP_Main.Screens {
     public class UserScreen: BaseScreen, IShowScreen, IDeleteScreen, IEditScreen {
@@ -84,7 +88,7 @@ namespace OOP_Main.Screens {
             if (confirmPassword == newPassword) {
                 try {
                     _appData.CurrentUser.Value.UpdatePassword(UserService.HashPassword(newPassword));
-                    _appData.SaveAllData();
+                    Task.Run(() => _appData.SaveAllData()).GetAwaiter().GetResult();
 
                     DefaultSuccessOutput("Password was changed!");
                 }

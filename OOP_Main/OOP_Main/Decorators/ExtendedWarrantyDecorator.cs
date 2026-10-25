@@ -1,7 +1,8 @@
 ﻿using Newtonsoft.Json;
 using OOP_Main.Attributes;
+using OOP_Main.Entities;
 
-namespace OOP_Main {
+namespace OOP_Main.Decorators {
     public class ExtendedWarrantyDecorator : ProductDecorator {
         private int _years;
 

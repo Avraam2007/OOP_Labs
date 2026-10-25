@@ -4,7 +4,7 @@ using System.IO.Compression;
 using System.Linq;
 using static OOP_Main.Utilities.Exceptions;
 
-namespace OOP_Main {
+namespace OOP_Main.FileIO {
     public class BackupService {
         public static string CreateZipBackup(string sourceDirectory, string backupTargetFolder) {
             try {

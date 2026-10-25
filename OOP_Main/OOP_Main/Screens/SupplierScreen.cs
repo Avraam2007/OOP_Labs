@@ -1,4 +1,7 @@
 ﻿using OOP_Main.Comparers;
+using OOP_Main.Entities;
+using OOP_Main.Repositories;
+using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;

@@ -1,23 +1,17 @@
 ﻿using Newtonsoft.Json;
 using OOP_Main.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OOP_Main.Entities;
+using OOP_Main.Structures;
 
-namespace OOP_Main {
+namespace OOP_Main.Decorators {
     public class DiscountDecorator : ProductDecorator {
-        private double _discountPercent;
+        private Discount _discount;
 
         [Editable("Discount percent")]
         public double DiscountPercent {
-            get => _discountPercent;
+            get => _discount.Percent;
             set {
-                if (value < 0 || value > 100) {
-                    throw new ArgumentOutOfRangeException($"Discount percent should range between 0% and 100%", nameof(value));
-                }
-                _discountPercent = value;
+                _discount = new Discount(value);
             }
         }
 

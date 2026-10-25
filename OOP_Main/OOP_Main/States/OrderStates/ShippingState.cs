@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OOP_Main.States.OrderStates {
+﻿namespace OOP_Main.States.OrderStates {
     internal class ShippingState: OrderState {
         public override string GetDescription() => "Shipping";
         public override bool CanBeCancelled() => false;

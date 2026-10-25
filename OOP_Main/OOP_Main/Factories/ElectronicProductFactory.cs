@@ -1,4 +1,6 @@
-﻿namespace OOP_Main {
+﻿using OOP_Main.Entities;
+
+namespace OOP_Main.Factories {
     public class ElectronicProductFactory : ProductFactory {
         public override Product CreateProduct(string article, string name, double price, int supplierId, string category = "") {
             int power = DefaultTextPrompt<int>("Enter product [green]power (in watts)[/]:");

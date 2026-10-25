@@ -1,10 +1,13 @@
-﻿using OOP_Main.States;
+﻿using OOP_Main.Bundles;
+using OOP_Main.Decorators;
+using OOP_Main.Entities;
+using OOP_Main.States;
 using OOP_Main.Utilities;
 using Spectre.Console;
 using Spectre.Console.Rendering;
 using System.Collections.Generic;
 
-namespace OOP_Main {
+namespace OOP_Main.UI {
     public struct CardRenderer {
         public static Dictionary<string, IRenderable> GetCardInfo(object item) {
             switch (item) {
@@ -54,7 +57,7 @@ namespace OOP_Main {
                 ["status"] = new Text($"Status: {OrderStatusExtensions.GetDescription(order.Status)}\n"),
             };
 
-            if (Tools.ValidateArray(order.Products)) {
+            if (!Tools.ValidateArray(order.Products)) {
                 card["empty_products"] = new Text("  (No products in this order)\n", new Style(foreground: Color.Red));
                 return card;
             }
@@ -125,7 +128,7 @@ namespace OOP_Main {
                 ["discount"] = new Text($"Dicsount: -{bundle.BundleDiscountPercent}%\n")
             };
 
-            if (Tools.ValidateArray(bundle.Items)) {
+            if (!Tools.ValidateArray(bundle.Items)) {
                 card["empty_products"] = new Text("  (No products in this bundle)\n", new Style(foreground: Color.Red));
                 return card;
             }
@@ -189,7 +192,7 @@ namespace OOP_Main {
                 ["reputation"] = new Text($"Reputation: {(supplier.Inspect() ? "Good" : "Bad")}\n"),
             };
 
-            if (Tools.ValidateArray(supplier.Catalog)) {
+            if (!Tools.ValidateArray(supplier.Catalog)) {
                 card["empty_products"] = new Text("  (No products that supplier can provide)\n", new Style(foreground: Color.Red));
                 return card;
             }

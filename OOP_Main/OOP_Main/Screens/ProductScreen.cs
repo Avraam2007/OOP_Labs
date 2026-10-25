@@ -1,5 +1,10 @@
 ﻿using NOptional;
+using OOP_Main.Bundles;
 using OOP_Main.Comparers;
+using OOP_Main.Decorators;
+using OOP_Main.Entities;
+using OOP_Main.Factories;
+using OOP_Main.Repositories;
 using OOP_Main.Structures;
 using OOP_Main.UI;
 using OOP_Main.Utilities;
@@ -63,7 +68,7 @@ namespace OOP_Main.Screens {
                 throw new ECommerceException("Provided product is not a product bundle.");
             }
 
-            if (Tools.ValidateArray(_appData.Products)) {
+            if (!Tools.ValidateArray(_appData.Products)) {
                 throw new ECommerceException("No products found. Call the admin to fix this issue.");
             }
 
@@ -104,7 +109,7 @@ namespace OOP_Main.Screens {
         public string Create() {
             ShowHeader("Adding product");
 
-            if (Tools.ValidateArray(_appData.Suppliers)) {
+            if (!Tools.ValidateArray(_appData.Suppliers)) {
                 DefaultErrorOutput("No suppliers found. Call the admin to fix this issue");
                 return BackToMenuPrompt();
             }
@@ -248,7 +253,7 @@ namespace OOP_Main.Screens {
             }
 
             ShowHeader("Search product");
-            if (Tools.ValidateArray(foundProducts)) {
+            if (!Tools.ValidateArray(foundProducts)) {
                 DefaultErrorOutput("No products found for your search.");
             }
             else {

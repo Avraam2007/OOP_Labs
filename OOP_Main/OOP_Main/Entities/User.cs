@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 using OOP_Main.Attributes;
-using OOP_Main.Entities;
+using OOP_Main.Repositories;
 using OOP_Main.States;
 using System;
 
-namespace OOP_Main {
+namespace OOP_Main.Entities {
     public class User: IIdentifiable<int>, IComparable<User> {
         private readonly int _id;
         private string username;

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using NOptional;
+using OOP_Main.FileIO;
+using OOP_Main.Interfaces;
 
-namespace OOP_Main {
+namespace OOP_Main.Repositories {
     public interface IIdentifiable<TId> {
         TId Id { get; }
     }
@@ -25,6 +25,16 @@ namespace OOP_Main {
 
         public void Save() {
             JsonStorage.SaveToFile(FilePath, Items);
+        }
+
+        public virtual async Task LoadAsync() {
+            Task<List<T>> loadTask = Task.Run(() => JsonStorage.LoadFromFile<List<T>>(FilePath));
+            Items = await loadTask ?? new List<T>();
+        }
+
+        public async Task SaveAsync() {
+            Task saveTask = Task.Run(() => JsonStorage.SaveToFile(FilePath, Items));
+            await saveTask;
         }
 
         protected virtual void Add(T obj) {

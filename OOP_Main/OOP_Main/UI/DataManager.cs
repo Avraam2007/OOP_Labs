@@ -1,4 +1,5 @@
 ﻿using OOP_Main.FileIO;
+using OOP_Main.Repositories;
 using System;
 using System.IO;
 using System.Linq;
@@ -38,15 +39,15 @@ namespace OOP_Main.UI {
             }
         }
 
-        public static void SaveFilesFrom(Data data) {
-            data.SaveAllData();
+        public static async void SaveFilesFrom(Data data) {
+            await data.SaveAllData();
             data.SaveBackup();
         }
 
-        public static void UploadFilesFrom(Data data) {
+        public static async void UploadFilesFrom(Data data) {
             ErrorRegistry.RegisterHandler(DefaultErrorOutput);
             EnsureDataOrRestoreBackup();
-            data.LoadAllData();
+            await data.LoadAllData();
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using OOP_Main.Attributes;
+using OOP_Main.Repositories;
 using OOP_Main.Utilities;
-using Spectre.Console;
 using System;
 using System.Collections.Generic;
 
-namespace OOP_Main {
+namespace OOP_Main.Entities {
     public class Supplier: IIdentifiable<int> {
         private double rating;
         private readonly int supplierId;

@@ -1,4 +1,6 @@
-﻿namespace OOP_Main {
+﻿using OOP_Main.Entities;
+
+namespace OOP_Main.Factories {
     public class ClothFactory: ProductFactory {
         public override Product CreateProduct(string article, string name, double price, int supplierId, string category = "") {
             string material = DefaultTextPrompt<string>("Enter product [green]material[/]:");

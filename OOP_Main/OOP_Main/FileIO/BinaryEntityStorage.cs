@@ -1,11 +1,9 @@
-﻿using System;
+﻿using OOP_Main.Bundles;
+using OOP_Main.Entities;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OOP_Main {
+namespace OOP_Main.FileIO {
     public static class BinaryEntityStorage {
         public static void SaveProductsBinary(string filePath, List<Product> products) {
             string directory = Path.GetDirectoryName(filePath);

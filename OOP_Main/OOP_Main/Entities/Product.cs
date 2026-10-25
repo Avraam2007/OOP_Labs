@@ -1,8 +1,9 @@
 ﻿using OOP_Main.Attributes;
+using OOP_Main.Repositories;
 using OOP_Main.Utilities;
 using System;
 
-namespace OOP_Main {
+namespace OOP_Main.Entities {
     public abstract class Product: IIdentifiable<string>, IComparable<Product> {
         private string article;
         private string name;

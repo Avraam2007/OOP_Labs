@@ -1,10 +1,11 @@
 ﻿using OOP_Main.Comparers;
+using OOP_Main.Entities;
 using OOP_Main.Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OOP_Main {
+namespace OOP_Main.Utilities {
     public static class ProductHelpers {
         public static string NormalizeProductName(string productName) {
             return productName.Trim().ToLowerInvariant();
