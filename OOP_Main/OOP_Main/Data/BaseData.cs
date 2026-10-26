@@ -15,25 +15,29 @@ namespace OOP_Main.Repositories {
         {
         public readonly string FilePath;
         public List<T> Items { get; protected set; } = new List<T>();
-        protected BaseDataRepository(string filePath) {
+
+        private readonly IStorage<List<T>> _storage;
+
+        protected BaseDataRepository(string filePath, IStorage<List<T>> storage = null) {
             FilePath = filePath;
+            _storage = storage ?? new JsonStorage<List<T>>();
         }
 
         public virtual void Load() {
-            Items = JsonStorage.LoadFromFile<List<T>>(FilePath) ?? new List<T>();
+            Items = _storage.LoadFromFile(FilePath) ?? new List<T>();
         }
 
         public void Save() {
-            JsonStorage.SaveToFile(FilePath, Items);
+            _storage.SaveToFile(FilePath, Items);
         }
 
         public virtual async Task LoadAsync() {
-            Task<List<T>> loadTask = Task.Run(() => JsonStorage.LoadFromFile<List<T>>(FilePath));
+            Task<List<T>> loadTask = Task.Run(() => _storage.LoadFromFile(FilePath));
             Items = await loadTask ?? new List<T>();
         }
 
         public async Task SaveAsync() {
-            Task saveTask = Task.Run(() => JsonStorage.SaveToFile(FilePath, Items));
+            Task saveTask = Task.Run(() => _storage.SaveToFile(FilePath, Items));
             await saveTask;
         }
 

@@ -62,7 +62,7 @@ namespace OOP_Main.Screens {
 
             var availableProducts = new List<Product>(_appData.Products);
 
-            var productNames = _appData.Products.Select(p => $"{p.Name} - {p.Price}$").ToList();
+            var productNames = _appData.Products.Select(p => $"{p.Name} - {p.Price.GetCurrencyOutput()}").ToList();
 
             productNames.Add(exitOption);
 
@@ -97,7 +97,7 @@ namespace OOP_Main.Screens {
                 var prompt = new SelectionPrompt<Product>()
                     .Title("Select [green]product[/] to order")
                     .PageSize(15)
-                    .UseConverter(p => p == null ? exitOption : $"{p.Name} - {p.Price}$")
+                    .UseConverter(p => p == null ? exitOption : $"{p.Name} - {p.Price.GetCurrencyOutput()}$")
                     .AddChoices(filteredProducts);
 
                 var productChoice = AnsiConsole.Prompt(prompt);
@@ -149,7 +149,7 @@ namespace OOP_Main.Screens {
 
             double totalPrice = tempOrder.GetTotalPrice();
 
-            bool acceptOrder = DefaultConfirm($"The order costs {totalPrice}$. Would you like to pay for it?");
+            bool acceptOrder = DefaultConfirm($"The order costs {totalPrice.GetCurrencyOutput()}. Would you like to pay for it?");
 
             if (!acceptOrder) return BackToMenuPrompt();
 
@@ -157,7 +157,7 @@ namespace OOP_Main.Screens {
                 _appData.CurrentUser.Value.TakeMoney(totalPrice);
 
                 _appData.AddOrder(userId, catalog.ToList());
-                DefaultSuccessOutput($"New transaction: -{totalPrice} $");
+                DefaultSuccessOutput($"New transaction: -{totalPrice.GetCurrencyOutput()}");
 
                 Order newOrder = _appData.GetOrderById(newOrderID).GetValueOrElseThrow();
 
@@ -166,7 +166,7 @@ namespace OOP_Main.Screens {
 
                 _appData.OrderQueue?.EnqueueOrder(newOrder);
 
-                string orderReciept = RecieptGenerator.BuildOrderReceipt(newOrder, _appData.CurrentUser.Value);
+                string orderReciept = ReceiptGenerator.BuildOrderReceipt(newOrder, _appData.CurrentUser.Value);
                 DefaultMarkupOutput($"[bold green rapidblink]YOUR NEW ORDER[/]");
                 var panel = new Panel(orderReciept)
                     .BorderColor(Color.Blue)
@@ -176,10 +176,15 @@ namespace OOP_Main.Screens {
                 AnsiConsole.Write(panel);
 
                 string username = _appData.CurrentUser.MapValue(user => user.Username).GetValueOrElse(newOrder.BuyerId.ToString());
-                string savePath = $"DataStorage/reciept_order_{newOrderID}_from_{username}.txt";
+                string savePath = $"DataStorage/receipt_order_{newOrderID}_from_{username}.txt";
 
-                RecieptGenerator.SaveReciept(orderReciept, savePath);
-                DefaultMarkupOutput($"[blue]Reciept was saved in file:[/] [yellow]{savePath}[/]");
+                ReceiptGenerator.SaveReceipt(
+                    orderReciept, 
+                    savePath, 
+                    new TextStorageAdapter(new TextStorage())
+                );
+
+                DefaultMarkupOutput($"[blue]Receipt was saved in file:[/] [yellow]{savePath}[/]");
             }
             catch (InsufficientFundsException ex) {
                 DefaultErrorOutput(ex.Message);
@@ -202,27 +207,6 @@ namespace OOP_Main.Screens {
             _appData.DeleteOrder,
             order => $"[red]\"({order.OrderId}) from {order.BuyerId}\"[/]"
         );
-
-        //public string Edit() {
-        //    ShowHeader("Edit order");
-
-        //    if (Tools.ValidateArray(_appData.Orders)) {
-        //        DefaultErrorOutput("No orders found. Call the admin to fix this issue");
-        //        return BackToMenuPrompt();
-        //    }
-
-        //    var orderChoice = AnsiConsole.Prompt(
-        //        new SelectionPrompt<Order>()
-        //            .Title("Select order to edit:")
-        //            .UseConverter(o => o.ToString())
-        //            .AddChoices(_appData.Orders));
-
-        //    EntityEditorEngine.EditEntity(orderChoice);
-
-        //    _appData.SaveAllData();
-
-        //    return BackToMenuPrompt();
-        //}
 
         public string Edit() => this.EditObjectScreen(_appData.Orders);
     }

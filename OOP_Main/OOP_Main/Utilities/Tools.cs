@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -11,6 +12,10 @@ namespace OOP_Main.Utilities {
 
         public static string GetTypeName<T>(T obj) {
             return obj.GetType().Name;
+        }
+
+        public static string GetCurrencyOutput(this double value) {
+            return value.ToString("C2", CultureInfo.CreateSpecificCulture("en-US"));
         }
 
         public static double RoundNumber(this double number, int digitsAfterPeriod = 2) {

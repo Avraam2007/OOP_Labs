@@ -1,11 +1,12 @@
 ﻿using OOP_Main.Entities;
+using OOP_Main.Interfaces;
 using OOP_Main.Utilities;
 using System;
 using System.Text;
 using static OOP_Main.Utilities.Exceptions;
 
 namespace OOP_Main.FileIO {
-    public static class RecieptGenerator {
+    public static class ReceiptGenerator {
         public static string BuildOrderReceipt(Order order, User buyer) {
             var sb = new StringBuilder();
 
@@ -25,17 +26,19 @@ namespace OOP_Main.FileIO {
                     string itemArticle = product.Article.Length > 15 ? product.Article.Substring(0, 12) + "..." : product.Article;
                     string itemName = product.Name.Length > 18 ? product.Name.Substring(0, 15) + "..." : product.Name;
 
-                    sb.AppendFormat("{0,-15} | {1,-18} | {2,7:F2}$", itemArticle, itemName, product.Price);
+                    string formattedPrice = product.Price.GetCurrencyOutput();
+                    sb.AppendFormat("{0,-15} | {1,-18} | {2,8}", itemArticle, itemName, formattedPrice);
                     sb.AppendLine();
                 }
             }
 
+            double totalAmount = order.GetTotalPrice() + order.GetTotalShippingCost();
             sb.AppendLine("-------------------------------------------------");
-            sb.Append("Subtotal:       ").AppendFormat("{0,28:F2}$", order.GetTotalPrice()).AppendLine();
-            sb.Append("Shipping Cost:  ").AppendFormat("{0,28:F2}$", order.GetTotalShippingCost()).AppendLine();
+            sb.Append("Subtotal:       ").AppendFormat("{0,28}", order.GetTotalPrice().GetCurrencyOutput()).AppendLine();
+            sb.Append("Shipping Cost:  ").AppendFormat("{0,28}", order.GetTotalShippingCost().GetCurrencyOutput()).AppendLine();
             sb.AppendLine("[yellow]Note: you'll pay the shipping cost[/]").AppendLine("[yellow]after reicept of the order[/]");
             sb.AppendLine("=================================================");
-            sb.Append("[bold]TOTAL AMOUNT:   [/]").AppendFormat("[bold]{0,28:F2}$[/]", order.GetTotalPrice() + order.GetTotalShippingCost()).AppendLine();
+            sb.Append("[bold]TOTAL AMOUNT:   [/]").AppendFormat("[bold]{0,28}[/]", totalAmount.GetCurrencyOutput()).AppendLine();
             sb.AppendLine("=================================================");
             sb.AppendLine("         Thank you for shopping with us!         ");
 
@@ -44,12 +47,12 @@ namespace OOP_Main.FileIO {
             return sb.ToString();
         }
 
-        public static void SaveReciept(string receiptText, string outputFilePath) {
+        public static void SaveReceipt(string receiptText, string outputFilePath, IStorage<string> storage) {
             try {
-                TextStorage.SaveToFile(receiptText, outputFilePath);
+                storage.SaveToFile(receiptText, outputFilePath);
             }
             catch (Exception ex) {
-                throw new ECommerceException($"Error with saving reciept in file '{outputFilePath}'", ex);
+                throw new ECommerceException($"Error with saving receipt in file '{outputFilePath}'", ex);
             }
         }
     }

@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 
 namespace OOP_Main.FileIO {
-    public struct FileService {
+    public static class FileService {
         private enum FileMeasureMode {
             Bytes,
             Lines

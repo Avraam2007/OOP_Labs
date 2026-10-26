@@ -1,10 +1,11 @@
-﻿using System;
+﻿using OOP_Main.Interfaces;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace OOP_Main.FileIO {
-    public static class TextStorage {
-        public static async Task<string> LoadFromFile(string filePath) {
+    public class TextStorage {
+        public string LoadFromFile(string filePath) {
             try {
                 if (!File.Exists(filePath)) {
                     return string.Empty;
@@ -13,7 +14,7 @@ namespace OOP_Main.FileIO {
                 string text;
 
                 using (StreamReader reader = new StreamReader(filePath)) {
-                    text = await reader.ReadToEndAsync();
+                    text = reader.ReadToEnd();
                 }
 
                 return text;
@@ -32,13 +33,13 @@ namespace OOP_Main.FileIO {
             }
         }
         
-        public static void SaveToFile(string text, string filePath, bool appendLine = false) {
+        public void SaveToFile(string text, string filePath, bool appendLine = false) {
             try {
                 string directory = Path.GetDirectoryName(filePath);
                 FileService.EnsureDirectoryExists(directory);
 
                 using (StreamWriter writer = new StreamWriter(filePath, append: appendLine)) {
-                    writer.WriteLineAsync(text);
+                    writer.WriteLine(text);
                 }
             }
             catch (UnauthorizedAccessException ex) {

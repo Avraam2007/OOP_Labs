@@ -41,7 +41,7 @@ namespace OOP_Main.UI {
                 ["header"] = new Text($"{user.Username}\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["id"] = new Text($"ID: {user.Id}\n"),
                 ["role"] = new Text($"Role: {UserRoleExtensions.GetDescription(user.Role)}\n"),
-                ["account"] = new Text($"Total balance: {user.Account.Sum}$\n")
+                ["account"] = new Text($"Total balance: {user.Account.Sum.GetCurrencyOutput()}\n")
             };
         }
 
@@ -49,11 +49,11 @@ namespace OOP_Main.UI {
             var card = new Dictionary<string, IRenderable> {
                 ["header"] = new Text($"ORDER #{order.OrderId}\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["buyer"] = new Text($"Buyer ID: {order.BuyerId}\n"),
-                ["total"] = new Text($"Total price: {order.GetTotalPrice()}$\n"),
-                ["shipping_cost"] = new Text($"Total shipping cost: {order.GetTotalShippingCost()}$\n"),
-                ["average"] = new Text($"Average price: {order.GetAveragePrice()}$\n"),
-                ["minimal"] = new Text($"Minimal price: {order.GetMinPrice()}$\n"),
-                ["maximal"] = new Text($"Maximal price: {order.GetMaxPrice()}$\n"),
+                ["total"] = new Text($"Total price: {order.GetTotalPrice().GetCurrencyOutput()}\n"),
+                ["shipping_cost"] = new Text($"Total shipping cost: {order.GetTotalShippingCost().GetCurrencyOutput()}\n"),
+                ["average"] = new Text($"Average price: {order.GetAveragePrice().GetCurrencyOutput()}\n"),
+                ["minimal"] = new Text($"Minimal price: {order.GetMinPrice().GetCurrencyOutput()}\n"),
+                ["maximal"] = new Text($"Maximal price: {order.GetMaxPrice().GetCurrencyOutput()}\n"),
                 ["status"] = new Text($"Status: {OrderStatusExtensions.GetDescription(order.Status)}\n"),
             };
 
@@ -86,7 +86,7 @@ namespace OOP_Main.UI {
             var card = new Dictionary<string, IRenderable> {
                 ["header"] = new Text($"{categoryTitle} \"{product.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["article"] = new Text($"Article: {product.Article}\n"),
-                ["price"] = new Text($"Price: {product.Price}$\n")
+                ["price"] = new Text($"Price: {product.Price.GetCurrencyOutput()}\n")
             };
 
             switch (product) {
@@ -124,7 +124,7 @@ namespace OOP_Main.UI {
             var card = new Dictionary<string, IRenderable> {
                 ["header"] = new Text($"{categoryTitle} \"{bundle.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["article"] = new Text($"Article: {bundle.Article}\n"),
-                ["price"] = new Text($"Price: {bundle.Price}$\n"),
+                ["price"] = new Text($"Price: {bundle.Price.GetCurrencyOutput()}\n"),
                 ["discount"] = new Text($"Dicsount: -{bundle.BundleDiscountPercent}%\n")
             };
 
@@ -157,7 +157,7 @@ namespace OOP_Main.UI {
             var card = new Dictionary<string, IRenderable> {
                 ["header"] = new Text($"{categoryTitle} \"{decorator.Name}\"\n\n", new Style(decoration: Decoration.Bold)).Centered(),
                 ["article"] = new Text($"Article: {decorator.Article}\n"),
-                ["price"] = new Text($"Price: {decorator.Price}$\n")
+                ["price"] = new Text($"Price: {decorator.Price.GetCurrencyOutput()}\n")
             };
 
             var innerProduct = decorator.TargetProduct;

@@ -97,12 +97,13 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="OOP_Main.FileIO.JsonStorage">
-    <Position X="43" Y="6" Width="1.75" />
+  <Class Name="OOP_Main.FileIO.JsonStorage&lt;T&gt;">
+    <Position X="44.5" Y="5.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAEAA=</HashCode>
       <FileName>FileIO\JsonStorage.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Screens.SupplierScreen">
     <Position X="12" Y="13.25" Width="1.75" />
@@ -353,7 +354,7 @@
   <Class Name="OOP_Main.Repositories.BaseDataRepository&lt;T, TId&gt;">
     <Position X="26.75" Y="14.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAIAgIAgAAAACABAAAAABAAAAIAAAAAAAABAAAAAAAA=</HashCode>
+      <HashCode>AAIAgIAgAAAACABAAAAABAAAAIAAAAAAAABAAAAAgAA=</HashCode>
       <FileName>Data\BaseData.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -371,9 +372,9 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Utilities.Tools">
-    <Position X="45.75" Y="14.25" Width="2.75" />
+    <Position X="42.75" Y="15" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAEAAAABBAAEAAAAAAACAAAAAAAAAAAAAABABBAAAAA=</HashCode>
+      <HashCode>AAEAAAgBBAAEAAAAAAACAAAAAAAAAAAAAABABBAAAAA=</HashCode>
       <FileName>Utilities\Tools.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -392,28 +393,25 @@
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="_authScreen" />
+      <Field Name="_productScreen" />
+      <Field Name="_orderScreen" />
+      <Field Name="_userScreen" />
+      <Field Name="_supplierScreen" />
       <Field Name="_autoSaveService" />
       <Field Name="_orderQueue" />
-      <Field Name="_orderScreen" />
-      <Field Name="_productScreen" />
-      <Field Name="_supplierScreen" />
-      <Field Name="_userScreen" />
       <Property Name="AppData" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="OOP_Main.FileIO.BinaryEntityStorage">
-    <Position X="38.5" Y="3.75" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
-      <FileName>FileIO\BinaryEntityStorage.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="OOP_Main.FileIO.TextEntityStorage">
-    <Position X="48" Y="6" Width="2" />
+    <Position X="48.75" Y="11.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAAAAAAAAhAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <HashCode>EAAIAAAAAAAAAAAAAAhAAAAAAAAAAAAQAAQAAAAAAAA=</HashCode>
       <FileName>FileIO\TextEntityStorage.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_productStorage" />
+      <Field Name="_userStorage" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="OOP_Main.Handlers.EmptyOrderValidationHandler">
     <Position X="3" Y="5.5" Width="2.25" />
@@ -462,7 +460,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.States.UserRoleExtensions">
-    <Position X="48" Y="9.25" Width="1.75" />
+    <Position X="44.25" Y="9.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>States\UserState.cs</FileName>
@@ -481,7 +479,7 @@
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAgACAAAABAAAAAAIIAAAAEAAAgAAAAAAAAAAAABAAg=</HashCode>
+      <HashCode>AAgACAAAABAAAAAAIIAAAAEAAAgAAQAAAAAAAAABAAg=</HashCode>
       <FileName>Utilities\Logger.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -536,7 +534,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.FileIO.ErrorRegistry">
-    <Position X="41" Y="3.25" Width="1.5" />
+    <Position X="38.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAIAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>FileIO\ErrorRegistry.cs</FileName>
@@ -581,7 +579,7 @@
   <Class Name="OOP_Main.Utilities.AutoSaveService" BaseTypeListCollapsed="true">
     <Position X="16.25" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAABCAIAAAAAJAAAAAAACAAAAAAYAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAABCAIAAAAAJAAAAAAACAAAAIAYAAIAAAAAAA=</HashCode>
       <FileName>Utilities\AutoSaveService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -595,14 +593,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Main.Utilities.ParallelSearchService">
-    <Position X="45.5" Y="4" Width="1.75" />
+    <Position X="41.75" Y="4" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
       <FileName>Utilities\ParalellSearchService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Attributes.EditableAttribute">
-    <Position X="45.75" Y="17.25" Width="1.5" />
+    <Position X="46.5" Y="15" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Attributes\Attributes.cs</FileName>
@@ -695,15 +693,15 @@
       <FileName>Factories\ProductFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OOP_Main.FileIO.RecieptGenerator">
-    <Position X="45.5" Y="6" Width="1.75" />
+  <Class Name="OOP_Main.FileIO.ReceiptGenerator">
+    <Position X="41.75" Y="6" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
-      <FileName>FileIO\RecieptGenerator.cs</FileName>
+      <HashCode>AAAAAAAAACAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileIO\ReceiptGenerator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.FileIO.TextStorage">
-    <Position X="41" Y="6" Width="1.5" />
+    <Position X="49.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>FileIO\TextStorage.cs</FileName>
@@ -732,21 +730,59 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.Utilities.ProductHelpers">
-    <Position X="48" Y="11" Width="2" />
+    <Position X="44.25" Y="11" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAIAIAAAAAgAAAAAA=</HashCode>
       <FileName>Utilities\ProductHelpers.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Struct Name="OOP_Main.UI.CardRenderer">
-    <Position X="7" Y="16.75" Width="2" />
+  <Class Name="OOP_Main.FileIO.BinaryStorage">
+    <Position X="47.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAIpAAAAAAAAQA=</HashCode>
-      <FileName>UI\CardRenderer.cs</FileName>
+      <HashCode>AAAAAAAgAAAAAAAAAAAIAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>FileIO\BinaryStorage.cs</FileName>
     </TypeIdentifier>
-  </Struct>
-  <Struct Name="OOP_Main.FileIO.FileService">
-    <Position X="43" Y="8.5" Width="2" />
+    <ShowAsAssociation>
+      <Field Name="_productStorage" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OOP_Main.FileIO.TextStorageAdapter" BaseTypeListCollapsed="true">
+    <Position X="49.25" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAEAA=</HashCode>
+      <FileName>FileIO\TextStorageAdapter.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_textStorage" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Main.FileIO.BinaryEntities.BinaryProductStorage" BaseTypeListCollapsed="true">
+    <Position X="47" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>FileIO\BinaryEntities\BinaryProductStorage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Main.FileIO.TextEntities.TextProductStorage" BaseTypeListCollapsed="true">
+    <Position X="50.75" Y="9.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>FileIO\TextEntities\TextProductStorage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Main.FileIO.TextEntities.TextUserStorage" BaseTypeListCollapsed="true">
+    <Position X="47.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>FileIO\TextEntities\TextUserStorage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Main.FileIO.FileService">
+    <Position X="38.75" Y="11.5" Width="2" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -761,9 +797,16 @@
       <HashCode>AAAAAAAABAAAgAAAAAAAAAACAAAAAAAAAAAAAAAABAI=</HashCode>
       <FileName>FileIO\FileService.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Struct Name="OOP_Main.UI.CardRenderer">
+    <Position X="7" Y="16.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAIpAAAAAAAAQA=</HashCode>
+      <FileName>UI\CardRenderer.cs</FileName>
+    </TypeIdentifier>
   </Struct>
   <Struct Name="OOP_Main.Utilities.UserService">
-    <Position X="45.75" Y="9.25" Width="1.5" />
+    <Position X="42" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
       <FileName>Utilities\UserService.cs</FileName>
@@ -784,7 +827,7 @@
     </TypeIdentifier>
   </Struct>
   <Struct Name="OOP_Main.Utilities.ValidationService">
-    <Position X="45.75" Y="11" Width="1.5" />
+    <Position X="42" Y="11" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAABABBAAAEA=</HashCode>
       <FileName>Utilities\ValidationTools.cs</FileName>
@@ -812,7 +855,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="OOP_Main.Repositories.IIdentifiable&lt;TId&gt;">
-    <Position X="40" Y="12.5" Width="1.75" />
+    <Position X="38.75" Y="9.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Data\BaseData.cs</FileName>
@@ -853,10 +896,17 @@
       <FileName>Interfaces\IScreen.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="OOP_Main.Interfaces.IRepository&lt;T&gt;">
-    <Position X="43" Y="12.75" Width="1.75" />
+  <Interface Name="OOP_Main.Interfaces.IStorage&lt;T&gt;">
+    <Position X="44.5" Y="1.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Interfaces\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OOP_Main.Interfaces.IEntityStorage&lt;U&gt;" Collapsed="true">
+    <Position X="44.5" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IRepository.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -882,7 +932,7 @@
     </TypeIdentifier>
   </Enum>
   <Delegate Name="OOP_Main.FileIO.OnError">
-    <Position X="40" Y="9" Width="1.5" />
+    <Position X="38.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>FileIO\ErrorRegistry.cs</FileName>

@@ -1,4 +1,8 @@
-﻿using OOP_Main.FileIO;
+﻿using OOP_Main.Entities;
+using OOP_Main.FileIO;
+using OOP_Main.FileIO.BinaryEntities;
+using OOP_Main.FileIO.TextEntities;
+using OOP_Main.Interfaces;
 using OOP_Main.Repositories;
 using OOP_Main.UI;
 using System;
@@ -12,8 +16,21 @@ namespace OOP_Main.Utilities {
         private bool _isRunning = true;
         private readonly int _intervalSeconds;
 
-        public AutoSaveService(Data appData, int intervalSeconds = 30) {
+        private readonly IEntityStorage<User> _userTextStorage;
+        private readonly IEntityStorage<Product> _productTextStorage;
+        private readonly IEntityStorage<Product> _productBinaryStorage;
+
+        public AutoSaveService(
+            Data appData, 
+            int intervalSeconds = 30,
+            IEntityStorage<User> userTextStorage = null,
+            IEntityStorage<Product> productTextStorage = null,
+            IEntityStorage<Product> productBinaryStorage = null
+        ) {
             _appData = appData;
+            _userTextStorage = userTextStorage ?? new TextUserStorage();
+            _productTextStorage = productTextStorage ?? new TextProductStorage();
+            _productBinaryStorage = productBinaryStorage ?? new BinaryProductStorage();
             _intervalSeconds = intervalSeconds;
 
             _workerThread = new Thread(RunAutoSave) {
@@ -34,9 +51,9 @@ namespace OOP_Main.Utilities {
                     if (!_isRunning) break;
 
                     lock (_lockObj) {
-                        TextEntityStorage.SaveUsersToText("DataStorage/text/users.txt", _appData.Users);
-                        TextEntityStorage.SaveProductsToText("DataStorage/text/products.txt", _appData.Products);
-                        BinaryEntityStorage.SaveProductsBinary("DataStorage/bin/products.dat", _appData.Products);
+                        _userTextStorage.SaveToFile("DataStorage/text/users.txt", _appData.Users);
+                        _productTextStorage.SaveToFile("DataStorage/text/products.txt", _appData.Products);
+                        _productBinaryStorage.SaveToFile("DataStorage/bin/products.dat", _appData.Products);
                         DataManager.SaveFilesFrom(_appData);
                         Logger.Log("Data successfully saved in a background thread", Logger.LogLevels.Info);
                     }

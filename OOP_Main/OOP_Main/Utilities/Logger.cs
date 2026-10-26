@@ -10,6 +10,7 @@ namespace OOP_Main.Utilities {
         private static int _currentLineCount = 0;
         private static int _currentFileIndex = 1;
         private static string _currentFilePath;
+        private static readonly TextStorage _textStorage = new TextStorage();
         public enum LogLevels {
             Error,
             Warn,
@@ -52,7 +53,7 @@ namespace OOP_Main.Utilities {
 
                 string logEntry = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} |{GetDescription(level)}| : ({username}) {message}";
 
-                TextStorage.SaveToFile(
+                _textStorage.SaveToFile(
                     logEntry,
                     _currentFilePath,
                     appendLine: true

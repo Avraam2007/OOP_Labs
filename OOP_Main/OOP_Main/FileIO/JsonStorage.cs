@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
+using OOP_Main.Interfaces;
 using System;
 using System.IO;
 using System.Threading;
 
 namespace OOP_Main.FileIO {
-    public class JsonStorage {
+    public class JsonStorage<T>: IStorage<T> where T: new() {
         private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings {
             Formatting = Formatting.Indented,
             TypeNameHandling = TypeNameHandling.Auto,
@@ -12,7 +13,7 @@ namespace OOP_Main.FileIO {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
         };
 
-        public static T LoadFromFile<T>(string filePath) where T : new() {
+        public T LoadFromFile(string filePath) {
             try {
                 if (!File.Exists(filePath)) {
                     return new T();
@@ -55,7 +56,7 @@ namespace OOP_Main.FileIO {
             }
         }
 
-        public static void SaveToFile<T>(string filePath, T data) {
+        public void SaveToFile(string filePath, T data) {
             try {
                 string directory = Path.GetDirectoryName(filePath);
                 FileService.EnsureDirectoryExists(directory);
