@@ -5,8 +5,6 @@ using OOP_Main.Decorators;
 using OOP_Main.Entities;
 using OOP_Main.Factories;
 using OOP_Main.Repositories;
-using OOP_Main.Structures;
-using OOP_Main.UI;
 using OOP_Main.Utilities;
 using Spectre.Console;
 using System;
