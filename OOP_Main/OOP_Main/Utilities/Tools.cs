@@ -30,7 +30,7 @@ namespace OOP_Main.Utilities {
         public static string AddSpacesBetweenCapitalizedWords(this string text) {
             if (string.IsNullOrEmpty(text)) return text;
 
-            string ans = Regex.Replace(text, "([A-Z])", " $1", RegexOptions.Compiled);
+            string ans = Regex.Replace(text, "([A-Z])", " $1", RegexOptions.Compiled).Trim();
             return ans;
         }
 
