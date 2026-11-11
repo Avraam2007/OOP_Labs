@@ -52,9 +52,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProductHelperTest.cs" />
+    <Compile Include="Structures\CategoryBSTTest.cs" />
+    <Compile Include="Structures\DimensionsTest.cs" />
+    <Compile Include="Structures\DiscountTest.cs" />
     <Compile Include="ToolsTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
