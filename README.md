@@ -4,6 +4,7 @@ To use this app you should unzip this archive: **OOP_Main/Build_app.zip**. It ha
 
 ## Project structure:
  + **`criteria`** - Lab tasks
+ + **`OOP_UnitTests`** - Unit tests for main project
  + **`Lab6Benchmark`** - benchmark test from Lab #6 (`concat with +` vs `StringBuilder`)
  + **`Lab8Benchmark`** - benchmark test from Lab #8 (`List<T>` vs `LinkedList<T>`)
  + **`OOP_Main`** - main project code
