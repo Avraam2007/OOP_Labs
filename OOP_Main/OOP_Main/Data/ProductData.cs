@@ -62,6 +62,9 @@ namespace OOP_Main.Repositories {
 
         public bool DeleteProductByArticle(string article) {
             var productToDelete = this.Get(article);
+
+            if (productToDelete.IsEmpty()) return false;
+
             var baseProduct = GetBaseProduct(productToDelete.Value);
 
             bool isRemoved = Remove(article);

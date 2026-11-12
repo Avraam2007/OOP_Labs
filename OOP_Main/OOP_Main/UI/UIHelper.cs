@@ -14,12 +14,7 @@ namespace OOP_Main.UI {
     public class UIHelper {
         public delegate string ConsolePromptHandler(string text); // Func<string, string>
 
-        protected string GetEnumDescription(Enum value) {
-            FieldInfo fi = value.GetType().GetField(value.ToString());
-            if (fi == null) return value.ToString();
-            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
-            return attributes.Length > 0 ? attributes[0].Description : value.ToString();
-        }
+        #region Console elements
         protected static void StatusSpinner(string text, Action actionDuringLoading = null, int loadingTimeInMs = 2400) {
             IOptional<Action> DoSmth = Optional.OfNullable(actionDuringLoading);
             AnsiConsole.Status()
@@ -96,11 +91,6 @@ namespace OOP_Main.UI {
             AnsiConsole.Write(RuleLine());
         };
 
-        protected static bool CheckIfUserIsAdmin(IOptional<User> currentUser) {
-            return currentUser.HasValue() && currentUser.Value.IsAdmin();
-        }
-        protected static bool CheckIfUserIsAdmin(User currentUser) => CheckIfUserIsAdmin(Optional.OfNullable(currentUser));
-
         protected static string BackToMenuPrompt(params string[] extraOptions) {
             List<string> options = new List<string> { "Back to menu" };
             foreach (var option in extraOptions) {
@@ -156,5 +146,19 @@ namespace OOP_Main.UI {
 
             AnsiConsole.Write(table);
         }
+
+        #endregion
+
+        protected string GetEnumDescription(Enum value) {
+            FieldInfo fi = value.GetType().GetField(value.ToString());
+            if (fi == null) return value.ToString();
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            return attributes.Length > 0 ? attributes[0].Description : value.ToString();
+        }
+
+        protected static bool CheckIfUserIsAdmin(IOptional<User> currentUser) {
+            return currentUser.HasValue() && currentUser.Value.IsAdmin();
+        }
+        protected static bool CheckIfUserIsAdmin(User currentUser) => CheckIfUserIsAdmin(Optional.OfNullable(currentUser));
     }
 }

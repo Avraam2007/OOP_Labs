@@ -13,7 +13,7 @@ namespace OOP_Main.Repositories {
         public void AddUser(User user) => Add(user);
 
         public void AddUser(string name, string password, bool isAdmin = false) {
-            int newUserId = Users.Count > 1 ? Users.Max(u => u.Id) : 0;
+            int newUserId = Users.Count > 0 ? Users.Max(u => u.Id) : 0;
             newUserId++;
 
             User newUser = new User(newUserId, name, UserService.HashPassword(password), 0, isAdmin);
@@ -23,11 +23,11 @@ namespace OOP_Main.Repositories {
 
         public bool DeleteUserById(int id) {
             bool isDeleted = Remove(id);
-            if (isDeleted) {
-                this.Save();
-                return true;
-            }
-            else { return false; }
+
+            if(!isDeleted) return false;
+
+            this.Save();
+            return true;
         }
 
         public bool DeleteUserByUsername(string username) {

@@ -11,7 +11,7 @@ namespace OOP_Main.Utilities {
         }
 
         public static string GetTypeName<T>(T obj) {
-            return obj.GetType().Name;
+            return obj?.GetType().Name;
         }
 
         public static string GetCurrencyOutput(this double value) {
@@ -34,10 +34,14 @@ namespace OOP_Main.Utilities {
             return ans;
         }
 
+        #region Validation Methods
+
         public static bool IsValidArticle(string article) => ValidationService.IsValidArticle(article);
 
         public static bool IsValidEmail(string email) => ValidationService.IsValidEmail(email);
 
         public static bool IsValidPhone(string phone) => ValidationService.IsValidPhone(phone);
+
+        #endregion
     }
 }

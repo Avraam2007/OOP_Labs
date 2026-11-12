@@ -2,6 +2,7 @@
 
 namespace OOP_Main.Utilities {
     internal readonly struct ValidationService {
+        #region Patterns
         /* 
          * ПАТЕРН 1: Валідація Email
          * Пояснення патерну:
@@ -47,10 +48,16 @@ namespace OOP_Main.Utilities {
             RegexOptions.Compiled
         );
 
+        #endregion
+
+        #region Validation Methods
+
         public static bool IsValidEmail(string email) => !string.IsNullOrWhiteSpace(email) && EmailRegex.IsMatch(email);
 
         public static bool IsValidArticle(string article) => !string.IsNullOrWhiteSpace(article) && ArticleRegex.IsMatch(article);
 
         public static bool IsValidPhone(string phone) => !string.IsNullOrWhiteSpace(phone) && UkrPhoneRegex.IsMatch(phone);
+
+        #endregion
     }
 }

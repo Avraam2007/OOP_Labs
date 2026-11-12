@@ -11,6 +11,7 @@ using System.Threading;
 namespace OOP_Main.UI {
     public class MainScreen: UIHelper {
 
+        #region Inner helpers for main page
         private static int GetHeaderHeight(int panelRows, int verticalPaddingHeight, int rules) {
             if (panelRows < 0 || rules < 0) return 0;
 
@@ -41,6 +42,8 @@ namespace OOP_Main.UI {
             if (contentLength < 0 || horizontalPadding < 0 || frameWidth < 0) return 0;
             return contentLength + 2 * (horizontalPadding + frameWidth);
         }
+
+        #endregion
 
         public static T ShowMenuWithLiveClock<T>(
             string headerTitle, 

@@ -46,25 +46,25 @@ namespace OOP_Main.Screens {
 
             string confirmPassword = PasswordPrompt("Confirm your [green]password[/]:");
 
-            if (confirmPassword == password) {
-                try {
-                    _appData.AddUser(username, password);
-
-                    int createdUserId = _appData.GetUserByUsername(username).Value.Id;
-
-                    _appData.CurrentUser = _appData.GetUserById(createdUserId);
-                    DefaultSuccessOutput("Account was created!");
-                }
-                catch (ArgumentException e) {
-                    DefaultErrorOutput(e.Message);
-                    return BackToMenuPrompt();
-                }
-                return BackToMenuPrompt();
-            }
-            else {
+            if (confirmPassword != password) {
                 DefaultErrorOutput($"Incorrect password. Try again");
                 return BackToMenuPrompt();
             }
+
+            try {
+                _appData.AddUser(username, password);
+
+                int createdUserId = _appData.GetUserByUsername(username).Value.Id;
+
+                _appData.CurrentUser = _appData.GetUserById(createdUserId);
+                DefaultSuccessOutput("Account was created!");
+            }
+            catch (ArgumentException e) {
+                DefaultErrorOutput(e.Message);
+                return BackToMenuPrompt();
+            }
+
+            return BackToMenuPrompt();
         }
     }
 }

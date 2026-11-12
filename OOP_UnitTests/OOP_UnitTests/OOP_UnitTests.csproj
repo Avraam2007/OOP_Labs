@@ -45,6 +45,9 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.2.2.10\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="NOptional, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NOptional.0.3.0\lib\netstandard2.0\NOptional.dll</HintPath>
+    </Reference>
     <Reference Include="OOP_Main">
       <HintPath>..\..\OOP_Main\OOP_Main\bin\Release\OOP_Main.exe</HintPath>
     </Reference>
@@ -52,6 +55,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DataTest.cs" />
+    <Compile Include="Data\OrderDataTest.cs" />
+    <Compile Include="Data\ProductDataTest.cs" />
+    <Compile Include="Data\SupplierDataTest.cs" />
+    <Compile Include="Data\UserDataTest.cs" />
     <Compile Include="ProductHelperTest.cs" />
     <Compile Include="Structures\CategoryBSTTest.cs" />
     <Compile Include="Structures\DimensionsTest.cs" />

@@ -9,7 +9,7 @@ namespace OOP_Main.Repositories {
     public class OrderData: BaseDataRepository<Order, int> {
         public List<Order> Orders => Items;
 
-        public OrderProcessingQueue OrderQueue { get; set; }
+        public OrderProcessingQueue OrderQueue { get; set; } = new OrderProcessingQueue();
 
         public OrderData() : base("DataStorage/orders.json") { }
 

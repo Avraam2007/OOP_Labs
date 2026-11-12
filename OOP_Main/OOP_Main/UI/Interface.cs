@@ -26,6 +26,8 @@ namespace OOP_Main.UI {
             _supplierScreen = new SupplierScreen(AppData);
         }
 
+        #region Navigation inside pages
+
         public void RunScreenFlow(Func<string> Func) {
             string nextAction = Func();
             HandleNavigation(nextAction);
@@ -51,25 +53,32 @@ namespace OOP_Main.UI {
         }
 
         public void RunLoginFlow() {
-            string nextAction = _authScreen.LoginScreen();
-            HandleNavigation(nextAction);
+            RunScreenFlow(_authScreen.LoginScreen);
+            //string nextAction = _authScreen.LoginScreen();
+            //HandleNavigation(nextAction);
         }
 
         public void RunSignUpFlow() {
-            string nextAction = _authScreen.Create();
-            HandleNavigation(nextAction);
+            RunScreenFlow(_authScreen.Create);
+            //string nextAction = _authScreen.Create();
+            //HandleNavigation(nextAction);
         }
 
         public void RunTopUpFlow() {
-            string nextAction = _userScreen.TopUpBalance();
-            HandleNavigation(nextAction);
+            RunScreenFlow(_userScreen.TopUpBalance);
+            //string nextAction = _userScreen.TopUpBalance();
+            //HandleNavigation(nextAction);
         }
 
         public void RunChangePasswordFlow() {
-            string nextAction = _userScreen.ChangePassword();
-            HandleNavigation(nextAction);
+            RunScreenFlow(_userScreen.ChangePassword);
+            //string nextAction = _userScreen.ChangePassword();
+            //HandleNavigation(nextAction);
         }
 
+        #endregion
+
+        #region Booting up and down
         public void BootUpScreen() {
             // Styled text with markup
             DefaultMarkupOutput("[bold blue]ECommerce[/] [green]v0.26[/]");
@@ -124,6 +133,9 @@ namespace OOP_Main.UI {
             Logger.Log($"The program has been successfully closed", Logger.LogLevels.Info);
         }
 
+        #endregion
+
+        #region Access check
         private string CheckAccessToCreateOrder() {
             if (!AppData.CurrentUser.Value.CanBuy()) {
                 Logger.Log($"The access is forbidden", Logger.LogLevels.Warn, AppData.CurrentUser.Value.Username);
@@ -146,6 +158,10 @@ namespace OOP_Main.UI {
             }
         }
 
+        #endregion
+
+
+        #region Main screen
         private MenuOption MainMenuList(MenuOption[] menuList) {
             return UI.MainScreen.ShowMenuWithLiveClock(
                 "Welcome to [green]ECommerce[/]",
@@ -284,5 +300,7 @@ namespace OOP_Main.UI {
 
             return true;
         }
+
+        #endregion
     }
 }
