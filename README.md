@@ -2,7 +2,7 @@
 
 To use this app you should unzip this archive: **OOP_Main/Build_app.zip**. It has `.exe` file and crucial libraries.
 
-*[Test Report](https://avraam2007.github.io/OOP_Labs/Results/TestResults.html)*.
+*[Test Report](https://avraam2007.github.io/OOP_Labs/Results/TestResult.html)*.
 
 ## Project structure:
  + **`criteria`** - Lab tasks
