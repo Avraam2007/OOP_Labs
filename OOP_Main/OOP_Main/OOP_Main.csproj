@@ -94,6 +94,7 @@
     <Compile Include="FileIO\BackupService.cs" />
     <Compile Include="Data\BaseData.cs" />
     <Compile Include="FileIO\BinaryEntities\BinaryProductStorage.cs" />
+    <Compile Include="FileIO\BinaryEntities\BinaryUserStorage.cs" />
     <Compile Include="FileIO\BinaryStorage.cs" />
     <Compile Include="FileIO\ErrorRegistry.cs" />
     <Compile Include="FileIO\FileService.cs" />

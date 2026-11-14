@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OOP_UnitTests {
+namespace OOP_UnitTests.Utilities {
     [TestClass]
     public class ProductHelperTest {
         private List<Product> GetSampleProducts() {
@@ -71,7 +71,7 @@ namespace OOP_UnitTests {
 
         #region NormalizeProductName Tests
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Laptop", "laptop")]
         [DataRow("  Gaming Mouse  ", "gaming mouse")]
         [DataRow("\t\nWireless Keyboard\r\n", "wireless keyboard")]
@@ -87,7 +87,7 @@ namespace OOP_UnitTests {
 
         [TestMethod]
         public void NormalizeProductName_NullInput_ThrowsNullReferenceException() {
-            Assert.ThrowsException<NullReferenceException>(() => ProductHelpers.NormalizeProductName(null));
+            Assert.Throws<NullReferenceException>(() => ProductHelpers.NormalizeProductName(null));
         }
 
         #endregion
@@ -101,7 +101,7 @@ namespace OOP_UnitTests {
 
             var result = products.FindProductsInPriceRange(150.0, 800.0);
 
-            Assert.AreEqual(3, result.Count);
+            Assert.HasCount(3, result);
             Assert.AreEqual(150.0, result[0].Price);
             Assert.AreEqual(300.0, result[1].Price);
             Assert.AreEqual(800.0, result[2].Price);
@@ -113,7 +113,7 @@ namespace OOP_UnitTests {
 
             var result = products.FindProductsInPriceRange(2000.0, 5000.0);
 
-            Assert.AreEqual(0, result.Count);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -122,7 +122,7 @@ namespace OOP_UnitTests {
 
             var result = products.FindProductsInPriceRange(500.0, 100.0);
 
-            Assert.AreEqual(0, result.Count);
+            Assert.IsEmpty(result);
         }
 
         #endregion
@@ -135,15 +135,15 @@ namespace OOP_UnitTests {
 
             var categories = products.GetCategoriesList();
 
-            Assert.AreEqual(5, categories.Count);
-            CollectionAssert.AreEqual(new List<string> { "Cloth", "ElectronicProduct", "Furniture", "ProductBundle", "Sofa" }, categories);
+            Assert.HasCount(5, categories);
+            Assert.AreSequenceEqual(new List<string> { "Cloth", "ElectronicProduct", "Furniture", "ProductBundle", "Sofa" }, categories);
         }
 
         [TestMethod]
         public void GetCategoriesList_EmptyCollection_ThrowsNullReferenceException() {
             var emptyProducts = new List<Product>();
 
-            Assert.ThrowsException<NullReferenceException>(() => emptyProducts.GetCategoriesList());
+            Assert.Throws<NullReferenceException>(() => emptyProducts.GetCategoriesList());
         }
 
         #endregion
@@ -159,7 +159,7 @@ namespace OOP_UnitTests {
 
             var result = products.FilterByCategory(wantedCategory);
 
-            Assert.AreEqual(1, result.Count);
+            Assert.HasCount(1, result);
             Assert.IsTrue(result.All(p => p.Category.Equals("ElectronicProduct", StringComparison.OrdinalIgnoreCase)));
         }
 
@@ -169,7 +169,7 @@ namespace OOP_UnitTests {
 
             var result = products.FilterByCategory("Clothing");
 
-            Assert.AreEqual(0, result.Count);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -178,7 +178,7 @@ namespace OOP_UnitTests {
 
             var result = products.FilterByCategory(null);
 
-            Assert.AreEqual(0, result.Count);
+            Assert.IsEmpty(result);
         }
 
         #endregion

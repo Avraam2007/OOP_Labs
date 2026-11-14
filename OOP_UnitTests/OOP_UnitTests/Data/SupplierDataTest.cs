@@ -25,7 +25,7 @@ namespace OOP_UnitTests.Repositories {
 
             _supplierData.AddSupplier(supplier);
 
-            Assert.AreEqual(1, _supplierData.Suppliers.Count);
+            Assert.HasCount(1, _supplierData.Suppliers);
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace OOP_UnitTests.Repositories {
             _supplierData.AddSupplier("Suppplier 1", "ad@frem.com", "0589634589", 4.6);
             _supplierData.AddSupplier("Suppplier 2", "def@dert.com", "0892345678", 3.2);
 
-            Assert.AreEqual(2, _supplierData.Suppliers.Count);
+            Assert.HasCount(2, _supplierData.Suppliers);
             Assert.AreEqual(1, _supplierData.Suppliers[0].SupplierId);
             Assert.AreEqual(2, _supplierData.Suppliers[1].SupplierId);
         }
@@ -73,7 +73,7 @@ namespace OOP_UnitTests.Repositories {
             bool isDeleted = _supplierData.DeleteSupplierByName("Supppliers Inc.");
 
             Assert.IsTrue(isDeleted);
-            Assert.AreEqual(0, _supplierData.Suppliers.Count);
+            Assert.IsEmpty(_supplierData.Suppliers);
         }
 
         [TestMethod]
@@ -90,7 +90,7 @@ namespace OOP_UnitTests.Repositories {
             bool isDeleted = _supplierData.DeleteSupplierById(3);
 
             Assert.IsTrue(isDeleted);
-            Assert.AreEqual(0, _supplierData.Suppliers.Count);
+            Assert.IsEmpty(_supplierData.Suppliers);
         }
 
         [TestMethod]

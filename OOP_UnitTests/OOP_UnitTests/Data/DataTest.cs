@@ -45,10 +45,10 @@ namespace OOP_UnitTests.Repositories {
             Assert.IsNotNull(_data.Suppliers);
             Assert.IsNotNull(_data.OrderQueue);
 
-            Assert.AreEqual(0, _data.Users.Count);
-            Assert.AreEqual(0, _data.Products.Count);
-            Assert.AreEqual(0, _data.Orders.Count);
-            Assert.AreEqual(0, _data.Suppliers.Count);
+            Assert.IsEmpty(_data.Users);
+            Assert.IsEmpty(_data.Products);
+            Assert.IsEmpty(_data.Orders);
+            Assert.IsEmpty(_data.Suppliers);
         }
 
         [TestMethod]
@@ -76,16 +76,16 @@ namespace OOP_UnitTests.Repositories {
             var loadedData = new Data();
             await loadedData.LoadAllData();
 
-            Assert.AreEqual(1, loadedData.Users.Count);
+            Assert.HasCount(1, loadedData.Users);
             Assert.AreEqual("TestUser", loadedData.Users[0].Username);
 
-            Assert.AreEqual(1, loadedData.Products.Count);
+            Assert.HasCount(1, loadedData.Products);
             Assert.AreEqual("EL-0001", loadedData.Products[0].Article);
 
-            Assert.AreEqual(1, loadedData.Suppliers.Count);
+            Assert.HasCount(1, loadedData.Suppliers);
             Assert.AreEqual("TechSupply", loadedData.Suppliers[0].Name);
 
-            Assert.AreEqual(1, loadedData.Orders.Count);
+            Assert.HasCount(1, loadedData.Orders);
             Assert.AreEqual(1, loadedData.Orders[0].BuyerId);
         }
 
@@ -99,7 +99,7 @@ namespace OOP_UnitTests.Repositories {
             string backupDir = Path.Combine(_tempDir, "Backups");
             Assert.IsTrue(Directory.Exists(backupDir));
             var zipFiles = Directory.GetFiles(backupDir, "*.zip");
-            Assert.IsTrue(zipFiles.Length > 0);
+            Assert.IsNotEmpty(zipFiles);
         }
 
         #endregion
@@ -112,13 +112,13 @@ namespace OOP_UnitTests.Repositories {
             _data.AddUser(user1);
             _data.AddUser("UserTwo", "pass2", isAdmin: true);
 
-            Assert.AreEqual(2, _data.Users.Count);
+            Assert.HasCount(2, _data.Users);
             Assert.IsTrue(_data.GetUserById(1).HasValue());
             Assert.IsTrue(_data.GetUserByUsername("UserTwo").HasValue());
 
             Assert.IsTrue(_data.DeleteUserById(1));
             Assert.IsTrue(_data.DeleteUserByUsername("UserTwo"));
-            Assert.AreEqual(0, _data.Users.Count);
+            Assert.IsEmpty(_data.Users);
         }
 
         #endregion
@@ -131,12 +131,12 @@ namespace OOP_UnitTests.Repositories {
             _data.AddOrder(order);
             _data.AddOrder(5, new List<Product> { new ElectronicProduct("EL-0001", "Phone", 500, 10, 5, 1) });
 
-            Assert.AreEqual(2, _data.Orders.Count);
+            Assert.HasCount(2, _data.Orders);
             Assert.IsTrue(_data.GetOrderById(10).HasValue());
-            Assert.AreEqual(2, _data.GetOrdersFromUser(5).Count);
+            Assert.HasCount(2, _data.GetOrdersFromUser(5));
 
             Assert.IsTrue(_data.DeleteOrder(10));
-            Assert.AreEqual(1, _data.Orders.Count);
+            Assert.HasCount(1, _data.Orders);
         }
 
         #endregion
@@ -149,13 +149,13 @@ namespace OOP_UnitTests.Repositories {
             _data.AddSupplier(supplier);
             _data.AddSupplier("Supp2", "c@d.com", "0987654321", 4.0);
 
-            Assert.AreEqual(2, _data.Suppliers.Count);
+            Assert.HasCount(2, _data.Suppliers);
             Assert.IsTrue(_data.GetSupplierById(1).HasValue());
             Assert.IsTrue(_data.GetSupplierByName("Supp2").HasValue());
 
             Assert.IsTrue(_data.DeleteSupplierById(1));
             Assert.IsTrue(_data.DeleteSupplierByName("Supp2"));
-            Assert.AreEqual(0, _data.Suppliers.Count);
+            Assert.IsEmpty(_data.Suppliers);
         }
 
         #endregion
@@ -198,12 +198,12 @@ namespace OOP_UnitTests.Repositories {
             bool result = _data.DeleteProductByName("Gaming Mouse");
 
             Assert.IsTrue(result);
-            Assert.AreEqual(1, _data.Products.Count);
+            Assert.HasCount(1, _data.Products);
             Assert.IsFalse(_data.IsArticleExists("EL-0001"));
 
-            Assert.AreEqual(1, supplier1.Catalog.Count);
+            Assert.HasCount(1, supplier1.Catalog);
             Assert.AreEqual("Keyboard", supplier1.Catalog[0].Name);
-            Assert.AreEqual(0, supplier2.Catalog.Count);
+            Assert.IsEmpty(supplier2.Catalog);
         }
 
         [TestMethod]
@@ -218,8 +218,8 @@ namespace OOP_UnitTests.Repositories {
             bool result = _data.DeleteProductByName("NonExistentItem");
 
             Assert.IsFalse(result);
-            Assert.AreEqual(1, _data.Products.Count);
-            Assert.AreEqual(1, supplier.Catalog.Count);
+            Assert.HasCount(1, _data.Products);
+            Assert.HasCount(1, supplier.Catalog);
         }
 
         [TestMethod]
@@ -237,9 +237,9 @@ namespace OOP_UnitTests.Repositories {
             bool result = _data.DeleteProductByArticle("CL-0001");
 
             Assert.IsTrue(result);
-            Assert.AreEqual(1, _data.Products.Count);
+            Assert.HasCount(1, _data.Products);
             Assert.IsFalse(_data.IsArticleExists("CL-0001"));
-            Assert.AreEqual(1, supplier.Catalog.Count);
+            Assert.HasCount(1, supplier.Catalog);
             Assert.AreEqual("CL-0002", supplier.Catalog[0].Article);
         }
 

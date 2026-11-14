@@ -1,5 +1,5 @@
 ﻿namespace OOP_Main.States.OrderStates {
-    internal class PendingState: OrderState {
+    public class PendingState: OrderState {
         public override string GetDescription() => "Pending";
         public override bool CanBeCancelled() => true;
 

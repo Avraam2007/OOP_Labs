@@ -1,11 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OOP_Main;
 using OOP_Main.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace OOP_UnitTests {
+namespace OOP_UnitTests.Utilities {
     [TestClass]
     public class ToolsTest {
 
@@ -160,11 +159,12 @@ namespace OOP_UnitTests {
 
         [TestMethod]
         [TestCategory("GetTypeName")]
-        [ExpectedException(typeof(NullReferenceException))]
         public void Tools_GetTypeName_WithNullThrowsException() {
             Order testObj = null;
 
-            Tools.GetTypeName(testObj);
+            string result = Tools.GetTypeName(testObj);
+
+            Assert.IsNull(result);
         }
 
         #endregion

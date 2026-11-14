@@ -25,7 +25,7 @@ namespace OOP_Main.Entities {
             string material,
             int supplierId
         ) : base(article, name, price, supplierId) {
-            this.material = material;
+            this.Material = material;
         }
 
         public override double CalculateShippingCost() { 

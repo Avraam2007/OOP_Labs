@@ -11,7 +11,9 @@ namespace OOP_Main.Entities {
                 if (value < 0) {
                     sum = 0;
                 }
-                sum = Math.Round(value, 2, MidpointRounding.AwayFromZero);
+                else {
+                    sum = Math.Round(value, 2, MidpointRounding.AwayFromZero);
+                }
             } 
         }
         public Account(double sum) => this.Sum = sum;

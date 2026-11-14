@@ -47,7 +47,7 @@ namespace OOP_UnitTests.Structures {
             var visited = new List<string>();
             _bst.InOrderTraversal(name => visited.Add(name));
 
-            Assert.AreEqual(1, visited.Count);
+            Assert.HasCount(1, visited);
             Assert.AreEqual("Electronics", visited[0]);
         }
 
@@ -61,7 +61,7 @@ namespace OOP_UnitTests.Structures {
             var result = new List<string>();
             _bst.InOrderTraversal(name => result.Add(name));
 
-            CollectionAssert.AreEqual(new List<string> { "Auto", "Books", "Garden", "Media" }, result);
+            Assert.AreSequenceEqual(new List<string> { "Auto", "Books", "Garden", "Media" }, result);
         }
 
         [TestMethod]
@@ -74,7 +74,7 @@ namespace OOP_UnitTests.Structures {
             var result = new List<string>();
             _bst.PreOrderTraversal(name => result.Add(name));
 
-            CollectionAssert.AreEqual(new List<string> { "Media", "Auto", "Garden", "Books" }, result);
+            Assert.AreSequenceEqual(new List<string> { "Media", "Auto", "Garden", "Books" }, result);
         }
 
         [TestMethod]

@@ -26,7 +26,7 @@ namespace OOP_UnitTests.Repositories {
 
             _userData.AddUser(User);
 
-            Assert.AreEqual(1, _userData.Users.Count);
+            Assert.HasCount(1, _userData.Users);
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace OOP_UnitTests.Repositories {
             _userData.AddUser("User 1", "password123");
             _userData.AddUser("User 2", "password456");
 
-            Assert.AreEqual(2, _userData.Users.Count);
+            Assert.HasCount(2, _userData.Users);
             Assert.AreEqual(1, _userData.Users[0].Id);
             Assert.AreEqual(2, _userData.Users[1].Id);
         }
@@ -74,7 +74,7 @@ namespace OOP_UnitTests.Repositories {
             bool isDeleted = _userData.DeleteUserByUsername("MegaUser");
 
             Assert.IsTrue(isDeleted);
-            Assert.AreEqual(0, _userData.Users.Count);
+            Assert.IsEmpty(_userData.Users);
         }
 
         [TestMethod]
@@ -91,7 +91,7 @@ namespace OOP_UnitTests.Repositories {
             bool isDeleted = _userData.DeleteUserById(3);
 
             Assert.IsTrue(isDeleted);
-            Assert.AreEqual(0, _userData.Users.Count);
+            Assert.IsEmpty(_userData.Users);
         }
 
         [TestMethod]

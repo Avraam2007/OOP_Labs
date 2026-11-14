@@ -16,28 +16,28 @@ namespace OOP_UnitTests.Structures {
         }
 
 
-        [DataTestMethod]
+        [TestMethod]
         [TestCategory("InvalidParams")]
         [DataRow(0)]
         [DataRow(-5.5)]
         public void Constructor_InvalidWidth_ThrowsArgumentOutOfRangeException(double invalidWidth) {
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Dimensions(invalidWidth, 10, 10));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Dimensions(invalidWidth, 10, 10));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [TestCategory("InvalidParams")]
         [DataRow(0)]
         [DataRow(-1.2)]
         public void Constructor_InvalidHeight_ThrowsArgumentOutOfRangeException(double invalidHeight) {
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Dimensions(10, invalidHeight, 10));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Dimensions(10, invalidHeight, 10));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [TestCategory("InvalidParams")]
         [DataRow(0)]
         [DataRow(-100)]
         public void Constructor_InvalidLength_ThrowsArgumentOutOfRangeException(double invalidLength) {
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Dimensions(10, 10, invalidLength));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Dimensions(10, 10, invalidLength));
         }
 
         [TestMethod]

@@ -35,7 +35,7 @@ namespace OOP_UnitTests.Repositories {
 
             _orderData.AddOrder(buyerId: 5, products);
 
-            Assert.AreEqual(2, _orderData.Orders.Count);
+            Assert.HasCount(2, _orderData.Orders);
             Assert.IsTrue(_orderData.GetOrderById(2).HasValue());
             Assert.IsTrue(_orderData.GetOrderById(3).HasValue());
             Assert.IsTrue(_orderData.GetOrderById(1).IsEmpty());
@@ -67,7 +67,7 @@ namespace OOP_UnitTests.Repositories {
             var result = _orderData.GetOrdersFromUser(userId: 99);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Count);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]

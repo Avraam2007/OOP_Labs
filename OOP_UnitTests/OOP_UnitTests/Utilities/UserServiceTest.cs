@@ -2,7 +2,7 @@
 using OOP_Main.Entities;
 using OOP_Main.Utilities;
 
-namespace OOP_UnitTests {
+namespace OOP_UnitTests.Utilities {
     [TestClass]
     public class UserServiceTest {
         [TestMethod]

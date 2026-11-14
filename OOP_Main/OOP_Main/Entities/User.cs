@@ -5,6 +5,7 @@ using OOP_Main.States;
 using System;
 
 namespace OOP_Main.Entities {
+    [Serializable]
     public class User: IIdentifiable<int>, IComparable<User> {
         private readonly int _id;
         private string username;

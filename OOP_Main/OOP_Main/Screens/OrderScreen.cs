@@ -127,7 +127,6 @@ namespace OOP_Main.Screens {
             if (catalog.Count == 0) return BackToMenuPrompt();
 
             int userId = _appData.CurrentUser.Value.Id;
-            int newOrderID = _appData.GetOrdersFromUser(userId).LastOrDefault().OrderId;
 
             var director = new Director();
             var builder = new OrderBuilder();
@@ -153,13 +152,21 @@ namespace OOP_Main.Screens {
 
             if (!acceptOrder) return BackToMenuPrompt();
 
+            int? newOrderID = null;
+            bool moneyTaken = false;
+
             try {
                 _appData.CurrentUser.Value.TakeMoney(totalPrice);
+                moneyTaken = true;
 
                 _appData.AddOrder(userId, catalog.ToList());
+
                 DefaultSuccessOutput($"New transaction: -{totalPrice.GetCurrencyOutput()}");
 
-                Order newOrder = _appData.GetOrderById(newOrderID).GetValueOrElseThrow();
+                Order newOrder = _appData.GetOrdersFromUser(userId).LastOrDefault() ?? 
+                    throw new ECommerceException("Order was not saved properly.");
+
+                newOrderID = newOrder.OrderId;
 
                 newOrder.Pay();
 
@@ -188,15 +195,26 @@ namespace OOP_Main.Screens {
             }
             catch (InsufficientFundsException ex) {
                 DefaultErrorOutput(ex.Message);
-                _appData.DeleteOrder(newOrderID);
+                if (moneyTaken) {
+                    _appData.CurrentUser.Value.TopUpAccount(totalPrice);
+                }
+                if (newOrderID.HasValue) {
+                    _appData.DeleteOrder(newOrderID.Value);
+                }
             }
             catch (ArgumentException ex) {
                 DefaultErrorOutput(ex.Message);
-                _appData.DeleteOrder(newOrderID);
+                if (moneyTaken) {
+                    _appData.CurrentUser.Value.TopUpAccount(totalPrice);
+                }
+                if (newOrderID.HasValue) {
+                    _appData.DeleteOrder(newOrderID.Value);
+                }
             }
-            catch (ECommerceException ex) {
-                DefaultErrorOutput(ex.Message);
-                _appData.DeleteOrder(newOrderID);
+            catch (ECommerceException) {
+                if (newOrderID.HasValue) {
+                    _appData.DeleteOrder(newOrderID.Value);
+                }
             }
 
             return BackToMenuPrompt();

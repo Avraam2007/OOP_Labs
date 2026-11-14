@@ -43,7 +43,7 @@ namespace OOP_UnitTests.Repositories {
 
             _productData.AddProduct(product);
 
-            Assert.AreEqual(1, _productData.Products.Count);
+            Assert.HasCount(1, _productData.Products);
             Assert.IsTrue(_productData.IsArticleExists("EL-0001"));
             Assert.IsFalse(_productData.IsArticleExists("EL-9999"));
         }
@@ -71,7 +71,7 @@ namespace OOP_UnitTests.Repositories {
             var repoToLoad = new ProductData();
             repoToLoad.Load();
 
-            Assert.AreEqual(1, repoToLoad.Products.Count);
+            Assert.HasCount(1, repoToLoad.Products);
             Assert.IsTrue(repoToLoad.IsArticleExists("EL-0010"));
         }
 
@@ -83,7 +83,7 @@ namespace OOP_UnitTests.Repositories {
             var repoToLoad = new ProductData();
             await repoToLoad.LoadAsync();
 
-            Assert.AreEqual(1, repoToLoad.Products.Count);
+            Assert.HasCount(1, repoToLoad.Products);
             Assert.IsTrue(repoToLoad.IsArticleExists("FN-0003"));
         }
 
@@ -115,7 +115,7 @@ namespace OOP_UnitTests.Repositories {
             bool isDeleted = repo.DeleteProductByName("Mouse");
 
             Assert.IsTrue(isDeleted);
-            Assert.AreEqual(0, repo.Products.Count);
+            Assert.IsEmpty(repo.Products);
             Assert.IsFalse(repo.IsArticleExists("EL-0002"));
         }
 
@@ -136,7 +136,7 @@ namespace OOP_UnitTests.Repositories {
             bool isDeleted = repo.DeleteProductByArticle("EL-0003");
 
             Assert.IsTrue(isDeleted);
-            Assert.AreEqual(0, repo.Products.Count);
+            Assert.IsEmpty(repo.Products);
             Assert.IsFalse(repo.IsArticleExists("EL-0003"));
         }
 
@@ -166,15 +166,16 @@ namespace OOP_UnitTests.Repositories {
         public void ChangeProductPriceByArticle_NonExistentArticle_ThrowsEntityNotFoundException() {
             var repo = new ProductData();
 
-            Assert.ThrowsException<EntityNotFoundException>(() =>
+            Assert.Throws<EntityNotFoundException>(() =>
                 repo.ChangeProductPriceByArticle("EL-4040", 100));
         }
+
 
         #endregion
 
         #region GenerateNextProductArticle Tests
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(typeof(ElectronicProduct), "EL-0001")]
         [DataRow(typeof(Cloth), "CL-0001")]
         [DataRow(typeof(Sofa), "SF-0001")]
