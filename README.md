@@ -3,6 +3,8 @@
 To use this app you should unzip this archive: **OOP_Main/Build_app.zip**. It has `.exe` file and crucial libraries.
 
 *[Test Report](https://avraam2007.github.io/OOP_Labs/Results/TestResult.html)*.
+*[`concat with +` vs `StringBuilder` benchmark Report](https://avraam2007.github.io/OOP_Labs/OOP_Lab6Benchmark/OOP_Lab6Benchmark.Lab6BenchmarkTest-report.html)*.
+*[`List<T>` vs `LinkedList<T>` benchmark Report](https://avraam2007.github.io/OOP_Labs/OOP_Lab8Benchmark/OOP_Lab8Benchmark.Lab8BenchmarkTest-report.html)*.
 
 ## Project structure:
  + **`criteria`** - Lab tasks
