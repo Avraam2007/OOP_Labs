@@ -28,6 +28,7 @@ namespace OOP_UnitTests.Screens {
             _originalConsole = AnsiConsole.Console;
             _testConsole = new TestConsole();
             _testConsole.Profile.Capabilities.Interactive = true;
+            _testConsole.Profile.Width = 200;
             AnsiConsole.Console = _testConsole;
 
             _appData = new Data();

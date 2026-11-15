@@ -1,4 +1,5 @@
 ﻿using OOP_Main.Entities;
+using System;
 
 namespace OOP_Main.States {
     public enum UserRole {
@@ -21,6 +22,7 @@ namespace OOP_Main.States {
             }
         }
     }
+    [Serializable]
 
     public abstract class UserState {
         protected User _user;

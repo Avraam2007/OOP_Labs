@@ -43,7 +43,15 @@ namespace OOP_UnitTests.Utilities {
             Directory.SetCurrentDirectory(_originalWorkingDir);
 
             if (Directory.Exists(_tempWorkingDir)) {
-                Directory.Delete(_tempWorkingDir, recursive: true);
+                for (int i = 0; i < 5; i++) {
+                    try {
+                        Directory.Delete(_tempWorkingDir, recursive: true);
+                        break;
+                    }
+                    catch (IOException) when (i < 4) {
+                        Thread.Sleep(50);
+                    }
+                }
             }
         }
 

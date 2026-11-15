@@ -37,7 +37,7 @@ namespace OOP_UnitTests.Utilities {
 
         [TestMethod]
         public void EnqueueOrder_ValidOrder_SetsStatusToPaidAndAddsToQueue() {
-            _queue = new OrderProcessingQueue();
+            _queue = new OrderProcessingQueue(processingDelayMs: 20);
             var order = new Order(101, 5);
             Assert.AreEqual(OrderStatus.Pending, order.Status);
 
@@ -48,7 +48,7 @@ namespace OOP_UnitTests.Utilities {
 
         [TestMethod]
         public void EnqueueOrder_AfterDispose_ThrowsInvalidOperationException() {
-            _queue = new OrderProcessingQueue();
+            _queue = new OrderProcessingQueue(processingDelayMs: 20);
             _queue.Dispose();
 
             var order = new Order(102, 5);
@@ -62,7 +62,7 @@ namespace OOP_UnitTests.Utilities {
 
         [TestMethod]
         public void ProcessQueue_OrderConsumed_TransitionsStatusFromPaidToShipped() {
-            _queue = new OrderProcessingQueue();
+            _queue = new OrderProcessingQueue(processingDelayMs: 20);
             var order = new Order(201, 10);
 
             _queue.EnqueueOrder(order);
@@ -76,7 +76,7 @@ namespace OOP_UnitTests.Utilities {
 
         [TestMethod]
         public void ProcessQueue_NullOrderInCollection_CatchesExceptionWithoutCrashingConsumer() {
-            _queue = new OrderProcessingQueue();
+            _queue = new OrderProcessingQueue(processingDelayMs: 20);
 
             // Отримуємо внутрішню колекцію _orderQueue, щоб додати null і спровокувати NullReferenceException у споживачі
             FieldInfo queueField = typeof(OrderProcessingQueue).GetField("_orderQueue", BindingFlags.NonPublic | BindingFlags.Instance);

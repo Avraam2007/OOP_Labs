@@ -93,10 +93,8 @@ namespace OOP_UnitTests.FileIO {
             ReceiptGenerator.SaveReceipt(receiptContent, targetPath, fakeStorage);
 
             Assert.AreEqual(1, fakeStorage.SaveCallCount);
-            // Зверніть увагу на порядок аргументів у ReceiptGenerator.SaveReceipt:
-            // storage.SaveToFile(receiptText, outputFilePath)
-            Assert.AreEqual(receiptContent, fakeStorage.LastFirstArg);
-            Assert.AreEqual(targetPath, fakeStorage.LastSecondArg);
+            Assert.AreEqual(receiptContent, fakeStorage.LastSecondArg);
+            Assert.AreEqual(targetPath, fakeStorage.LastFirstArg);
         }
 
         [TestMethod]

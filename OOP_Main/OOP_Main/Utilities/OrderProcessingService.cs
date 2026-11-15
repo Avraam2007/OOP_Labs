@@ -9,8 +9,10 @@ namespace OOP_Main.Utilities {
         private readonly BlockingCollection<Order> _orderQueue = new BlockingCollection<Order>(boundedCapacity: 100);
         private readonly Task _processingTask;
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
+        private readonly int _processingDelayMs;
 
-        public OrderProcessingQueue() {
+        public OrderProcessingQueue(int processingDelayMs = 15000) {
+            _processingDelayMs = processingDelayMs;
             _processingTask = Task.Run(() => ProcessQueue(_cts.Token));
         }
 
@@ -26,14 +28,16 @@ namespace OOP_Main.Utilities {
         private void ProcessQueue(CancellationToken ct) {
             foreach (var order in _orderQueue.GetConsumingEnumerable(ct)) {
                 try {
-                    Thread.Sleep(15000);
+                    Thread.Sleep(_processingDelayMs);
 
                     order.Status = OrderStatus.Shipped;
-                    Logger.Log($"[Queue] Order #{order.OrderId} has been shipped from the store's warehouse.", Logger.LogLevels.Info);
+                    Logger.Log($"[Queue] Order #{order?.OrderId} has been shipped from the store's warehouse.", Logger.LogLevels.Info);
                 }
                 catch (Exception ex) {
-                    order.Status = OrderStatus.Cancelled;
-                    Logger.Log($"[Queue] Error processing order #{order.OrderId}: {ex.Message}", Logger.LogLevels.Error);
+                    if (order != null) {
+                        order.Status = OrderStatus.Cancelled;
+                    }
+                    Logger.Log($"[Queue] Error processing order #{order?.OrderId}: {ex.Message}", Logger.LogLevels.Error);
                 }
             }
         }

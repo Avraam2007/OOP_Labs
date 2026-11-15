@@ -74,5 +74,69 @@ namespace OOP_UnitTests.States {
         }
 
         #endregion
+
+        #region PaidState Tests
+
+        [TestMethod]
+        public void PaidState_DescriptionAndShipping_CannotShipStatusIsPending() {
+            _state = new PaidState();
+            _state.SetOrder(_testOrder);
+
+            Assert.AreEqual("Paid, ready to ship", _state.GetDescription());
+            Assert.AreEqual("The order will be shipped later", _state.Ship());
+        }
+
+        [TestMethod]
+        public void PaidState_Cancelling_CanCancel() {
+            _state = new PaidState();
+            _state.SetOrder(_testOrder);
+
+            Assert.IsTrue(_state.CanBeCancelled());
+            Assert.AreEqual("The order is cancelled.", _state.Cancel());
+
+            _state.Cancel();
+
+            Assert.AreEqual(OrderStatus.Cancelled, _testOrder.Status);
+        }
+
+        [TestMethod]
+        public void PaidState_Paying_CannotPay() {
+            _state = new PaidState();
+            _state.SetOrder(_testOrder);
+
+            Assert.AreEqual("The order is already paid.", _state.Pay());
+        }
+
+        #endregion
+
+        #region CancelledState Tests
+
+        [TestMethod]
+        public void CancelledState_DescriptionAndShipping_CannotShipStatusIsPending() {
+            _state = new CancelledState();
+            _state.SetOrder(_testOrder);
+
+            Assert.AreEqual("Cancelled", _state.GetDescription());
+            Assert.AreEqual("The order is cancelled.", _state.Ship());
+        }
+
+        [TestMethod]
+        public void CancelledState_Cancelling_CannotCancel() {
+            _state = new CancelledState();
+            _state.SetOrder(_testOrder);
+
+            Assert.IsFalse(_state.CanBeCancelled());
+            Assert.AreEqual("The order is cancelled.", _state.Cancel());
+        }
+
+        [TestMethod]
+        public void CancelledState_Paying_CannotPay() {
+            _state = new CancelledState();
+            _state.SetOrder(_testOrder);
+
+            Assert.AreEqual("The order is cancelled.", _state.Pay());
+        }
+
+        #endregion
     }
 }

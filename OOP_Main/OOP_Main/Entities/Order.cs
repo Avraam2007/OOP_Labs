@@ -149,38 +149,39 @@ namespace OOP_Main {
             return arr;
         }
 
-        public List<T> RemoveDuplicates<T>(List<T> arr) {
+        public List<T> GetUniqueValues<T>(List<T> arr) {
             if (!Tools.ValidateArray(arr)) return null;
 
             List<T> ans = new List<T>();
+            HashSet<T> seen = new HashSet<T>();
 
-            // traverse each element in the array
-            for (int i = 0; i < arr.Count; i++) {
-                int cnt = 0;
-
-                // check if element is already added to result
-                foreach (var it in ans) {
-                    if (arr[i].Equals(it)) {
-                        cnt++;
-                        break;
-                    }
+            foreach (var item in arr) {
+                if (seen.Add(item)) {
+                    ans.Add(item);
                 }
+            }
 
-                // if already added, skip checking again
-                if (cnt > 0) continue;
+            return ans;
+        }
 
-                // check if current element appears again 
-                // in the rest of the array
-                for (int j = i + 1; j < arr.Count; j++) {
-                    if (arr[i].Equals(arr[j])) {
-                        cnt++;
-                        break;
-                    }
+        public List<T> RemoveDuplicates<T>(List<T> arr) {
+            if (!Tools.ValidateArray(arr)) return null;
+
+            var counts = new Dictionary<T, int>();
+            foreach (var item in arr) {
+                if (counts.ContainsKey(item)) {
+                    counts[item]++;
                 }
+                else {
+                    counts[item] = 1;
+                }
+            }
 
-                // if duplicate found, delete it
-                if (cnt > 0) continue;
-                else ans.Add(arr[i]);
+            var ans = new List<T>();
+            foreach (var item in arr) {
+                if (counts[item] == 1) {
+                    ans.Add(item);
+                }
             }
 
             return ans;

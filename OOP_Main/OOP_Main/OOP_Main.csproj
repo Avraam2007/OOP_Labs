@@ -112,6 +112,8 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Screens\AuthScreen.cs" />
     <Compile Include="Screens\BaseScreen.cs" />
+    <Compile Include="States\OrderStates\CancelledState.cs" />
+    <Compile Include="States\OrderStates\PaidState.cs" />
     <Compile Include="States\OrderStates\PendingState.cs" />
     <Compile Include="States\OrderStates\ShippingState.cs" />
     <Compile Include="States\UserStates\AdminState.cs" />

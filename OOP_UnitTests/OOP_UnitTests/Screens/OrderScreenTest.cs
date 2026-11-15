@@ -31,6 +31,7 @@ namespace OOP_UnitTests.Screens {
             _originalConsole = AnsiConsole.Console;
             _testConsole = new TestConsole();
             _testConsole.Profile.Capabilities.Interactive = true;
+            _testConsole.Profile.Width = 200;
             AnsiConsole.Console = _testConsole;
 
             _appData = new Data();
@@ -39,6 +40,7 @@ namespace OOP_UnitTests.Screens {
 
         [TestCleanup]
         public void Cleanup() {
+            _appData.OrderQueue?.Dispose();
             AnsiConsole.Console = _originalConsole;
             Directory.SetCurrentDirectory(_originalWorkingDir);
 
@@ -177,8 +179,7 @@ namespace OOP_UnitTests.Screens {
 
             string result = _orderScreen.Create();
 
-            // "Not enough money!"
-            Assert.Contains("Categories not found", _testConsole.Output);
+            Assert.Contains("Not enough money!", _testConsole.Output);
             Assert.IsEmpty(_appData.Orders);
             Assert.AreEqual("Back to menu", result);
         }
@@ -197,9 +198,7 @@ namespace OOP_UnitTests.Screens {
 
             string result = _orderScreen.Create();
 
-            //"максимально дозволений ліміт однієї транзакції (5000$)"
-
-            Assert.Contains("Categories not found", _testConsole.Output);
+            Assert.Contains("максимально дозволений ліміт однієї транзакції (5000$)", _testConsole.Output);
             Assert.IsEmpty(_appData.Orders);
             Assert.AreEqual("Back to menu", result);
         }
@@ -233,18 +232,20 @@ namespace OOP_UnitTests.Screens {
             _testConsole.Input.PushKey(ConsoleKey.Enter);
             _testConsole.Input.PushKey(ConsoleKey.Enter);
             _testConsole.Input.PushTextWithEnter("2");
+
             _testConsole.Input.PushKey(ConsoleKey.Enter);
             _testConsole.Input.PushTextWithEnter("y");
+            _testConsole.Input.PushKey(ConsoleKey.DownArrow);
             _testConsole.Input.PushKey(ConsoleKey.Enter);
             string result = _orderScreen.Create();
-            Assert.AreEqual(400.0, buyer.Account.Sum, 0.001);
+            Assert.AreEqual(400.0, buyer.Account.Sum, 0.001, $"Console output:\n{_testConsole.Output}");
             Assert.HasCount(1, _appData.Orders);
             Order createdOrder = _appData.Orders.First();
             Assert.AreEqual(OrderStatus.Paid, createdOrder.Status);
             string expectedReceiptPath = Path.Combine("DataStorage", $"receipt_order_{createdOrder.OrderId}_from_HappyBuyer.txt");
             Assert.IsTrue(File.Exists(expectedReceiptPath));
             Assert.Contains("YOUR NEW ORDER", _testConsole.Output);
-            Assert.Contains($"DataStorage/receipt_order{createdOrder.OrderId}_from_HappyBuyer.txt", _testConsole.Output);
+            Assert.Contains($"DataStorage/receipt_order_{createdOrder.OrderId}_from_HappyBuyer.txt", _testConsole.Output);
             Assert.AreEqual("Back to menu", result);
         }
         #endregion

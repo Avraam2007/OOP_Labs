@@ -1,4 +1,7 @@
-﻿namespace OOP_Main.States {
+﻿using System;
+
+namespace OOP_Main.States {
+    [Serializable]
     public class GuestState: UserState {
         public override bool CanBuyProducts() => false;
         public override bool CanManageUsers() => false;

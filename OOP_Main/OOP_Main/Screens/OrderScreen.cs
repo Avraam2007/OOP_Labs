@@ -74,9 +74,12 @@ namespace OOP_Main.Screens {
                 try {
                     categoriesList = availableProducts.GetCategoriesList().ToList();
                 }
-                catch (NullReferenceException ex) {
+                catch (NullReferenceException ex) when (!Tools.ValidateArray(catalog)) {
                     DefaultErrorOutput(ex.Message);
                     return BackToMenuPrompt();
+                }
+                catch (NullReferenceException) {
+                    categoriesList = new List<string>();
                 }
 
                 var selectedCategory = AnsiConsole.Prompt(

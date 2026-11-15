@@ -1,4 +1,7 @@
-﻿namespace OOP_Main.States {
+﻿using System;
+
+namespace OOP_Main.States {
+    [Serializable]
     public class LoggedInState: UserState {
         public override bool CanBuyProducts() => true;
         public override bool CanManageUsers() => false;

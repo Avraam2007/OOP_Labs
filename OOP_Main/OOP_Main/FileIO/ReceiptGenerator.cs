@@ -49,7 +49,7 @@ namespace OOP_Main.FileIO {
 
         public static void SaveReceipt(string receiptText, string outputFilePath, IStorage<string> storage) {
             try {
-                storage.SaveToFile(receiptText, outputFilePath);
+                storage.SaveToFile(outputFilePath, receiptText);
             }
             catch (Exception ex) {
                 throw new ECommerceException($"Error with saving receipt in file '{outputFilePath}'", ex);

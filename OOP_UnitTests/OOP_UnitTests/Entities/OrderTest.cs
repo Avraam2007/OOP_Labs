@@ -87,16 +87,21 @@ namespace OOP_UnitTests.Entities {
         #region State Pattern Transitions Tests
 
         [TestMethod]
-        public void StateTransitions_PayAndShip_UpdatesOrderStatusAndDescription() {
+        public void StateTransitions_Pay_UpdatesOrderStatusAndDescription() {
             Assert.AreEqual("Pending", _order.GetStatusDescription());
 
             _order.Pay();
             Assert.AreEqual(OrderStatus.Paid, _order.Status);
             Assert.AreEqual("Paid, ready to ship", _order.GetStatusDescription());
+        }
+
+        [TestMethod]
+        public void StateTransitions_Ship_UpdatesOrderStatusAndDescription() {
+            Assert.AreEqual("Pending", _order.GetStatusDescription());
 
             _order.Ship();
-            Assert.AreEqual(OrderStatus.Shipped, _order.Status);
-            Assert.AreEqual("Shipping", _order.GetStatusDescription());
+            Assert.AreEqual(OrderStatus.Pending, _order.Status);
+            Assert.AreEqual("Pending", _order.GetStatusDescription());
         }
 
         [TestMethod]
@@ -216,6 +221,15 @@ namespace OOP_UnitTests.Entities {
             var uniqueOnly = _order.RemoveDuplicates(list);
 
             Assert.AreSequenceEqual(new List<int> { 1, 4, 5 }, uniqueOnly);
+        }
+
+        [TestMethod]
+        public void GetUniqueValues_ListWithDuplicates_ReturnsUniqueElements() {
+            var list = new List<int> { 1, 2, 2, 3, 4, 3, 5 };
+
+            var uniqueOnly = _order.GetUniqueValues(list);
+
+            Assert.AreSequenceEqual(new List<int> { 1, 2, 3, 4, 5 }, uniqueOnly);
         }
 
         #endregion

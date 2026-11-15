@@ -34,7 +34,7 @@
   <Class Name="OOP_Main.Order" BaseTypeListCollapsed="true">
     <Position X="34.75" Y="23.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>EAAABAAEQAIAAgKEgAAASEAAAQCIQYABAAACAJBAABQ=</HashCode>
+      <HashCode>EAAABAAEQAIAAgKEgQAASEAAAQCIQYABAAACAJBAABQ=</HashCode>
       <FileName>Entities\Order.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -229,10 +229,10 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.States.OrderState">
-    <Position X="22.75" Y="22.5" Width="1.5" />
+    <Position X="22.5" Y="22.5" Width="1.5" />
     <AssociationLine Name="_order" Type="OOP_Main.Order" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="24.25" Y="22.875" />
+        <Point X="24" Y="22.875" />
         <Point X="25.917" Y="22.875" Type="JumpStart" />
         <Point X="26.083" Y="22.875" Type="JumpEnd" />
         <Point X="34.375" Y="22.875" />
@@ -277,14 +277,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.States.OrderStates.PendingState">
-    <Position X="21.5" Y="25.25" Width="1.5" />
+    <Position X="21.25" Y="25.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAQAAAAgAAIAAAAQAAAACAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>States\OrderStates\PendingState.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OOP_Main.States.OrderStates.ShippingState">
-    <Position X="23.75" Y="25.25" Width="1.5" />
+    <Position X="23.5" Y="25.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAQAAAAgAAIAAAAQAAAACAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>States\OrderStates\ShippingState.cs</FileName>
@@ -579,7 +579,7 @@
   <Class Name="OOP_Main.Utilities.AutoSaveService" BaseTypeListCollapsed="true">
     <Position X="16.25" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAABCAIAAAAAJAAAAAAACAAAAIAYAAIAAAAAAA=</HashCode>
+      <HashCode>AAAAAEAABCAIAAAAAJAAAAACACAAAACAYAAAAAAAAAA=</HashCode>
       <FileName>Utilities\AutoSaveService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -587,7 +587,7 @@
   <Class Name="OOP_Main.Utilities.OrderProcessingQueue" BaseTypeListCollapsed="true">
     <Position X="19.25" Y="15.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>BAAAAAAAACEAAAAAAAgAAAAABAIAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>BAAAAAAAACEIAAAAAAgAAAAABAIAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utilities\OrderProcessingService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -739,7 +739,7 @@
   <Class Name="OOP_Main.FileIO.BinaryStorage">
     <Position X="47.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAAAAAAAAAAAIAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>EAAAAAAgAAgAAAAAAAAIAAAAAAAAAAAQAAIAAAAAAAA=</HashCode>
       <FileName>FileIO\BinaryStorage.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -796,6 +796,20 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAABAAAgAAAAAAAAAACAAAAAAAAAAAAAAAABAI=</HashCode>
       <FileName>FileIO\FileService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.States.OrderStates.CancelledState">
+    <Position X="21.25" Y="27.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAgAAIAAAAQAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>States\OrderStates\CancelledState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Main.States.OrderStates.PaidState">
+    <Position X="23.5" Y="27.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAgAAIAAAAQAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>States\OrderStates\PaidState.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="OOP_Main.UI.CardRenderer">

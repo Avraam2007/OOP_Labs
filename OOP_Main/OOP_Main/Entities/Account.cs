@@ -2,6 +2,7 @@
 using static OOP_Main.Utilities.Exceptions;
 
 namespace OOP_Main.Entities {
+    [Serializable]
     public class Account {
         private double sum;
 
